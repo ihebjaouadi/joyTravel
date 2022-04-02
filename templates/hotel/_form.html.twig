@@ -1,0 +1,46 @@
+{{ form_start(form) }}
+
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Input Addon</h3>
+    </div>
+    <div class="card-body">
+
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Nom hotel</label>
+            {{ form_widget(form.Nom,{'attr':{'class': 'form-control','placeholder':'Nom hotel'}}) }}
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Adresse</label>
+            {{ form_widget(form.Adresse,{'attr':{'class': 'form-control','placeholder':'Adresse'}}) }}
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Complement adresse</label>
+            {{ form_widget(form.Complement_adresse,{'attr':{'class': 'form-control','placeholder':'Complement adresse'}}) }}
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Code postal</label>
+            {{ form_widget(form.Code_postal,{'attr':{'class': 'form-control','placeholder':'Code postal'}}) }}
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Ville</label>
+            {{ form_widget(form.Ville,{'attr':{'class': 'form-control','placeholder':'Ville'}}) }}
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Pays</label>
+            {{ form_widget(form.Pays,{'attr':{'class': 'form-control','placeholder':'Pays'}}) }}
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Nb_etoile</label>
+            {{ form_widget(form.Nb_etoile,{'attr':{'class': 'form-control','placeholder':'Nb d\'etoile'}}) }}
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Images</label>
+            {{ form_widget(form.images,{'attr':{'class': 'form-control'}}) }}
+        </div>
+        <button class="btn btn-success pull-right">{{ button_label|default('Save') }}</button>
+
+    </div>
+</div>
+
+{{ form_end(form) }}
