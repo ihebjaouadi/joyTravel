@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,6 +42,27 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="ID_user", orphanRemoval=true)
+     */
+    private $reservations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="ID_user", orphanRemoval=true)
+     */
+    private $contacts;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Vote::class, mappedBy="ID_user", cascade={"persist", "remove"})
+     */
+    private $vote;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -132,5 +155,87 @@ class User implements UserInterface
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setIDUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getIDUser() === $this) {
+                $reservation->setIDUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contact>
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
+            $contact->setIDUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getIDUser() === $this) {
+                $contact->setIDUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVote(): ?Vote
+    {
+        return $this->vote;
+    }
+
+    public function setVote(Vote $vote): self
+    {
+        // set the owning side of the relation if necessary
+        if ($vote->getIDUser() !== $this) {
+            $vote->setIDUser($this);
+        }
+
+        $this->vote = $vote;
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
     }
 }
