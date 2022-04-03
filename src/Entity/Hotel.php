@@ -59,9 +59,38 @@ class Hotel
      */
     private $images;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Chambre::class, mappedBy="ID_hotel", orphanRemoval=true)
+     */
+    private $chambres;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Equipement::class, mappedBy="ID_Hotel", orphanRemoval=true)
+     */
+    private $equipements;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Vote::class, mappedBy="ID_hotel", cascade={"persist", "remove"})
+     */
+    private $vote;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="ID_hotel", orphanRemoval=true)
+     */
+    private $commentaires;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Evenement::class, mappedBy="ID_hotel", orphanRemoval=true)
+     */
+    private $evenements;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->chambres = new ArrayCollection();
+        $this->equipements = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
+        $this->evenements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +206,143 @@ class Hotel
             // set the owning side to null (unless already changed)
             if ($image->getIDHotel() === $this) {
                 $image->setIDHotel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chambre>
+     */
+    public function getChambres(): Collection
+    {
+        return $this->chambres;
+    }
+
+    public function addChambre(Chambre $chambre): self
+    {
+        if (!$this->chambres->contains($chambre)) {
+            $this->chambres[] = $chambre;
+            $chambre->setIDHotel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChambre(Chambre $chambre): self
+    {
+        if ($this->chambres->removeElement($chambre)) {
+            // set the owning side to null (unless already changed)
+            if ($chambre->getIDHotel() === $this) {
+                $chambre->setIDHotel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Equipement>
+     */
+    public function getEquipements(): Collection
+    {
+        return $this->equipements;
+    }
+
+    public function addEquipement(Equipement $equipement): self
+    {
+        if (!$this->equipements->contains($equipement)) {
+            $this->equipements[] = $equipement;
+            $equipement->setIDHotel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEquipement(Equipement $equipement): self
+    {
+        if ($this->equipements->removeElement($equipement)) {
+            // set the owning side to null (unless already changed)
+            if ($equipement->getIDHotel() === $this) {
+                $equipement->setIDHotel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVote(): ?Vote
+    {
+        return $this->vote;
+    }
+
+    public function setVote(Vote $vote): self
+    {
+        // set the owning side of the relation if necessary
+        if ($vote->getIDHotel() !== $this) {
+            $vote->setIDHotel($this);
+        }
+
+        $this->vote = $vote;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setIDHotel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getIDHotel() === $this) {
+                $commentaire->setIDHotel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Evenement>
+     */
+    public function getEvenements(): Collection
+    {
+        return $this->evenements;
+    }
+
+    public function addEvenement(Evenement $evenement): self
+    {
+        if (!$this->evenements->contains($evenement)) {
+            $this->evenements[] = $evenement;
+            $evenement->setIDHotel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvenement(Evenement $evenement): self
+    {
+        if ($this->evenements->removeElement($evenement)) {
+            // set the owning side to null (unless already changed)
+            if ($evenement->getIDHotel() === $this) {
+                $evenement->setIDHotel(null);
             }
         }
 

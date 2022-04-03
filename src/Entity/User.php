@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,6 +42,45 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="ID_user", orphanRemoval=true)
+     */
+    private $reservations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="ID_user", orphanRemoval=true)
+     */
+    private $contacts;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Vote::class, mappedBy="ID_user", cascade={"persist", "remove"})
+     */
+    private $vote;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="ID_user", orphanRemoval=true)
+     */
+    private $commentaires;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ReservationEvenement::class, mappedBy="ID_user", orphanRemoval=true)
+     */
+    private $reservationEvenements;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Chat::class, mappedBy="idSender", orphanRemoval=true)
+     */
+    private $chats;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
+        $this->reservationEvenements = new ArrayCollection();
+        $this->chats = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -130,6 +171,178 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setIDUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getIDUser() === $this) {
+                $reservation->setIDUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contact>
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
+            $contact->setIDUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getIDUser() === $this) {
+                $contact->setIDUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVote(): ?Vote
+    {
+        return $this->vote;
+    }
+
+    public function setVote(Vote $vote): self
+    {
+        // set the owning side of the relation if necessary
+        if ($vote->getIDUser() !== $this) {
+            $vote->setIDUser($this);
+        }
+
+        $this->vote = $vote;
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setIDUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getIDUser() === $this) {
+                $commentaire->setIDUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReservationEvenement>
+     */
+    public function getReservationEvenements(): Collection
+    {
+        return $this->reservationEvenements;
+    }
+
+    public function addReservationEvenement(ReservationEvenement $reservationEvenement): self
+    {
+        if (!$this->reservationEvenements->contains($reservationEvenement)) {
+            $this->reservationEvenements[] = $reservationEvenement;
+            $reservationEvenement->setIDUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservationEvenement(ReservationEvenement $reservationEvenement): self
+    {
+        if ($this->reservationEvenements->removeElement($reservationEvenement)) {
+            // set the owning side to null (unless already changed)
+            if ($reservationEvenement->getIDUser() === $this) {
+                $reservationEvenement->setIDUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chat>
+     */
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+    public function addChat(Chat $chat): self
+    {
+        if (!$this->chats->contains($chat)) {
+            $this->chats[] = $chat;
+            $chat->setIdSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChat(Chat $chat): self
+    {
+        if ($this->chats->removeElement($chat)) {
+            // set the owning side to null (unless already changed)
+            if ($chat->getIdSender() === $this) {
+                $chat->setIdSender(null);
+            }
+        }
 
         return $this;
     }
