@@ -3,30 +3,27 @@
 namespace App\Form;
 
 use App\Entity\Chambre;
-use App\Entity\Hotel;
+use App\Entity\Disponibilite;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ChambreType extends AbstractType
+class DisponibiliteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Type')
-            ->add('Disponibilite')
-            ->add('ID_hotel', EntityType::class,[
-                'class'=>Hotel::class,
-                'choice_label'=>'Nom'
-            ])
+            ->add('reservee_du')
+            ->add('reservee_au')
+            ->add('ID_chambre', EntityType::class,['class'=>Chambre::class, 'choice_label'=>'id'])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Chambre::class,
+            'data_class' => Disponibilite::class,
         ]);
     }
 }

@@ -1,0 +1,49 @@
+{#{% extends 'base.html.twig' %}#}
+{% extends 'baseBackOffice.html.twig' %}
+{% block title %}Liste Reservations{% endblock %}
+
+{% block body %}
+    <h1>Reservation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date Reservation</th>
+                <th>Date Arrivee</th>
+                <th>Date Depart</th>
+                <th>Nbr Personnes</th>
+                <th>Prix Total</th>
+                <th>User</th>
+                <th>Formule</th>
+                <th>Hotel</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.DateReservation ? reservation.DateReservation|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.DateArrivee ? reservation.DateArrivee|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.DateDepart ? reservation.DateDepart|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.NbrPersonnes }}</td>
+                <td>{{ reservation.PrixTotal }}</td>
+                <td>{{ reservation.getIDUser().getEmail() }}</td>
+                <td>{{ reservation.getIDFormule().getTypeChambre() }}</td>
+                <td>{{ reservation.getIDChambre().getIDHotel().getNom() }}</td>
+                <td>
+                    <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">show</a>
+                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reservation_new') }}">Create new</a>
+{% endblock %}

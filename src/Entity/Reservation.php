@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
@@ -19,16 +20,22 @@ class Reservation
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThan(propertyPath="Date_depart")
+     * @Assert\LessThanOrEqual(propertyPath="Date_arrivee")
+     * @Assert\NotNull(message="{{ value }} shouldn't be NULL")
      */
     private $Date_reservation;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThan(propertyPath="Date_depart")
      */
     private $Date_arrivee;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan(propertyPath="Date_arrivee", message="{{ value }} doit etre sup a {{ compared_value }}")
+     * @Assert\GreaterThan(propertyPath="Date_reservation")
      */
     private $Date_depart;
 
@@ -45,13 +52,14 @@ class Reservation
     private $ID_chambre;
 
     /**
-     * @ORM\OneToOne(targetEntity=Formule::class, inversedBy="reservation", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Formule::class,cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $ID_formule;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotNull(message="cette valeur ne doit pas etre NULLE")
      */
     private $Nbr_personnes;
 

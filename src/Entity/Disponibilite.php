@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\DisponibiliteRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=DisponibiliteRepository::class)
@@ -25,11 +26,13 @@ class Disponibilite
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThan(propertyPath="reservee_au")
      */
     private $reservee_du;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan(propertyPath="reservee_du")
      */
     private $reservee_au;
 
