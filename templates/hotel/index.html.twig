@@ -7,8 +7,8 @@
     <div class="product-area pd-top-118 pd-bottom-90">
         <div class="container">
             <div class="section-title text-center">
-                <h6>We are offring the best real estate</h6>
-                <h2>Best House For You</h2>
+                <h6>We are offring the best Deal</h6>
+                <h2>Best Hotel For You</h2>
             </div>
             <div class="row justify-content-center">
                 {% for hotel in hotels %}
@@ -17,7 +17,7 @@
                             <div class="thumb">
                                 {% for image in hotel.images %}
                                     {% if loop.first %}
-                                        <img width="1000" height="200" src="{{ asset('uploads/images/'~ image.chemain) }}" alt="img">
+                                        <img width="1000" height="300" src="{{ asset('uploads/images/'~ image.chemain) }}" alt="img">
                                     {% endif %}
                                 {% endfor %}
                                 <a class="cat" href="#">Voir les dètails</a>
