@@ -44,4 +44,58 @@
         </ul>
     </nav>
     <!-- /.sidebar-menu -->
+
+
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="{{ path('app_chambres_index') }}" class="nav-link
+                    {% if _route == 'app_chambres_new' or
+                    _route == 'app_chambres_index' %}active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Chambre
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+
+
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="{{ path('app_equipement_new') }}" class="nav-link
+                    {% if _route == 'app_equipement_new' or
+                    _route == 'app_equipement_index' %}active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Equipement
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+
+
+
+
 </div>

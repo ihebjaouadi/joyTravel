@@ -6,6 +6,8 @@ use App\Repository\ChambreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=ChambreRepository::class)
@@ -20,12 +22,19 @@ class Chambre
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage=" Entrer un titre au mini de 2 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="string", length=255)
      */
     private $Type;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @ORM\Column(type="integer")
      */
     private $Disponibilite;
 
@@ -186,5 +195,10 @@ class Chambre
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getType();
     }
 }

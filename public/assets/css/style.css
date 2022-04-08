@@ -1248,7 +1248,6 @@ ul {
 .bg-overlay-2 {
   position: relative;
   background-size: cover !important;
-  background-position: !important;
 }
 .bg-overlay-2:after {
   content: "";
