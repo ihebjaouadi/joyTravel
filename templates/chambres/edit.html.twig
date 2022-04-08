@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseBackOffice.html.twig' %}
 
 {% block title %}Edit Chambre{% endblock %}
 
@@ -7,7 +7,7 @@
 
     {{ include('chambres/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_chambres_index') }}">back to list</a>
+    <a href="{{ path('app_chambres_index') }}"> <button class="btn btn-success pull-right">{{ button_label|default('Back To List') }}</button></a>
 
     {{ include('chambres/_delete_form.html.twig') }}
 {% endblock %}
