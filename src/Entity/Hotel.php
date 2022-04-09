@@ -38,6 +38,17 @@ class Hotel
      *      minMessage=" Entrer un titre au mini de 2 caracteres"
      *
      *     )
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage=" Entrer un titre au mini de 2 caracteres"
+     *
+     *     )
      * @ORM\Column(type="string", length=255)
      */
     private $Adresse;
@@ -88,11 +99,6 @@ class Hotel
 
     /**
      * @Assert\NotBlank(message=" titre doit etre non vide")
-     * @Assert\Length(
-     *      min = 5,
-     *      minMessage=" Entrer un titre au mini de 2 caracteres"
-     *
-     *     )
      * @ORM\Column(type="string", length=255)
      */
     private $Nb_etoile;
@@ -177,12 +183,12 @@ class Hotel
         return $this;
     }
 
-    public function getCodePostal(): ?int
+    public function getCodePostal()
     {
         return $this->Code_postal;
     }
 
-    public function setCodePostal(?int $Code_postal): self
+    public function setCodePostal($Code_postal): self
     {
         $this->Code_postal = $Code_postal;
 
@@ -396,4 +402,21 @@ class Hotel
     {
         return (string)$this->getNom();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
+    }
+
 }
