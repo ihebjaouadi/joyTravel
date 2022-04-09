@@ -20,13 +20,15 @@ class HotelType extends AbstractType
             ->add('Code_postal')
             ->add('Complement_adresse')
             ->add('Pays')
+            ->add('description')
             ->add('Nb_etoile', ChoiceType::class, [
                 'choices' => [
-                    '1' => '1',
-                    '2' => '2',
-                    '3' => '3',
-                    '4' => '4',
-                    '5' => '5',
+                    '' => 0,
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
                 ]
             ])
             ->add('images', FileType::class, [
@@ -34,8 +36,7 @@ class HotelType extends AbstractType
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

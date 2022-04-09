@@ -1,0 +1,36 @@
+<style>
+    .select2-container .select2-selection--single {
+        height: 43px !important;
+    }
+</style>
+{{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Ajouter Equipement</h3>
+    </div>
+    <div class="card-body">
+
+
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Hotel</label>
+            {{ form_widget(form.ID_Hotel,{'attr':{'class': ' select2','placeholder':'Complement adresse'}}) }}
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Chambre</label>
+            {{ form_widget(form.ID_chambre,{'attr':{'class': 'form-control select2','placeholder':'Complement adresse'}}) }}
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Nom</label>
+            {{ form_widget(form.Nom,{'attr':{'class': 'form-control select2','placeholder':'Nom Equipement'}}) }}
+            {{ form_errors(form.Nom,{'attr':{'class': 'text-danger'}}) }}
+        </div>
+
+
+        <button class="btn btn-success pull-right">{{ button_label|default('Save') }}</button>
+
+
+    </div>
+
+</div>
+
+{{ form_end(form) }}

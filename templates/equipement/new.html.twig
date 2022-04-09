@@ -1,0 +1,10 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}New Equipement{% endblock %}
+
+{% block body %}
+
+    {{ include('equipement/_form.html.twig') }}
+
+    <a href="{{ path('app_equipement_index') }}">back to list</a>
+{% endblock %}

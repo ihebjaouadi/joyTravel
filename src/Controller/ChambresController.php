@@ -79,9 +79,7 @@ class ChambresController extends AbstractController
      */
     public function delete(Request $request, Chambre $chambre, ChambreRepository $chambreRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$chambre->getId(), $request->request->get('_token'))) {
-            $chambreRepository->remove($chambre);
-        }
+        $chambreRepository->remove($chambre);
 
         return $this->redirectToRoute('app_chambres_index', [], Response::HTTP_SEE_OTHER);
     }
