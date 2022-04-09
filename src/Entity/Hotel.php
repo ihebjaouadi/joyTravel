@@ -31,16 +31,7 @@ class Hotel
      */
     private $Nom;
 
-    /**
-     * @Assert\NotBlank(message=" titre doit etre non vide")
-     * @Assert\Length(
-     *      min = 2,
-     *      minMessage=" Entrer un titre au mini de 2 caracteres"
-     *
-     *     )
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
+    
 
     /**
      * @Assert\NotBlank(message=" titre doit etre non vide")
