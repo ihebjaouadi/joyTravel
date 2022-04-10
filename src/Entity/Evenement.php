@@ -6,6 +6,8 @@ use App\Repository\EvenementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=EvenementRepository::class)
@@ -21,6 +23,7 @@ class Evenement
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Si il vous plait saissir un Nom Valid!!")
      */
     private $Nom;
 
@@ -41,11 +44,24 @@ class Evenement
 
     /**
      * @ORM\Column(type="float")
+     *  @Assert\Range(
+     *      min = 2,
+     *      max = 150,
+     *      minMessage = "prix entre doit étre supérieur à  2",
+     *      maxMessage = "prix doit étre inférieur à 150"
+     * )
      */
     private $Prix;
 
     /**
      * @ORM\Column(type="integer")
+     *   * @Assert\Range(
+     *      min = 2,
+     *      max = 180,
+     *      minMessage = "Le nombre de particant doit étre supérieur à {{ min }} Person !!",
+     *      maxMessage = "Le nombre de particant doit étre  iférieur à {{ max }} Person !!"
+     * )
+     *
      */
     private $Nombre_Participants;
 
@@ -59,6 +75,21 @@ class Evenement
      * @ORM\OneToMany(targetEntity=ReservationEvenement::class, mappedBy="ID_evenement", orphanRemoval=true)
      */
     private $reservationEvenements;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $Description;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CategoryEvent::class, inversedBy="evenements")
+     */
+    private $Category;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Img;
 
     public function __construct()
     {
@@ -183,4 +214,48 @@ class Evenement
 
         return $this;
     }
+
+    public function getDescription(): ?string
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(string $Description): self
+    {
+        $this->Description = $Description;
+
+        return $this;
+    }
+
+    public function getCategory(): ?CategoryEvent
+    {
+        return $this->Category;
+    }
+
+    public function setCategory(?CategoryEvent $Category): self
+    {
+        $this->Category = $Category;
+
+        return $this;
+    }
+
+    public function getImg(): ?string
+    {
+        return $this->Img;
+    }
+
+    public function setImg(string $Img): self
+    {
+        $this->Img = $Img;
+
+        return $this;
+    }
+
+
+
+
+    public function __toString() {
+        return $this->getNom();
+    }
+
 }

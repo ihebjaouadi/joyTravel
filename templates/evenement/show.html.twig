@@ -1,0 +1,50 @@
+
+{% extends 'baseBackOffice.html.twig' %}
+{%  block body %}
+    <h1>Evenement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ evenement.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ evenement.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ evenement.Type }}</td>
+            </tr>
+            <tr>
+                <th>Date_debut</th>
+                <td>{{ evenement.DateDebut ? evenement.DateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_fin</th>
+                <td>{{ evenement.DateFin ? evenement.DateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ evenement.Prix }}</td>
+            </tr>
+            <tr>
+                <th>Nombre_Participants</th>
+                <td>{{ evenement.NombreParticipants }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ evenement.Description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_evenement_index') }}">back to list</a>
+
+    <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a>
+
+   {{ include('evenement/_delete_form.html.twig') }}
+
+
+{% endblock %}

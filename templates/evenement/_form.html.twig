@@ -1,0 +1,52 @@
+
+  {#  {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+{{ form_start(form) }}   #}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+    <h2>Ajouter Evenement: </h2>
+
+
+
+
+
+
+
+   {{ form_start(form, {"attr": {"novalidate": "novalidate"}}) }}
+
+    {{ form_widget(form.Nom, {'attr': {'placeholder': "Merci de saissir le nom de événement  :"}}) }}
+
+   {{ form_errors(form.Nom) }}
+    {{ form_widget(form.Type, {'attr': {'placeholder': "Merci de donner une remarque  "}}) }}
+
+    {{ form_row(form.Date_debut, {'attr': {'placeholder': "Merci de donner Date de debut  "}}) }}
+
+    {{ form_row(form.Date_fin, {'attr': {'placeholder': "Merci de donner Date de finir  "}}) }}
+    {{ form_row(form.Prix, {'attr': {'placeholder': "Donner le prix en Dinar"}}) }}
+    {{ form_row(form.Nombre_Participants, {'attr': {'placeholder': "Nombre totale des particpants  "}}) }}
+    {{ form_row(form.Description, {'attr': {'placeholder': "Merci de donner une description détailler   "}}) }}
+    {{ form_row(form.ID_hotel, {'attr': {'placeholder': "Nom De Hotel ou il va deroule l'événement   "}}) }}
+    {{ form_row(form.Category, {'attr': {'placeholder': "Category de l'evenement  "}}) }}
+    {{ form_row(form.Img, {'attr': {'placeholder': "L'affiche de l'événement"}}) }}
+
+
+
+
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+
+
+
+
+
+
+
+
+  {#<button class="btn btn-success pull-right">{{ button_label|default('Save') }}</button>#}
+
+
+
+
