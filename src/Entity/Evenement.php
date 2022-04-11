@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
+
 /**
  * @ORM\Entity(repositoryClass=EvenementRepository::class)
  */
@@ -23,7 +24,8 @@ class Evenement
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank(message="Si il vous plait saissir un Nom Valid!!")
+     *
+     *     @Assert\NotBlank(message="Le Nom de category ne doit pas étre Null S'il vous plait ressayer ")
      */
     private $Nom;
 
@@ -31,6 +33,11 @@ class Evenement
      * @ORM\Column(type="string", length=50)
      */
     private $Type;
+
+
+
+
+
 
     /**
      * @ORM\Column(type="date")
@@ -45,8 +52,8 @@ class Evenement
     /**
      * @ORM\Column(type="float")
      *  @Assert\Range(
-     *      min = 2,
-     *      max = 150,
+     *      min = 5.5,
+     *      max = 100,
      *      minMessage = "prix entre doit étre supérieur à  2",
      *      maxMessage = "prix doit étre inférieur à 150"
      * )
@@ -56,8 +63,8 @@ class Evenement
     /**
      * @ORM\Column(type="integer")
      *   * @Assert\Range(
-     *      min = 2,
-     *      max = 180,
+     *      min = 10,
+     *      max = 100,
      *      minMessage = "Le nombre de particant doit étre supérieur à {{ min }} Person !!",
      *      maxMessage = "Le nombre de particant doit étre  iférieur à {{ max }} Person !!"
      * )
@@ -78,6 +85,9 @@ class Evenement
 
     /**
      * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank(message="Le champs description ne doit pas étre Null S'il vous plait Entrer une description ")
+     *
      */
     private $Description;
 

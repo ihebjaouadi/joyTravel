@@ -1,16 +1,19 @@
 
 
 
-{% form_theme form 'bootstrap_4_layout.html.twig' %}
-
-{{ form_start(form) }}
- {{ form_widget(form) }}
-{{ form_end(form) }}
 
 
 
 
 
 
+<div class="container">
+ {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+ <div class="form-group">
+  {{ form_widget(form) }}
 
+ </div>
+  {{ form_end(form) }}
+
+</div>
 

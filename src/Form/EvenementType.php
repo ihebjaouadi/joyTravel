@@ -25,7 +25,17 @@ class EvenementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Nom',\Symfony\Component\Form\Extension\Core\Type\TextType::class)
+            ->add('Nom',\Symfony\Component\Form\Extension\Core\Type\TextType::class,[
+
+
+                'attr'=>['placeholder'=>'Nom de event']
+            ])
+
+
+
+
+
+
 
 
 
@@ -33,9 +43,17 @@ class EvenementType extends AbstractType
 
 
             ->add('Date_debut',DateType::class,[
+                'required' => false,
+                'widget' => 'single_text',
+                'by_reference' => true,
 
                 'label'=>"  Date Debut   :"])
-        ->add('Date_fin',DateType::class,[
+        ->add('Date_fin', DateType::class,[
+
+
+            'required' => false,
+            'widget' => 'single_text',
+            'by_reference' => true,
 
         'label'=>"  Date Debut   :"])
 
@@ -86,8 +104,8 @@ class EvenementType extends AbstractType
 
 
             //->add('Img')
-            ->add('Img',FileType::class,  array('data_class' => null,'required' => false) )
-
+           // ->add('Img',FileType::class,  ['data_class' => null,'required' => false] )
+          ->add('Img', FileType::class , array("attr"=> array(),'data_class' => null, 'required' => false))
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'save'],
             ])

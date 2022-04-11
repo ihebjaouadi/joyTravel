@@ -107,16 +107,36 @@ class EvenementController extends AbstractController
             'evenement' => $evenement,
         ]);
     }
+
+
     /**
      * @Route("/{id}/edit", name="app_evenement_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
+    public function edit(Request $request, $id,EvenementRepository $evenementRepository): Response
     {
+
+        $evenement=$evenementRepository->find($id);
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $evenementRepository->add($evenement);
+            $file = $form->get('Img')->getData();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+            $em = $this->getDoctrine()->getManager();
+            $evenement->setImg($fileName);
+
+            $file->move(
+                $this->getParameter('images_directory'),
+                $fileName
+            );
+            $evenement->setImg($fileName);
+
+
+
+
+            $em=$this->getDoctrine()->getManager();
+           $em->flush();
             return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
         }
 
