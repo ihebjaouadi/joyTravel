@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentaire;
 use App\Entity\Hotel;
 use App\Entity\Image;
+use App\Form\CommentaireType;
 use App\Form\HotelType;
+use App\Repository\CommentaireRepository;
 use App\Repository\HotelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,12 +63,26 @@ class HotelController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_hotel_show", methods={"GET"})
+     * @Route("/{id}", name="app_hotel_show", methods={"GET","POST"})
      */
-    public function show(Hotel $hotel): Response
+    public function show(Hotel $hotel, Request $request, CommentaireRepository $commentaireRepository): Response
     {
+
+
+        if ($request->getMethod() == "POST") {
+            $commentaire = new Commentaire();
+            $commentaire->setContent($request->request->get('content'));
+            $commentaire->setIDUser($this->getUser());
+            $commentaire->setIDHotel($hotel);
+            $commentaire->setDate(new \DateTime('now'));
+            $this->getDoctrine()->getManager()->persist($commentaire);
+            $this->getDoctrine()->getManager()->flush();
+
+        }
         return $this->render('hotel/show.html.twig', [
             'hotel' => $hotel,
+            'commentaires' => $commentaireRepository->findBy(['ID_hotel' => $hotel->getId()])
+
         ]);
     }
 

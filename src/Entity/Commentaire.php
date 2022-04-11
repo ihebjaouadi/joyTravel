@@ -18,7 +18,7 @@ class Commentaire
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $Date;
 
@@ -44,17 +44,7 @@ class Commentaire
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->Date;
-    }
 
-    public function setDate(\DateTimeInterface $Date): self
-    {
-        $this->Date = $Date;
-
-        return $this;
-    }
 
     public function getIDUser(): ?User
     {
@@ -91,4 +81,21 @@ class Commentaire
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->Date;
+    }
+
+    /**
+     * @param mixed $Date
+     */
+    public function setDate($Date): void
+    {
+        $this->Date = $Date;
+    }
+
 }

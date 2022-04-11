@@ -19,8 +19,14 @@
                 <td>{{ equipement.id }}</td>
                 <td>{{ equipement.Nom }}</td>
                 <td>
-                    <a href="{{ path('app_equipement_show', {'id': equipement.id}) }}">show</a>
-                    <a href="{{ path('app_equipement_edit', {'id': equipement.id}) }}">edit</a>
+                    <form method="post" action="{{ path('app_equipement_delete', {'id': equipement.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ equipement.id) }}">
+                        <button class="btn btn-danger pull-right">{{ button_label|default('Delete') }}</button>
+                    </form>
+                    <a href="{{ path('app_equipement_edit', {'id': equipement.id}) }}">
+                        <button class="btn btn-success pull-right">{{ button_label|default('Update') }}</button>
+                    </a>
+                </td>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_equipement_new') }}">Create new</a>
+    <a href="{{ path('app_equipement_new') }}"><button class="btn btn-success pull-right">{{ button_label|default('Create') }}</button></a>
 {% endblock %}

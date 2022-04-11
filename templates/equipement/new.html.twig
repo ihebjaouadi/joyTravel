@@ -6,5 +6,5 @@
 
     {{ include('equipement/_form.html.twig') }}
 
-    <a href="{{ path('app_equipement_index') }}">back to list</a>
+    <a href="{{ path('app_equipement_index') }}"><button class="btn btn-success pull-right">{{ button_label|default('Back to list') }}</button></a>
 {% endblock %}

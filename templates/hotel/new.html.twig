@@ -20,5 +20,7 @@
 
 
 
-    <a href="{{ path('app_hotel_index') }}">back to list</a>
+    <a href="{{ path('app_hotel_index') }}">
+        <button class="btn btn-success pull-right">{{ button_label|default('Back to list') }}</button>
+    </a>
 {% endblock %}
