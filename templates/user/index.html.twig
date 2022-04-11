@@ -3,8 +3,22 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>user </h1>
 
+  
+{{ form_start(form) }}
+
+<div class="form-row align-items-end" >
+ <div class="col">
+   {{ form_row(form.nom, {'attr': {'placeholder': 'search for users'}}) }}
+ </div>
+
+  <div class="col">
+   <div class="form-group">
+        <button class="btn" type="submit"><i class="fa fa-search"></i></button>
+    </div>
+ </div>
+</div>
+ {{ form_end(form) }}
     <table class="table">
         <tbody>
         <tr>

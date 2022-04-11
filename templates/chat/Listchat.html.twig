@@ -1,0 +1,11 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}Chat{% endblock %}
+{% block body %}
+
+
+{% for message in messages %}
+{{message.IdSender.getEmail}}
+{{message.message}}
+{% endfor %}
+{%endblock%}

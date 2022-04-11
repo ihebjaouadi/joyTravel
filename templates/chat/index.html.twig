@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messagerie{% endblock %}
+
+{% block body %}
+<section class="container">
+  <div class="row">
+    <div class="col">
+        <h1>Messagerie</h1>
+        <p>Résume de la Messagerie</p>
+        <p>Recu</p>
+        <p>Envoyer</p>
+        <a href="{{path("app_send")}}">
+           send message
+        </a>
+        
+    </div> 
+  </div>
+</section>
+{% endblock %}

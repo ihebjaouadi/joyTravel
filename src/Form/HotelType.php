@@ -20,7 +20,7 @@ class HotelType extends AbstractType
             ->add('Code_postal')
             ->add('Complement_adresse')
             ->add('Pays')
-            ->add('description')
+            //->add('description')
             ->add('Nb_etoile', ChoiceType::class, [
                 'choices' => [
                     '' => 0,

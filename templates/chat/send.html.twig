@@ -1,0 +1,12 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}Chat{% endblock %}
+{% block body %}
+{{form(form)}}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-light" role="alert">
+   {{ flashMessage }}
+</div>
+{% endfor %}
+{%endblock%}

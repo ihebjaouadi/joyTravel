@@ -38,7 +38,9 @@ class Chat
      * @ORM\JoinColumn(nullable=false)
      */
     private $idReceiver;
-
+    public function __construct(){
+      $this->Date=new \DateTime();
+    }
     public function getId(): ?int
     {
         return $this->id;
