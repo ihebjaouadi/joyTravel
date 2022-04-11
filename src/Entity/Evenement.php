@@ -41,11 +41,18 @@ class Evenement
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan("today")
      */
     private $Date_debut;
 
     /**
      * @ORM\Column(type="date")
+     * * @Assert\Date()
+     * @Assert\Expression(
+     *     "this.getDateDebut() < this.getDateFin()",
+     *     message="La date fin ne doit pas être antérieure à la date début"
+     * )
+     *
      */
     private $Date_fin;
 
@@ -98,6 +105,8 @@ class Evenement
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veillez Choissir  une image ")
+
      */
     private $Img;
 

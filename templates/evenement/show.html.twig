@@ -63,7 +63,7 @@
         </div>
         <div class="col-md-7 my-auto">
             <h3>{{ evenement.Nom}}</h3>
-            <p>gtrfvfvvvvvvvvvvvvvvvvvvvv</p>
+            <p></p>
             <span class="product-page-price">{{ (evenement.Prix / 100)|number_format(2, ',', '.') }} €</span>
             <hr>
              <p> {{ evenement.Description }}</p>
@@ -74,6 +74,7 @@
             <p>
 
             </p>
+
             <a href="" class="btn btn-primary">Reserver Cette evenement</a>
         </div>
     </div>
@@ -82,9 +83,10 @@
     <p>Découvrez les articles les plus vendus.</p>
     <div class="row">
             <div class="col-md-3">
-                <a href="{{ path('app_evenement_index') }}">back to list</a>
-
-                <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a>
+                <button type="button" class="btn btn-secondary">
+                <a href="{{ path('app_evenement_index') }}">back to list</a> </button>
+                <button type="button" class="btn btn-secondary">
+                <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a> </button>
 
                 {{ include('evenement/_delete_form.html.twig') }}
             </div>

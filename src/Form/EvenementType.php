@@ -25,10 +25,10 @@ class EvenementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Nom',\Symfony\Component\Form\Extension\Core\Type\TextType::class,[
+            ->add('Nom',\Symfony\Component\Form\Extension\Core\Type\TextType::class,[   'label'=>"Nom De  Evenement :",
 
 
-                'attr'=>['placeholder'=>'Nom de event']
+                'attr'=>['placeholder'=>'Nom de evenement']
             ])
 
 
@@ -39,7 +39,11 @@ class EvenementType extends AbstractType
 
 
 
-            ->add('Type')
+            ->add('Type', \Symfony\Component\Form\Extension\Core\Type\TextType::class,[   'label'=>"Remarque :",
+
+
+                'attr'=>['placeholder'=>'Remarque Sur evenement opetionell ']
+            ])
 
 
             ->add('Date_debut',DateType::class,[
@@ -54,7 +58,6 @@ class EvenementType extends AbstractType
             'required' => false,
             'widget' => 'single_text',
             'by_reference' => true,
-
         'label'=>"  Date Debut   :"])
 
 
@@ -79,16 +82,20 @@ class EvenementType extends AbstractType
                         'propertyPath' => 'parent.all[Date_fin].data'
                     ]),
                 ] ))   */
-            ->add('Prix',NumberType::class,[
-                'label'=>"Prix :"
+            /*->add('Prix',NumberType::class,[
+                'label'=>"Prix  :"
+            ])*/
+                ->add('Prix',MoneyType::class, [
+                'attr'=>['placeholder'=>'Prix de reservation en Dinar']
             ])
 
 
             ->add('Nombre_Participants',NumberType::class,[
-        'label'=>"Prix :"
+        'label'=>"Nombre Des Personnes :"   ,  'attr'=>['placeholder'=>'Nombre de personne ']
     ])
 
             ->add('Description',TextareaType::class,[
+                'attr'=>['placeholder'=>'Une paragraph descriptive sur le evenement en question '],
                 'label'=>"Description  :"
             ])
 
@@ -105,10 +112,9 @@ class EvenementType extends AbstractType
 
             //->add('Img')
            // ->add('Img',FileType::class,  ['data_class' => null,'required' => false] )
-          ->add('Img', FileType::class , array("attr"=> array(),'data_class' => null, 'required' => false))
-            ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'save'],
-            ])
+          //->add('Img', FileType::class , array("attr"=> array(),'data_class' => null, 'required' => false))
+            ->add('Img', FileType::class , ["attr"=> array(),'data_class' => null, 'required' => false,'label'=>"Image de l'evenement :" ])
+
         ;
     }
 

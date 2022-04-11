@@ -302,12 +302,6 @@
 
 
 
-
-
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -341,9 +335,14 @@
 	<div class="w3-row-padding w3-padding- w3-center" id="food">
 		{% for evenement in evenements %}
 		<div class="w3-quarter">
+			<a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">
 			<img src="{{ asset('uploads/images/'~ evenement.Img) }}" style="width:100%" />
+			</a>
 
-			<h3>The Perfect Sandwich, A Real NYC Classic</h3>
+			<h3>{{ evenement.Nom }}</h3>
+			<a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">show</a>
+
+			<h4>{{ evenement.Prix }}</h4>
 			<p>Just some random text, lorem ipsum text praesent tincidunt ipsum lipsum.</p>
 		</div>
 
@@ -376,16 +375,6 @@
 	<hr id="about">
 
 	<!-- About Section -->
-	<div class="w3-container w3-padding-32 w3-center">
-		<h3>About Me, The Food Man</h3><br>
-		<img src="/w3images/chef.jpg" alt="Me" class="w3-image" style="display:block;margin:auto" width="800" height="533">
-		<div class="w3-padding-32">
-			<h4><b>I am Who I Am!</b></h4>
-			<h6><i>With Passion For Real, Good Food</i></h6>
-			<p>Just me, myself and I, exploring the universe of unknownment. I have a heart of love and an interest of lorem ipsum and mauris neque quam blog. I want to share my world with you. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-		</div>
-	</div>
-	<hr>
 
 
 
@@ -405,7 +394,6 @@
 
 </body>
 </html>
-
 
 
 
