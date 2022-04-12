@@ -73,6 +73,16 @@ class User implements UserInterface
      */
     private $chats;
 
+    /**
+     * @ORM\OneToMany(targetEntity=BlogPost::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $blogPosts;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BlogCommentaires::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $blogCommentaires;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
@@ -80,6 +90,8 @@ class User implements UserInterface
         $this->commentaires = new ArrayCollection();
         $this->reservationEvenements = new ArrayCollection();
         $this->chats = new ArrayCollection();
+        $this->blogPosts = new ArrayCollection();
+        $this->blogCommentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -341,6 +353,66 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($chat->getIdSender() === $this) {
                 $chat->setIdSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BlogPost>
+     */
+    public function getBlogPosts(): Collection
+    {
+        return $this->blogPosts;
+    }
+
+    public function addBlogPost(BlogPost $blogPost): self
+    {
+        if (!$this->blogPosts->contains($blogPost)) {
+            $this->blogPosts[] = $blogPost;
+            $blogPost->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogPost(BlogPost $blogPost): self
+    {
+        if ($this->blogPosts->removeElement($blogPost)) {
+            // set the owning side to null (unless already changed)
+            if ($blogPost->getUser() === $this) {
+                $blogPost->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BlogCommentaires>
+     */
+    public function getBlogCommentaires(): Collection
+    {
+        return $this->blogCommentaires;
+    }
+
+    public function addBlogCommentaire(BlogCommentaires $blogCommentaire): self
+    {
+        if (!$this->blogCommentaires->contains($blogCommentaire)) {
+            $this->blogCommentaires[] = $blogCommentaire;
+            $blogCommentaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogCommentaire(BlogCommentaires $blogCommentaire): self
+    {
+        if ($this->blogCommentaires->removeElement($blogCommentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($blogCommentaire->getUser() === $this) {
+                $blogCommentaire->setUser(null);
             }
         }
 

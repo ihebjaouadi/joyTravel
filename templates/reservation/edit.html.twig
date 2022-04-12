@@ -1,5 +1,10 @@
-{#{% extends 'base.html.twig' %}#}
-{% extends 'baseBackOffice.html.twig' %}
+{% extends 'base.html.twig' %}
+{#{% extends 'baseBackOffice.html.twig' %}#}
+
+{% block Stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/css/reservation.css') }}">
+{% endblock %}
+
 {% block title %}Edit Reservation{% endblock %}
 
 {% block body %}

@@ -1,4 +1,45 @@
 {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="row custom-gutters-10">
+    <div class="col-md-6">
+        <div class="single-select-inner">
+            <label>Date d'arrivée</label>
+                {{ form_widget(form.Date_arrivee,{'attr':{'class':'flex-nowrap'}}) }}
+            {{ form_errors(form.Date_arrivee, {'attr':{'class':'text-danger'}}) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="single-select-inner">
+            <label>Date de départ</label>
+                {{ form_widget(form.Date_depart,{'attr':{'class':'flex-nowrap'}}) }}
+            {{ form_errors(form.Date_depart, {'attr':{'class':'text-danger'}}) }}
+        </div>
+    </div>
+</div>
+<div class="row custom-gutters-10">
+    <div class="col-md-6">
+        <div class="single-select-inner">
+            <label>Nombre de personnes</label>
+                {{ form_widget(form.Nbr_personnes,{'attr':{'class':'flex-nowrap'}}) }}
+            {{ form_errors(form.Nbr_personnes, {'attr':{'class':'text-danger'}}) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="single-select-inner">
+            <label>Formule</label>
+                {{ form_widget(form.ID_formule,{'attr':{'class':'flex-nowrap'}}) }}
+        </div>
+    </div>
+</div>
+<div class="row custom-gutters-10">
+    <div class="col-md-12">
+        <label>Chambre</label>
+        {{ form_widget(form.ID_chambre,{'attr':{'class':'flex-nowrap'}}) }}
+        {{ form_errors(form.ID_chambre, {'attr':{'class':'text-danger'}}) }}
+    </div>
+</div>
+{#    {{ form_widget(form.Date_reservation)}} #}
+
+<button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+

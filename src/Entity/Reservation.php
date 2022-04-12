@@ -3,8 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Chambre;
+use App\Entity\Hotel;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
@@ -13,27 +17,32 @@ class Reservation
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="remplir tous les champs SVP")
+     * @Assert\NotNull(message="{{ value }} shouldn't be NULL")
      * @Assert\LessThan(propertyPath="Date_depart")
      * @Assert\LessThanOrEqual(propertyPath="Date_arrivee")
-     * @Assert\NotNull(message="{{ value }} shouldn't be NULL")
      */
     private $Date_reservation;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="remplir ce champs SVP")
      * @Assert\LessThan(propertyPath="Date_depart")
+     * @Assert\GreaterThanOrEqual(propertyPath="Date_reservation")
+     * @Assert\NotNull(message="cette valeur ne doit pas etre NULLE")
      */
     private $Date_arrivee;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="remplir ce champs SVP")
      * @Assert\GreaterThan(propertyPath="Date_arrivee", message="{{ value }} doit etre sup a {{ compared_value }}")
      * @Assert\GreaterThan(propertyPath="Date_reservation")
      */
@@ -42,31 +51,47 @@ class Reservation
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull(message="cette valeur ne doit pas etre NULLE")
+     * @Assert\NotBlank(message="remplir tous les champs SVP")
      */
     private $ID_user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Chambre::class, inversedBy="reservations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $ID_chambre;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Formule::class,cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="remplir tous les champs SVP")
+     * @Assert\NotNull(message="cette valeur ne doit pas etre NULLE")
      */
     private $ID_formule;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotNull(message="cette valeur ne doit pas etre NULLE")
+     * @Assert\NotBlank(message="remplir ce champs")
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0
+     * )
      */
     private $Nbr_personnes;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="remplir ce champs")
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0
+     * )
      */
     private $Prix_total;
+
+    /**
+     * @Assert\NotBlank(message="Sélectionner des chambres")
+     * @Assert\NotNull(message="Sélectionner des chambres")
+     * @ORM\ManyToMany(targetEntity=Chambre::class, inversedBy="reservations")
+     */
+    private $ID_chambre;
+
+    public function __construct()
+    {
+        $this->ID_chambre = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,24 +146,12 @@ class Reservation
         return $this;
     }
 
-    public function getIDChambre(): ?Chambre
-    {
-        return $this->ID_chambre;
-    }
-
-    public function setIDChambre(?Chambre $ID_chambre): self
-    {
-        $this->ID_chambre = $ID_chambre;
-
-        return $this;
-    }
-
-    public function getIDFormule(): ?Formule
+    public function getIDFormule(): ?string
     {
         return $this->ID_formule;
     }
 
-    public function setIDFormule(Formule $ID_formule): self
+    public function setIDFormule(string $ID_formule): self
     {
         $this->ID_formule = $ID_formule;
 
@@ -150,7 +163,7 @@ class Reservation
         return $this->Nbr_personnes;
     }
 
-    public function setNbrPersonnes(int $Nbr_personnes): self
+    public function setNbrPersonnes(?int $Nbr_personnes): self
     {
         $this->Nbr_personnes = $Nbr_personnes;
 
@@ -165,6 +178,45 @@ class Reservation
     public function setPrixTotal(float $Prix_total): self
     {
         $this->Prix_total = $Prix_total;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chambre>
+     */
+    public function getIDChambre(): Collection
+    {
+        return $this->ID_chambre;
+    }
+
+    public function getNomHotel(): ?string
+    {
+        $chambres = $this->getIDChambre()->getValues();
+//        $values = $this->getIDChambre()->get('1');
+//        $chambres = $this->getIDChambre()->toArray();
+        dump($chambres);
+//        dump($values);
+        $names = "";
+        foreach ($chambres as $value){
+            dump($value);
+            $names.=" ".$value->getIDHotel()->getNom()." CH:".$value->getId();
+        }
+        return $names;
+    }
+
+    public function addIDChambre(Chambre $iDChambre): self
+    {
+        if (!$this->ID_chambre->contains($iDChambre)) {
+            $this->ID_chambre[] = $iDChambre;
+        }
+
+        return $this;
+    }
+
+    public function removeIDChambre(Chambre $iDChambre): self
+    {
+        $this->ID_chambre->removeElement($iDChambre);
 
         return $this;
     }

@@ -30,7 +30,11 @@ class ReservationController extends AbstractController
      */
     public function new(Request $request, ReservationRepository $reservationRepository): Response
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $reservation = new Reservation();
+        $reservation->setIDUser($user);
+        $reservation->setDateReservation(new \DateTime('now'));
+        $reservation->setPrixTotal(100);
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 

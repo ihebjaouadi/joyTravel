@@ -46,9 +46,10 @@ class Chambre
     private $disponibilites;
 
     /**
-     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="ID_chambre", orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity=Reservation::class, mappedBy="ID_chambre")
      */
     private $reservations;
+
 
     public function __construct()
     {
@@ -170,7 +171,7 @@ class Chambre
     {
         if (!$this->reservations->contains($reservation)) {
             $this->reservations[] = $reservation;
-            $reservation->setIDChambre($this);
+            $reservation->addIDChambre($this);
         }
 
         return $this;
@@ -179,12 +180,10 @@ class Chambre
     public function removeReservation(Reservation $reservation): self
     {
         if ($this->reservations->removeElement($reservation)) {
-            // set the owning side to null (unless already changed)
-            if ($reservation->getIDChambre() === $this) {
-                $reservation->setIDChambre(null);
-            }
+            $reservation->removeIDChambre($this);
         }
 
         return $this;
     }
+
 }

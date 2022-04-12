@@ -21,18 +21,21 @@ class Disponibilite
     /**
      * @ORM\ManyToOne(targetEntity=Chambre::class, inversedBy="disponibilites")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull(message="cette valeur ne doit pas etre NULLE")
      */
     private $ID_chambre;
 
     /**
      * @ORM\Column(type="date")
      * @Assert\LessThan(propertyPath="reservee_au")
+     * @Assert\NotNull(message="cette valeur ne doit pas etre NULLE")
      */
     private $reservee_du;
 
     /**
      * @ORM\Column(type="date")
      * @Assert\GreaterThan(propertyPath="reservee_du")
+     * @Assert\NotNull(message="cette valeur ne doit pas etre NULLE")
      */
     private $reservee_au;
 

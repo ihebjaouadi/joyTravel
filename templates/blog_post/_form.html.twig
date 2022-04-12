@@ -1,0 +1,30 @@
+{#{{ form_start(form) }}#}
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<div class="row custom-gutters-10">
+    <div class="col-md-6">
+        <div class="single-select-inner">
+            <label>Titre</label>
+            {{ form_widget(form.titre,{'attr':{'class':'flex-nowrap'}}) }}
+            {{ form_errors(form.titre, {'attr':{'class':'text-danger'}}) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="single-select-inner">
+            <label>Description</label>
+            {{ form_widget(form.description,{'attr':{'class':'flex-nowrap'}}) }}
+            {{ form_errors(form.description, {'attr':{'class':'text-danger'}}) }}
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="single-select-inner">
+        <label>Body</label>
+        {{ form_widget(form.body,{'attr':{'class':'flex-nowrap'}}) }}
+        {{ form_errors(form.body, {'attr':{'class':'text-danger'}}) }}
+    </div>
+</div>
+</div>
+{#{{ form_widget (form.titre,{'attr':{'class':'form-control'}}) }}#}
+{#{{ form_errors(form.titre, {'attr':{'class':'text-danger'}}) }}#}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

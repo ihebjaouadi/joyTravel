@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FormuleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FormuleRepository::class)
@@ -19,6 +20,7 @@ class Formule
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotNull(message="cette valeur ne doit pas etre NULLE")
      */
     private $Type_chambre;
 
