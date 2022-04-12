@@ -1,0 +1,64 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}Contact index{% endblock %}
+
+{% block body %}
+    <div class="card card-info">
+        <div class="card-header">
+            <h1 class="card-title">Reclamation</h1>
+
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Body</th>
+            <th>Statue</th>
+            <th>User</th>
+            <th>Hotel</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.id }}</td>
+                <td>{{ contact.body }}</td>
+                <td>
+                    {% if(contact.statue == 0) %}
+                        Non traité
+                    {% else %}
+                        traité
+                    {% endif %}
+                </td>
+
+                <td>{{ contact.IDUser }}</td>
+                <td>{{ contact.IDhotel }}</td>
+
+                <td>
+                    <a href="{{ path('app_contacts_editTraitment', {id:contact.id}) }}" class="btn btn-primary"
+                            {% if(contact.statue == 1) %}
+                                style="
+                                  cursor: not-allowed;
+
+                                pointer-events: none;
+                                background: #92bdeb;
+                                border-color: #92bdeb;
+"
+                            {% endif %}
+                    >traitment</a>
+                </td>
+
+            </tr>
+
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

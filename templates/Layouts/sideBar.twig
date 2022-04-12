@@ -44,4 +44,98 @@
         </ul>
     </nav>
     <!-- /.sidebar-menu -->
+
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="{{ path('app_chambres_index') }}" class="nav-link
+                    {% if _route == 'app_chambres_new' or
+                    _route == 'app_chambres_index' %}active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Chambre
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="{{ path('app_contacts_index') }}" class="nav-link
+                    {% if _route == 'app_contacts_index' or
+                    _route == 'app_contacts_index' %}active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Reclamation
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="{{ path('app_vote_index') }}" class="nav-link
+                    {% if _route == 'app_vote_index' or
+                    _route == 'app_vote_index' %}active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Vote
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                {#                <a href="{{ path('app_equipement_new') }}" class="nav-link #}
+                {#                                    {% if _route == 'app_equipement_new' or #}
+                {#                    _route == 'app_equipement_index' %}active #}
+                {#                                    {% endif %} #}
+                {#                                    "> #}
+                {#                    <i class="nav-icon fas fa-th"></i> #}
+                {#                    <p> #}
+                {#                        Equipement #}
+                {#                    </p> #}
+                {#                </a> #}
+
+
+            </li>
+
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+
+
 </div>

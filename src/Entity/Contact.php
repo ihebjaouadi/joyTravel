@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ContactRepository::class)
@@ -24,12 +25,18 @@ class Contact
     private $ID_user;
 
     /**
-     * @ORM\Column(type="string", length=2000)
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage=" Entrer un titre au mini de 2 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="text", nullable=true)
      */
     private $Body;
 
     /**
-     * @ORM\OneToOne(targetEntity=Hotel::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Hotel::class, inversedBy="contacts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ID_hotel;
