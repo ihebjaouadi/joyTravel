@@ -45,6 +45,40 @@ class EvenementRepository extends ServiceEntityRepository
         }
     }
 
+
+
+    public function OrderByPrice(){
+        $em=$this ->getEntityManager();
+        $query=$em->createQuery('select e from  App\Entity\Evenement e order by e.Prix ASC');
+   return $query->getResult();
+
+    }
+
+
+
+
+public function recherche($Nom){
+
+    return $this->createQueryBuilder('e')
+        ->where('e.Nom LIKE :nom')
+        ->setParameter('nom', '%'.$Nom.'%')
+        ->getQuery()->getResult();
+
+
+}
+//Decrise the number of participants after a reservation
+
+public function DecriseNbrParticipants(int $id){
+    $em=$this ->getEntityManager();
+    $query=$em->createQuery('update e   App\Entity\Evenement e SET e.Nombre_Participants= e.Nombre_Participants -1 where id_evenement =$id');
+    return $query->getResult();
+
+
+}
+
+
+
+
     // /**
     //  * @return Evenement[] Returns an array of Evenement objects
     //  */

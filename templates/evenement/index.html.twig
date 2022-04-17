@@ -220,27 +220,43 @@
     </script>
 </head>
 <body>
+<form method="post" action="{{ path('recherche') }}">
+    <label  >Rechercher</label>
+    <input type="text" name="search"><input type="submit" value="Recherche">
+</form>
+
+
 <div class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2>Customer <b>Details</b></h2></div>
+                    <div class="col-sm-8"><h2>Event  <b>Details</b></h2></div>
                     <div class="col-sm-4">
                         <div class="search-box">
                             <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" class="form-control" placeholder="Search&hellip;">
+                            <input type="text" class="form-control"  <form method="post" action="{{ path('recherche') }}">
+                                <label  >Rechercher</label>
+                                <input type="text" name="search"><input type="submit" value="Recherche">
+                            </form>    placeholder="Search&hellip;">
+
+
+
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                 <tr>
                     <th>Nom</th>
                     <th>Affiche</th>
                     <th>Category</th>
-                    <th>prix <i class="fa fa-sort"></i></th>
+
+                    <th>prix <i class="fa fa-sort">  <li><a href={{ path('TriPrice') }} > Trier Par Prix  </a></li> </i>    </th>
 
                     <th>Date Debut </th>
                     <th>Date Fin <i class="fa fa-sort"></i></th>

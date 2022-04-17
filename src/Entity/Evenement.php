@@ -25,12 +25,13 @@ class Evenement
     /**
      * @ORM\Column(type="string", length=50)
      *
-     *     @Assert\NotBlank(message="Le Nom de category ne doit pas étre Null S'il vous plait ressayer ")
+     *     @Assert\NotBlank(message="Le Nom ne doit pas étre Null S'il vous plait ressayer ")
      */
     private $Nom;
 
     /**
      * @ORM\Column(type="string", length=50)
+     *    @Assert\NotBlank(message="Le Nom ne doit pas étre Null S'il vous plait ressayer ")
      */
     private $Type;
 
@@ -70,7 +71,7 @@ class Evenement
     /**
      * @ORM\Column(type="integer")
      *   * @Assert\Range(
-     *      min = 10,
+     *      min = 5,
      *      max = 100,
      *      minMessage = "Le nombre de particant doit étre supérieur à {{ min }} Person !!",
      *      maxMessage = "Le nombre de particant doit étre  iférieur à {{ max }} Person !!"
@@ -100,6 +101,7 @@ class Evenement
 
     /**
      * @ORM\ManyToOne(targetEntity=CategoryEvent::class, inversedBy="evenements")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $Category;
 
@@ -125,19 +127,24 @@ class Evenement
         return $this->Nom;
     }
 
+
+    public function setNom(?string $Nom): self
+    { $this->Nom = $Nom; return $this; }
+
+/*
     public function setNom(string $Nom): self
     {
         $this->Nom = $Nom;
 
         return $this;
-    }
+    }*/
 
     public function getType(): ?string
     {
         return $this->Type;
     }
 
-    public function setType(string $Type): self
+    public function setType(?string $Type): self
     {
         $this->Type = $Type;
 
@@ -173,7 +180,7 @@ class Evenement
         return $this->Prix;
     }
 
-    public function setPrix(float $Prix): self
+    public function setPrix( ?float $Prix): self
     {
         $this->Prix = $Prix;
 
@@ -185,7 +192,7 @@ class Evenement
         return $this->Nombre_Participants;
     }
 
-    public function setNombreParticipants(int $Nombre_Participants): self
+    public function setNombreParticipants( ? int $Nombre_Participants): self
     {
         $this->Nombre_Participants = $Nombre_Participants;
 
@@ -239,7 +246,7 @@ class Evenement
         return $this->Description;
     }
 
-    public function setDescription(string $Description): self
+    public function setDescription(? string $Description): self
     {
         $this->Description = $Description;
 
@@ -263,7 +270,7 @@ class Evenement
         return $this->Img;
     }
 
-    public function setImg(string $Img): self
+    public function setImg(? string $Img): self
     {
         $this->Img = $Img;
 

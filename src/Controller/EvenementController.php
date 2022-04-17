@@ -43,6 +43,16 @@ class EvenementController extends AbstractController
     }
 
 
+    /**
+     * @Route("/Trie", name="TriPrice", methods={"GET"})
+     */
+    public function Trie(EvenementRepository $evenementRepository): Response
+    {
+        return $this->render('evenement/index.html.twig', [
+            'evenements' => $evenementRepository->findAll(),
+            'evenements' => $evenementRepository->OrderByPrice(),
+        ]);
+    }
 
 
 
@@ -53,8 +63,12 @@ class EvenementController extends AbstractController
      */
     public function userGui(EvenementRepository $evenementRepository): Response
     {
+        $evenement=new Evenement();
+        $evenement=$evenementRepository->findAll();
+        $evenement =$evenementRepository->OrderByPrice();
+
         return $this->render('evenement/UserEvent.html.twig', [
-            'evenements' => $evenementRepository->findAll(),
+            'evenements' =>  $evenement,
         ]);
     }
 
@@ -157,4 +171,36 @@ class EvenementController extends AbstractController
 
         return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+
+     * @Route("/Test" ,name="Test", methods={"GET"}))
+     */
+
+function OrderByPriceSQL(EvenementRepository $repository){
+        $evenement =$repository->OrderByPrice();
+   return $this->render('evenement/UserEvent.html.twig', [
+            'evenements' =>  $evenement,
+        ]);
+}
+
+
+    /**
+
+     * @Route("evenement/Recherche", name="recherche")
+     */
+
+    function Recherche(EvenementRepository $repository, Request $request){
+        $Nom=$request->get('search');
+        $evenement =$repository->recherche($Nom);
+        return $this ->render("evenement/index.html.twig",
+            ['evenements' =>  $evenement]);
+
+
+    }
+
+
+
+
+
 }
