@@ -46,5 +46,9 @@
     <a href="{{ path('app_reservation_new') }}">
         <button type="submit" class="rounded-button mt-0">Create new</button>
     </a>
+    <a href="{{ path('resuser', {'id': app.user.getId}) }}">
+        <button type="submit" class="rounded-button-delete mt-0">Mes Réservations</button>
+    </a>
+
     {#    <a href="{{ path('app_reservation_new') }}">Create new</a> #}
 {% endblock %}

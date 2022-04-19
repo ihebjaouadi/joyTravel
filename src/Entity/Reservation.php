@@ -195,11 +195,11 @@ class Reservation
         $chambres = $this->getIDChambre()->getValues();
 //        $values = $this->getIDChambre()->get('1');
 //        $chambres = $this->getIDChambre()->toArray();
-        dump($chambres);
+//        dump($chambres);
 //        dump($values);
         $names = "";
         foreach ($chambres as $value){
-            dump($value);
+//            dump($value);
             $names.=" ".$value->getIDHotel()->getNom()." CH:".$value->getId();
         }
         return $names;

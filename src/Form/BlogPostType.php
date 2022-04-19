@@ -6,6 +6,7 @@ use App\Entity\BlogPost;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +18,9 @@ class BlogPostType extends AbstractType
         $builder
             ->add('titre')
             ->add('description')
-            ->add('body')
+            ->add('body', TextareaType::class, [
+                'attr' => ['rows' => 5],
+            ])
 //            ->add('dateCreation')
 //            ->add('user',EntityType::class,[
 //                'class'=>User::class,

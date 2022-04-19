@@ -36,6 +36,7 @@ class ReservationType extends AbstractType
                 ]
             ])
             ->add('ID_chambre', EntityType::class,[
+//                'required'   => true,
                 'class'=>Chambre::class,
                 'choice_label'=>'type','multiple'=>'true','expanded'=>'false'
             ])

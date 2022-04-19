@@ -11,6 +11,14 @@
                 <th>Id</th>
                 <td>{{ blog_commentaire.id }}</td>
             </tr>
+                <th>Post</th>
+            <td>{{ blog_commentaire.getPost.getTitre }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ blog_commentaire.body }}</td>
+            </tr>
+
         </tbody>
     </table>
 

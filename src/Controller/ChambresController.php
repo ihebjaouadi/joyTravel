@@ -20,6 +20,10 @@ class ChambresController extends AbstractController
      */
     public function index(ChambreRepository $chambreRepository): Response
     {
+        $chs = $chambreRepository->chambresDispo();
+//        $chambres = $chambreRepository->estDisponible(date_create('2022-04-20'), date_create('2022-04-25'));
+//        dump($chambres);
+        dump($chambreRepository->findAll());
         return $this->render('chambres/index.html.twig', [
             'chambres' => $chambreRepository->findAll(),
         ]);
@@ -42,6 +46,17 @@ class ChambresController extends AbstractController
         return $this->render('chambres/new.html.twig', [
             'chambre' => $chambre,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/dispo", name="app_chambres_dispo")
+     */
+    public function ListChDispo(ChambreRepository $chambreRepository) : Response
+    {
+        $chambres = $chambreRepository->chambresDispo();
+        return $this->render('chambres/index.html.twig', [
+            'chambres' => $chambres,
         ]);
     }
 
@@ -85,4 +100,15 @@ class ChambresController extends AbstractController
 
         return $this->redirectToRoute('app_chambres_index', [], Response::HTTP_SEE_OTHER);
     }
+    /**
+     * @Route("/{id}/dispo", name="chDispo")
+     */
+    public function estDisponible(ChambreRepository $chambreRepository, int $id)
+    {
+        $chambres = $chambreRepository->estDisponible(date_create('2022-04-10'), date_create('2022-04-15'),$id);
+        dump($chambres);
+        return $this->render('chambres/show.html.twig');
+    }
+
+
 }

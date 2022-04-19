@@ -1389,7 +1389,7 @@ ul {
 .navbar-top ul li a {
   margin: 0;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(0, 0, 0, 0.9);
 }
 .navbar-top ul li p img,
 .navbar-top ul li a img {
