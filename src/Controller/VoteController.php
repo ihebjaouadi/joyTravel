@@ -18,6 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class VoteController extends AbstractController
 {
+
+
     /**
      * @Route("/", name="app_vote_index", methods={"GET"})
      */
@@ -43,6 +45,28 @@ class VoteController extends AbstractController
         dump($voteRepository->findAll());
         return $this->render('vote/index1.html.twig', [
             'votes' => $voteRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/stats", name="app_vote_stats")
+     */
+    public function statistiques(VoteRepository $voteRepository)
+    {
+        $vote = $voteRepository->getVoteCount();
+        $vvote = [];
+        $vvvote = [];
+        dump($vote);
+
+        foreach ($vote as $votes) {
+            $vvote[] = $votes[1];
+            $vvvote[] = $votes["vote"];
+        }
+
+        return $this->render('vote/stats.html.twig', [
+            'vvote' => json_encode($vvote),
+            'vvvote' => json_encode($vvvote)
+
         ]);
     }
 
@@ -75,6 +99,7 @@ class VoteController extends AbstractController
             'vote' => $vote,
         ]);
     }
+
 
     /**
      * @Route("/{id}/edit", name="app_vote_edit", methods={"GET", "POST"})
@@ -130,4 +155,6 @@ class VoteController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+
 }
