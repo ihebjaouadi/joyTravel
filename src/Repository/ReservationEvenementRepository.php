@@ -45,6 +45,21 @@ class ReservationEvenementRepository extends ServiceEntityRepository
         }
     }
 
+/*
+    public function DeleteReservation($idd){
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('Delete from  App\Entity\ReservationEvenement RE where RE.ID_evenement = :i')
+           ->setParameter('i','$idd');
+        return $query->getResult();
+
+
+    }*/
+
+
+
+
+
+
     // /**
     //  * @return ReservationEvenement[] Returns an array of ReservationEvenement objects
     //  */
