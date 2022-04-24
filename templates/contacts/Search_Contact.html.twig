@@ -1,29 +1,26 @@
 {% extends 'baseBackOffice.html.twig' %}
-
-{% block title %}Contact index{% endblock %}
-
 {% block body %}
-
     <div class="card card-info">
         <div class="card-header">
-            <h1 class="card-title">Reclamation</h1>
-            <a href="{{ path('PDF_contact') }}" class="btn btn-danger float-right"
+            <h1 class="card-title" align="center">Liste des Reclamations</h1>
 
-            >Export PDF</a>
-            <a href="{{ path('SearchContact') }}" class="btn  float-right"
-
-            ><i class="fas fa-search"></i></a>
-            <a href="{{ path('orderByHotel') }}" class="btn btn-warning float-right"
-
-            >Trier</a>
 
         </div>
+        <div class="card-tools">
 
+            {{ form(Search_Contact, {'attr': {'class':'float-right','novalidate':'novalidate'}} ) }}
+            <br>
+            <br>
+            <br>
+
+
+            <div class="input-group input-group-sm" style="width: 150px;">
+
+            </div>
+        </div>
     </div>
 
-
-
-    <table class="table">
+    <table class="table" border="1" align="center">
         <thead>
         <tr>
             <th>Id</th>
@@ -32,6 +29,7 @@
             <th>User</th>
             <th>Hotel</th>
             <th>actions</th>
+
         </tr>
         </thead>
         <tbody>
@@ -39,8 +37,7 @@
             <tr>
                 <td>{{ contact.id }}</td>
                 <td>{{ contact.body }}</td>
-                <td>
-                    {% if(contact.statue == 0) %}
+                <td>  {% if(contact.statue == 0) %}
                         Non traité
                     {% elseif(contact.statue==1) %}
                         traité
@@ -84,8 +81,15 @@
             <tr>
                 <td colspan="4">no records found</td>
             </tr>
+
+
+            </tr>
+
+
         {% endfor %}
         </tbody>
-    </table>
 
+    </table>
 {% endblock %}
+
+

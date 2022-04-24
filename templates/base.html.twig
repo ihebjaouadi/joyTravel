@@ -298,6 +298,22 @@
     <script src="{{ asset('assets/js/vendor.js') }}"></script>
     <!-- main js  -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script>
+        function notify_delete_Contact() {
+            var notification = new Notification('Reclamation', {
+                body: "Reclamation supprimée !!",
+            });
+
+            setTimeout(notification.close.bind(notification), 6000);
+        }
+
+
+        function closeDiv() {
+            document.getElementById("notif").style.display = " none";
+        }
+
+        window.setTimeout(closeDiv, 6000);
+    </script>
 {% endblock %}
 </body>
 </html>
