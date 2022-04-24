@@ -8,82 +8,18 @@
 
 
 
-
 {% block body %}
-    {#
-    <h1>Evenement index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                {# <th>Id</th> #}   {#
-                <th>Nom</th>
-                <th>Type</th>
-                <th>Date_debut</th>
-                <th>Date_fin</th>
-                <th>Prix</th>
-                <th>Nombre_Participants</th>
-               {# <th>Description</th>#}{#
-                <th>image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for evenement in evenements %}
-            <tr>
-               {#<td>{{ evenement.id }}</td> #} {#
-                <td>{{ evenement.Nom }}</td>
-                <td>{{ evenement.Type }}</td>
-                <td>{{ evenement.DateDebut ? evenement.DateDebut|date('Y-m-d') : '' }}</td>
-                <td>{{ evenement.DateFin ? evenement.DateFin|date('Y-m-d') : '' }}</td>
-                <td>{{ evenement.Prix }}</td>
-                <td>{{ evenement.NombreParticipants }}</td>
-                {#  <td>{{ evenement.Description }}</td>#} {#
-                <td> <img width="100" height="100" src="{{ asset('uploads/images/'~ evenement.Img) }}" alt="img"></td>
-                <td>
-
-                    <button  style="
-
-        background-color:#0a0a23;
-        color: #fff;
-        border:none;
-        border-radius:10px;
-        padding:15px;
-        min-height:30px;
-        min-width: 120px;"><a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">show</a></button>
-
-                    <button  style="
-
-        background-color:#0a0a23;
-        color: #fff;
-        border:none;
-        border-radius:10px;
-        padding:15px;
-        min-height:30px;
-        min-width: 120px;"><a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a></button>
-                    </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>   #}
-    <button  style="
-
-        background-color:#0a0a23;
-        color: #fff;
-        border:none;
-        border-radius:10px;
-        padding:15px;
-        min-height:30px;
-        min-width: 120px;"><a href="{{path('app_evenement_new') }}">show</a></button>
-    <a href="{{ path('app_evenement_new') }}">Create new</a>
 
 
 
-<!DOCTYPE html>
+
+
+
+
+
+
+
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -106,7 +42,7 @@
             margin: 30px 0;
         }
         .table-wrapper {
-            min-width: 1100px;
+            min-width: 1400px;
             background: #fff;
             padding: 20px;
             box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -212,6 +148,12 @@
             margin-top: 6px;
             font-size: 95%;
         }
+
+
+        th {background-color:silver;
+            font-weight: bold;
+            font-size: 100%;
+        }
     </style>
     <script>
         $(document).ready(function(){
@@ -220,13 +162,28 @@
     </script>
 </head>
 <body>
-<form method="post" action="{{ path('recherche') }}">
+
+{# <form method="post" action="{{ path('recherche') }}">
     <label  >Rechercher</label>
     <input type="text" name="search"><input type="submit" value="Recherche">
-</form>
+</form> #}
 
 
-<div class="container-xl">
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">php bin/console make:controller
+        {{ message }}
+    </div>
+{% endfor %}
+
+<br>
+<a href="{{ path('TriPriceASC') }}"> <button type="button" class="btn-success" > Trie ASC  </button></a>
+
+<a href="{{ path('TriPriceDESC') }}"><button type="button" class="btn-success" > Trie DESC  </button></a>
+
+
+
+
+<div class="container-xxl">
     <div class="table-responsive">
         <div class="table-wrapper">
             <div class="table-title">
@@ -235,10 +192,11 @@
                     <div class="col-sm-4">
                         <div class="search-box">
                             <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" class="form-control"  <form method="post" action="{{ path('recherche') }}">
-                                <label  >Rechercher</label>
-                                <input type="text" name="search"><input type="submit" value="Recherche">
-                            </form>    placeholder="Search&hellip;">
+
+                            <form method="post" action="{{ path('recherche') }}">
+
+                                <input type="text" name="search">
+                            </form>
 
 
 
@@ -246,8 +204,11 @@
                     </div>
                 </div>
             </div>
-
-
+            <a href="{{ path('app_evenement_new') }}">
+            <i class="fa fa-plus fa-4x" aria-hidden="true" title="New Event" style="color:#1f76b0"></i>  &nbsp;
+            </a>
+            <a href="{{ path('app_category_event_index') }}">
+                <i class="fas fa-list-alt fa-4x" title="Category Evenet"></i> </a>
 
             <table class="table table-striped table-hover table-bordered">
                 <thead>
@@ -256,12 +217,16 @@
                     <th>Affiche</th>
                     <th>Category</th>
 
-                    <th>prix <i class="fa fa-sort">  <li><a href={{ path('TriPrice') }} > Trier Par Prix  </a></li> </i>    </th>
+                  {#   <th>prix <i class="fa fa-sort">  <li><a href={{ path('TriPriceASC') }} > Trier Par Prix  </a></li> </i>    </th>#}
 
-                    <th>Date Debut </th>
+                    <th>prix   <div ><a href="{{ path('TriPriceASC') }}" ><i class="fa fa-sort-asc "  style="font-size:36px;color:red" > </i></a> <a href="{{ path('TriPriceDESC') }}" ><i class="fa fa-sort-desc" style="font-size:36px;color:red"> </i></a> </div></th>
+
+
+
+                    <th >Date Debut </th>
                     <th>Date Fin <i class="fa fa-sort"></i></th>
                     <th>Nombre de participants <i class="fa fa-sort"></i></th>
-                    <th>Action </th>
+                    <th>Action          </th>
 
                 </tr>
                 </thead>
@@ -281,14 +246,14 @@
                     <td>{{ evenement.DateDebut ? evenement.DateDebut|date('Y-m-d') : '' }}</td>
                     <td>{{ evenement.DateFin ? evenement.DateFin|date('Y-m-d') : '' }}</td>
 
-                    <td>{{ evenement.NombreParticipants }}</td>
+                    <td style="width:10%">{{ evenement.NombreParticipants }}</td>
                     {#  <td>{{ evenement.Description }}</td>#}
                     {# <td> <img width="100" height="100" src="{{ asset('uploads/images/'~ evenement.Img) }}" alt="img"></td> #}
 
-                <td>
-                    <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                    <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                    <a href="{{ path('app_evenement_delete',{'id': evenement.id}) }}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                <td style="width:15%">
+                    <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}" class="edit" title="Edit" data-toggle="tooltip"><i class="   material-icons " style=" font-size:35px;" >&#xE254;</i></a>
+                    <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}" class="view" title="View" data-toggle="tooltip"><i class="material-icons " style=" font-size:35px;">&#xE417;</i></a>
+                    <a href="{{ path('app_evenement_delete',{'id': evenement.id}) }}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"style=" font-size:35px;">&#xE872;</i></a>
 
                 </td>
 
@@ -298,6 +263,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <a class="btn btn-success" href="{{ path('app_pdf') }}">Create pdf</a>
             <div class="clearfix">
                 <div class="hint-text">Il ya  <b>{{ Cont }}</b> evenement en totale  <b></b> entries</div>
                 <ul class="pagination">
@@ -310,6 +276,11 @@
         </div>
     </div>
 </div>
+
+
+
+
+
 </body>
 </html>
 

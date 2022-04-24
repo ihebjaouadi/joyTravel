@@ -3,8 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\ReservationEvenement;
+use App\Entity\User;
 use App\Form\EvenementType;
 use App\Repository\EvenementRepository;
+use App\Repository\ReservationEvenementRepository;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,13 +22,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\File;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-/*use Symfony\Component\HttpFoundation\File\Exception\FileException;*/
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-/*use Symfony\Component\String\Slugger\SluggerInterface;*/
 
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -32,31 +38,30 @@ use Symfony\Component\String\Slugger\SluggerInterface;
  */
 class EvenementController extends AbstractController
 {
+    private $entityManager;
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+
+    //Desplay for user
     /**
      * @Route("/", name="app_evenement_index", methods={"GET"})
      */
-    public function index(EvenementRepository $evenementRepository): Response
+    public function index(EvenementRepository $evenementRepository, SessionInterface $session): Response
     {
+
+
         return $this->render('evenement/index.html.twig', [
+            'evenements' => $evenementRepository->findAll(),
+            'evenements' => $evenementRepository->MiseAjourDeDataBase(),
             'evenements' => $evenementRepository->findAll(),
         ]);
     }
 
 
-    /**
-     * @Route("/Trie", name="TriPrice", methods={"GET"})
-     */
-    public function Trie(EvenementRepository $evenementRepository): Response
-    {
-        return $this->render('evenement/index.html.twig', [
-            'evenements' => $evenementRepository->findAll(),
-            'evenements' => $evenementRepository->OrderByPrice(),
-        ]);
-    }
-
-
-
-//Affichage de le client
+//Desplay for user
 
     /**
      * @Route("/userGui", name="userGui", methods={"GET"})
@@ -65,24 +70,29 @@ class EvenementController extends AbstractController
     {
         $evenement=new Evenement();
         $evenement=$evenementRepository->findAll();
-        $evenement =$evenementRepository->OrderByPrice();
+
 
         return $this->render('evenement/UserEvent.html.twig', [
             'evenements' =>  $evenement,
         ]);
     }
+    /**
+     * @Route("/userGui/{id}", name="user_show", methods={"GET"})
+     */
+    public function Usershow(Evenement $evenement): Response
+    {
+        return $this->render('evenement/showUser.html.twig', [
+            'evenement' => $evenement,
+        ]);
+    }
 
 
-
-
-
-
+//Create An Event
     /**
      * @Route("/new", name="app_evenement_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EvenementRepository $repository, EntityManagerInterface $em): Response
     {
-
         $evenement = new Evenement();
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
@@ -90,20 +100,18 @@ class EvenementController extends AbstractController
             //$file = $evenement->getImg();
             $file = $form->get('Img')->getData();
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-
             $em = $this->getDoctrine()->getManager();
             $evenement->setImg($fileName);
-
             $file->move(
                 $this->getParameter('images_directory'),
                 $fileName
             );
         $evenement->setImg($fileName);
-
             $em->persist($evenement);
             $em->flush();
             $repository->add($evenement);
 
+            $this->addFlash('success', 'Evenement ajouter avec succes !');
             return $this->redirectToRoute('app_evenement_index');
         }
         return $this->render('evenement/new.html.twig', array(
@@ -112,17 +120,9 @@ class EvenementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{id}", name="app_evenement_show", methods={"GET"})
-     */
-    public function show(Evenement $evenement): Response
-    {
-        return $this->render('evenement/show.html.twig', [
-            'evenement' => $evenement,
-        ]);
-    }
 
 
+//update an event
     /**
      * @Route("/{id}/edit", name="app_evenement_edit", methods={"GET", "POST"})
      */
@@ -132,23 +132,16 @@ class EvenementController extends AbstractController
         $evenement=$evenementRepository->find($id);
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('Img')->getData();
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-
             $em = $this->getDoctrine()->getManager();
             $evenement->setImg($fileName);
-
             $file->move(
                 $this->getParameter('images_directory'),
                 $fileName
             );
             $evenement->setImg($fileName);
-
-
-
-
             $em=$this->getDoctrine()->getManager();
            $em->flush();
             return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
@@ -159,7 +152,7 @@ class EvenementController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
+    //delete
     /**
      * @Route("/{id}", name="app_evenement_delete", methods={"POST"})
      */
@@ -168,7 +161,6 @@ class EvenementController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->request->get('_token'))) {
             $evenementRepository->remove($evenement);
         }
-
         return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
     }
 
@@ -184,21 +176,175 @@ function OrderByPriceSQL(EvenementRepository $repository){
         ]);
 }
 
+    /**
+     * @Route("/Reserver/{id}", name="app_ress", methods={"GET"})
+     */
+    public function ReserverEvenement(Evenement $evenement,$id,EvenementRepository $repository, SessionInterface $session): Response
+    {
+        $user =new User();
+        $reservationEvenement = new ReservationEvenement();
+        $em=$this->getDoctrine()->getManager();
+        $ev = $this->entityManager->getRepository(Evenement::class)->findOneByid($id);
+        $reservationEvenement->setIDEvenement( $ev );
+        $reservationEvenement->setIDUser($this->getUser());
+        $evenement=$repository->DecriseNbrParticipants($id);
+        $em= $this->getDoctrine()->getManager();
+        $em->persist($reservationEvenement);
+        $em->flush();
+        $this->addFlash('success', 'Event Add it succusfuly! Knowledge is power!');
+       // $some = $this->get('Add_cart_event')->SessionEvent($id, $session);
+        return $this->redirectToRoute('userGui');
+    }
 
+    /**
+     * @Route("/DeleteR/{id}" , name="DeleteR", methods={"GET"})
+     */
+    public function DeleteR(Evenement $evenement,$id,EvenementRepository $repository , ReservationEvenementRepository $repositoryRE): Response
+    {
+
+        $ev =new Evenement();
+        $reservationEvenement = new ReservationEvenement();
+        $ev = $this->entityManager->getRepository(Evenement::class)->findOneByid($id);
+
+
+        $reservationEvenement->setIDEvenement( $ev );
+
+        $idd=$reservationEvenement->getIDEvenement()->getId();
+        $reservationEvenement->getIDEvenement()->getId();
+//dd( $reservationEvenement->getIDEvenement()->getId());
+        $em=$this->getDoctrine()->getManager();
+//$reservationEvenement=$repositoryRE->DeleteReservation($idd);
+           //$repositoryRE->DeleteReservation(30);
+       // $em = $this->getEntityManager();
+
+         //  $em->flush();
+      /*  $this->addFlash('success', 'Article Created! Knowledge is power!');
+        return $this->redirectToRoute('app_evenement_index');*/
+
+        $em = $this->getDoctrine()->getManager();
+
+        $RAW_QUERY = 'Delete from  reservation_evenement where id_evenement_id = ?';
+
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement ->bindValue(1, $idd);
+        $statement->execute();
+        $resultSet =  $statement->executeQuery();
+        //$result = $statement->fetchAll();
+        return $this->redirectToRoute('app_evenement_index');
+
+    }
     /**
 
      * @Route("evenement/Recherche", name="recherche")
      */
 
-    function Recherche(EvenementRepository $repository, Request $request){
-        $Nom=$request->get('search');
-        $evenement =$repository->recherche($Nom);
+    function RechercheAdmin(EvenementRepository $repository, Request $request){
+        $value=$request->get('search');
+        $evenement=$repository->findEventByValue($value);
         return $this ->render("evenement/index.html.twig",
             ['evenements' =>  $evenement]);
-
-
     }
 
+
+    /**
+
+     * @Route("evenement/Re", name="rechercheUser")
+     */
+
+    function RechercheUser(EvenementRepository $repository, Request $request){
+        $value=$request->get('searchUser');
+        $evenement =$repository->findPlanBySujet($value);
+        return $this ->render("evenement/UserEvent.html.twig",
+            ['evenements' =>  $evenement]);
+    }
+
+
+    /**
+     * @Route("userGui/TrieA", name="TrieUser", methods={"GET"})
+     */
+    public function TrieUser(EvenementRepository $evenementRepository): Response
+    {
+        return $this->render('evenement/UserEvent.html.twig', [
+            'evenements' => $evenementRepository->findAll(),
+            'evenements' => $evenementRepository->OrderByPriceASC(),
+        ]);
+    }
+    /**
+     * @Route("userGui/TrieD", name="TriPriceDESCUser", methods={"GET"})
+     */
+    public function TrieDESCUser(EvenementRepository $evenementRepository): Response
+    {
+        return $this->render('evenement/UserEvent.html.twig', [
+            'evenements' => $evenementRepository->findAll(),
+            'evenements' => $evenementRepository->OrderByPriceDESC(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/Trie", name="TriPriceASC", methods={"GET"})
+     */
+    public function Trie(EvenementRepository $evenementRepository): Response
+    {
+        return $this->render('evenement/index.html.twig', [
+            'evenements' => $evenementRepository->findAll(),
+            'evenements' => $evenementRepository->OrderByPriceASC(),
+        ]);
+    }
+    /**
+     * @Route("/TrieDESC", name="TriPriceDESC", methods={"GET"})
+     */
+    public function TrieDESC(EvenementRepository $evenementRepository): Response
+    {
+        return $this->render('evenement/index.html.twig', [
+            'evenements' => $evenementRepository->findAll(),
+            'evenements' => $evenementRepository->OrderByPriceDESC(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/{id}", name="app_evenement_show", methods={"GET"})
+     */
+    public function show(Evenement $evenement): Response
+    {
+        return $this->render('evenement/show.html.twig', [
+            'evenement' => $evenement,
+        ]);
+    }
+
+
+
+    /**
+     * @param EvenementRepository $evenementRepository
+     * @return Response
+     * @Route("/pdf/pdf/pdf", name="app_pdf"  , methods={"GET"})
+     */
+    public function PDF(EvenementRepository $evenementRepository)
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+       // $pdfOptions->setTempDir('images_directory');
+        //$pdfOptions->set('isRemoteEnabled', true);
+        // $pdfOptions->set('images_directory', __DIR__);
+        $pdfOptions->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($pdfOptions);
+        $evenements= $evenementRepository->findAll();
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('evenement/pdf.html.twig', [
+            'evenements' => $evenements,
+        ]);
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+        // Render the HTML as PDF
+        $dompdf->render();
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+    }
 
 
 

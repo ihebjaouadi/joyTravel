@@ -1,9 +1,9 @@
 
-{% extends 'baseBackOffice.html.twig' %}
+{% extends 'base.html.twig' %}
 {%  block body %}
 
-<br>
-{#
+    <br>
+    {#
 
     {{ app.user.id}}
     <br>
@@ -36,7 +36,7 @@
 
             <a href=" {{ path('app_ress', {'id': evenement.id}) }}"> <button type="button" class="btn-success" > Reserver Cette </button></a><br>
 {#<a href="{{ path('app_reservation_evenement_new') }}"> <button type="button" class="btn-success" > Reserver Cette evenement   </button></a> #}
-{#
+    {#
     </div>
     <hr>
     <h3>Nos meilleures ventes</h3>
@@ -54,7 +54,7 @@
     </div><!-- /.row -->
 
 
-#}
+    #}
 
     <div class="row">
         <div class="col-md-7">
@@ -69,8 +69,35 @@
                 {{ evenement.Description }}
             </p>
 
+            <button onclick="yourlink()">dfsqqqqffdfdfdfde</button>
+
+            <script>
+
+                function yourlink() {
+
+                    var locs = [" {{ path('app_ress', {'id': evenement.id}) }}",
+                        " {{ path('Add_cart_event', {'id': evenement.id}) }}"]
+
+                    for (let i = 0; i < locs.length; i++) {
+                        window.open(locs[i])}
+                };
+
+            </script>
+
+<br>
+            <br>
+
+
+
+
             <a href=" {{ path('app_ress', {'id': evenement.id}) }}"class="btn btn-primary">Reserver Cette Evenemenet</a>
             <a href=" {{ path('Add_cart_event', {'id': evenement.id}) }}"class="btn btn-primary">  Panier Evenemenet</a>
+
+
+
+
+
+
 
 
             <a href=" {{ path('DeleteR', {'id': evenement.id }) }}"class="btn btn-primary">  Delete the motherfucker</a>
@@ -84,7 +111,7 @@
     <h3>Nos meilleures ventes</h3>
     <p>Découvrez les articles les plus vendus.</p>
     <div class="row">
-       {#  {% for product in products %}
+        {#  {% for product in products %}
             <div class="col-md-3">
                 {% include 'product/single_product.html.twig' %}
             </div>

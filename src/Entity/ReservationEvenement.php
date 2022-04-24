@@ -25,9 +25,11 @@ class ReservationEvenement
 
     /**
      * @ORM\ManyToOne(targetEntity=Evenement::class, inversedBy="reservationEvenements")
-     * @ORM\JoinColumn(nullable=false)
+     *    @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $ID_evenement;
+    //  * @ORM\JoinColumn(nullable=false)
+
 
     public function getId(): ?int
     {

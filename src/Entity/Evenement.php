@@ -31,13 +31,8 @@ class Evenement
 
     /**
      * @ORM\Column(type="string", length=50)
-     *    @Assert\NotBlank(message="Le Nom ne doit pas étre Null S'il vous plait ressayer ")
      */
     private $Type;
-
-
-
-
 
 
     /**
@@ -88,6 +83,7 @@ class Evenement
 
     /**
      * @ORM\OneToMany(targetEntity=ReservationEvenement::class, mappedBy="ID_evenement", orphanRemoval=true)
+     *   @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $reservationEvenements;
 
@@ -281,7 +277,9 @@ class Evenement
 
 
     public function __toString() {
-        return $this->getNom();
+     return $this->getNom();
+/*return
+    strval($this->getId());*/
     }
 
 }
