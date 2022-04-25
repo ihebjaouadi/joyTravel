@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Bootstrap Simple Data Table</title>
+    <title>Liste Comple des Evenements </title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -94,46 +94,29 @@
             float: right;
             margin: 0 0 5px;
         }
-        .pagination li a {
-            border: none;
-            font-size: 95%;
-            width: 30px;
-            height: 30px;
-            color: #999;
-            margin: 0 2px;
-            line-height: 30px;
-            border-radius: 30px !important;
-            text-align: center;
-            padding: 0;
-        }
-        .pagination li a:hover {
-            color: #666;
-        }
-        .pagination li.active a {
-            background: #03A9F4;
-        }
-        .pagination li.active a:hover {
-            background: #0397d6;
-        }
-        .pagination li.disabled i {
-            color: #ccc;
-        }
-        .pagination li i {
-            font-size: 16px;
-            padding-top: 6px
-        }
+
         .hint-text {
             float: left;
             margin-top: 6px;
             font-size: 95%;
         }
-        th {background-color:silver;
+        th {background-color: #811414;
             font-weight: bold;
             font-size: 100%;
+        }
+
+        th, td {
+            border-style: dotted;
         }
     </style>
 
 </head>
+
+
+
+
+{{ "now"|date("m/d/Y") }}
+<br>
 <table class="table table-striped table-hover table-bordered">
     <thead>
     <tr>
@@ -184,30 +167,6 @@
 </div>
 <br>
 <br>
-
-{% for evenement in evenements %}
-
-{% if evenement.Img|length > 0 %}
-    <img src="{{ asset('uploads/images/'~ evenement.Img) }}" width="250" height="150">
-    <?php dd(evenement.Img); >
-{% else %}
-    <img src="{{ asset('uploads/'~ "Not found.jpg" ) }}" width="250" height="150">
-{% endif %}
-
-
-{% endfor %}
-
-{% for evenement in evenements %}
-
-
-        <img src="{{ evenement.Img }}" width="250" height="150">
-
-
-
-{% endfor %}
-
-
-
 
 
 

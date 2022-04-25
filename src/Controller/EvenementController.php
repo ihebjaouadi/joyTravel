@@ -40,12 +40,18 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class EvenementController extends AbstractController
 {
 
+    private $entityManager;
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+
     /**
      * @Route("/", name="app_evenement_index", methods={"GET"})
      */
     public function index(EvenementRepository $evenementRepository, SessionInterface $session): Response
     {
-
         return $this->render('evenement/index.html.twig', [
             'evenements' => $evenementRepository->findAll(),
             'evenements' => $evenementRepository->MiseAjourDeDataBase(),
@@ -69,7 +75,6 @@ class EvenementController extends AbstractController
     }
 
 
-
     /**
      * @Route("/userGui/calender", name="userGuiCallendre", methods={"GET"})
      */
@@ -77,7 +82,7 @@ class EvenementController extends AbstractController
     {
         $evenement=new Evenement();
         $events=$evenementRepository->findAll();
-//dd($evenement);
+
         $rdvs = [];
         foreach ($events as $event ) {
             $rdvs[] = [
@@ -85,19 +90,15 @@ class EvenementController extends AbstractController
                 'Nom' => $event->getNom(),
                 'Date_debut' => $event->getDateDebut()->format('y-m-d'),
                 'Date_fin' => $event->getDateFin()->format('y-m-d'),
-
-
             ];
         }
-//dd($event);
+
         // dd($rdvs);
         $data= json_encode($rdvs);
         // dd($data);
-        return $this->render('evenement/calendar.html.twig',  compact('data'),
-        );
+        return $this->render('evenement/calendar.html.twig',  ['data' => $data,
+        ]);
     }
-
-
 
 
     /**
@@ -244,6 +245,8 @@ function OrderByPriceSQL(EvenementRepository $repository){
         return $this->redirectToRoute('app_evenement_index');
 
     }
+
+
     /**
 
      * @Route("evenement/Recherche", name="recherche")

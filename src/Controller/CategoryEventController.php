@@ -70,6 +70,7 @@ class CategoryEventController extends AbstractController
             return $this->redirectToRoute('app_category_event_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $this->addFlash('success', 'Category Modifier avec succes !');
         return $this->render('category_event/edit.html.twig', [
             'category_event' => $categoryEvent,
             'form' => $form->createView(),
@@ -84,7 +85,7 @@ class CategoryEventController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$categoryEvent->getId(), $request->request->get('_token'))) {
             $categoryEventRepository->remove($categoryEvent);
         }
-
+        $this->addFlash('success', 'Category Supprimer!');
         return $this->redirectToRoute('app_category_event_index', [], Response::HTTP_SEE_OTHER);
     }
 }
