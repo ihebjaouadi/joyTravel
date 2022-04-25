@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Form\EvenementType;
 use App\Repository\EvenementRepository;
 use App\Repository\ReservationEvenementRepository;
+use CalendarBundle\CalendarBundle;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -38,20 +39,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
  */
 class EvenementController extends AbstractController
 {
-    private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
 
-
-    //Desplay for user
     /**
      * @Route("/", name="app_evenement_index", methods={"GET"})
      */
     public function index(EvenementRepository $evenementRepository, SessionInterface $session): Response
     {
-
 
         return $this->render('evenement/index.html.twig', [
             'evenements' => $evenementRepository->findAll(),
@@ -70,12 +63,43 @@ class EvenementController extends AbstractController
     {
         $evenement=new Evenement();
         $evenement=$evenementRepository->findAll();
-
-
         return $this->render('evenement/UserEvent.html.twig', [
             'evenements' =>  $evenement,
         ]);
     }
+
+
+
+    /**
+     * @Route("/userGui/calender", name="userGuiCallendre", methods={"GET"})
+     */
+    public function userGuiCallender(EvenementRepository $evenementRepository): Response
+    {
+        $evenement=new Evenement();
+        $events=$evenementRepository->findAll();
+//dd($evenement);
+        $rdvs = [];
+        foreach ($events as $event ) {
+            $rdvs[] = [
+                'id' => $event->getId(),
+                'Nom' => $event->getNom(),
+                'Date_debut' => $event->getDateDebut()->format('y-m-d'),
+                'Date_fin' => $event->getDateFin()->format('y-m-d'),
+
+
+            ];
+        }
+//dd($event);
+        // dd($rdvs);
+        $data= json_encode($rdvs);
+        // dd($data);
+        return $this->render('evenement/calendar.html.twig',  compact('data'),
+        );
+    }
+
+
+
+
     /**
      * @Route("/userGui/{id}", name="user_show", methods={"GET"})
      */
@@ -110,8 +134,7 @@ class EvenementController extends AbstractController
             $em->persist($evenement);
             $em->flush();
             $repository->add($evenement);
-
-            $this->addFlash('success', 'Evenement ajouter avec succes !');
+            $this->addFlash('success', 'Evenement ajouter avec succes!');
             return $this->redirectToRoute('app_evenement_index');
         }
         return $this->render('evenement/new.html.twig', array(
@@ -140,6 +163,7 @@ class EvenementController extends AbstractController
             $file->move(
                 $this->getParameter('images_directory'),
                 $fileName
+
             );
             $evenement->setImg($fileName);
             $em=$this->getDoctrine()->getManager();
@@ -199,37 +223,24 @@ function OrderByPriceSQL(EvenementRepository $repository){
     /**
      * @Route("/DeleteR/{id}" , name="DeleteR", methods={"GET"})
      */
-    public function DeleteR(Evenement $evenement,$id,EvenementRepository $repository , ReservationEvenementRepository $repositoryRE): Response
+    public function DeleteReservation(Evenement $evenement,$id,EvenementRepository $repository , ReservationEvenementRepository $repositoryRE): Response
     {
 
         $ev =new Evenement();
         $reservationEvenement = new ReservationEvenement();
         $ev = $this->entityManager->getRepository(Evenement::class)->findOneByid($id);
-
-
         $reservationEvenement->setIDEvenement( $ev );
-
         $idd=$reservationEvenement->getIDEvenement()->getId();
         $reservationEvenement->getIDEvenement()->getId();
-//dd( $reservationEvenement->getIDEvenement()->getId());
         $em=$this->getDoctrine()->getManager();
-//$reservationEvenement=$repositoryRE->DeleteReservation($idd);
-           //$repositoryRE->DeleteReservation(30);
-       // $em = $this->getEntityManager();
-
-         //  $em->flush();
-      /*  $this->addFlash('success', 'Article Created! Knowledge is power!');
-        return $this->redirectToRoute('app_evenement_index');*/
-
         $em = $this->getDoctrine()->getManager();
-
         $RAW_QUERY = 'Delete from  reservation_evenement where id_evenement_id = ?';
-
         $statement = $em->getConnection()->prepare($RAW_QUERY);
         $statement ->bindValue(1, $idd);
         $statement->execute();
         $resultSet =  $statement->executeQuery();
         //$result = $statement->fetchAll();
+        $this->addFlash('success', 'Reservation supprimer !');
         return $this->redirectToRoute('app_evenement_index');
 
     }
@@ -245,9 +256,7 @@ function OrderByPriceSQL(EvenementRepository $repository){
             ['evenements' =>  $evenement]);
     }
 
-
     /**
-
      * @Route("evenement/Re", name="rechercheUser")
      */
 
@@ -279,7 +288,6 @@ function OrderByPriceSQL(EvenementRepository $repository){
             'evenements' => $evenementRepository->OrderByPriceDESC(),
         ]);
     }
-
 
     /**
      * @Route("/Trie", name="TriPriceASC", methods={"GET"})

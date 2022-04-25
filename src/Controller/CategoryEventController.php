@@ -36,6 +36,8 @@ class CategoryEventController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryEventRepository->add($categoryEvent);
+            $this->addFlash('success', 'Category ajouter avec succes !');
+
             return $this->redirectToRoute('app_category_event_index', [], Response::HTTP_SEE_OTHER);
         }
 
