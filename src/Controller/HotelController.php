@@ -21,12 +21,54 @@ use Symfony\Component\Routing\Annotation\Route;
 class HotelController extends AbstractController
 {
     /**
-     * @Route("/", name="app_hotel_index", methods={"GET"})
+     * @Route("/", name="app_hotel_index", methods={"GET","POST"})
      */
-    public function index(HotelRepository $hotelRepository): Response
+    public function index(HotelRepository $hotelRepository, Request $request): Response
     {
+        $hotels = $hotelRepository->findAll();
+
+        $hotelName = $hotelCity = $typeChambre = $tri = '';
+        if ($request->getMethod() == "POST") {
+            $hotelName = $request->request->get('name');
+            $hotelCity = $request->request->get('city');
+            $typeChambre = $request->request->get('typeChambre');
+            $tri = $request->request->get('tri');
+
+            $hotels = $hotelRepository->getHotelByFilters($hotelName, $hotelCity, $typeChambre, $tri);
+
+        }
         return $this->render('hotel/index.html.twig', [
+            'hotels' => $hotels,
+            'hotelNames' => $hotelRepository->getHotelNames(),
+            'hotelCities' => $hotelRepository->getCities(),
+            'hotelCity' => $hotelCity,
+            'hotelName' => $hotelName,
+            'typeChambre' => $typeChambre,
+            'tri' => $tri,
+
+
+        ]);
+    }
+
+    /**
+     * @Route("/adminHotel", name="app_hotel_admin_index", methods={"GET"})
+     */
+    public function indexAdmin(HotelRepository $hotelRepository): Response
+    {
+        return $this->render('hotel/index_admin.html.twig', [
             'hotels' => $hotelRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/statistique", name="app_hotel_statistique", methods={"GET"})
+     */
+    public function statistique(HotelRepository $hotelRepository): Response
+    {
+        $stat = $hotelRepository->getStat();
+
+        return $this->render('hotel/stat.html.twig', [
+            'stats' => $hotelRepository->getStat(),
         ]);
     }
 
@@ -53,7 +95,10 @@ class HotelController extends AbstractController
                 $hotel->addImage($imageEntity);
             }
             $hotelRepository->add($hotel);
-            return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);
+
+            $this->addFlash('success', 'Ajout efféctué avec succes');
+
+            return $this->redirectToRoute('app_hotel_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('hotel/new.html.twig', [
@@ -96,7 +141,8 @@ class HotelController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $hotelRepository->add($hotel);
-            return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Modification efféctué avec succes');
+            return $this->redirectToRoute('app_hotel_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('hotel/edit.html.twig', [
@@ -106,14 +152,18 @@ class HotelController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_hotel_delete", methods={"POST"})
+     * @Route("/delete/{id}", name="app_hotel_delete", methods={"POST"})
      */
     public function delete(Request $request, Hotel $hotel, HotelRepository $hotelRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $hotel->getId(), $request->request->get('_token'))) {
             $hotelRepository->remove($hotel);
+            $this->addFlash('success', 'Hotel supprimé avec succes');
+
         }
 
-        return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_hotel_admin_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

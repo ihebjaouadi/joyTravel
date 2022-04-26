@@ -6,13 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends AbstractController
+class PostlikeController extends AbstractController
 {
     /**
-     * @Route("/admin", name="app_default")
+     * @Route("/postlike", name="app_postlike")
      */
     public function index(): Response
     {
-        return $this->render('baseBackOffice.html.twig');
+        return $this->render('postlike/index.html.twig', [
+            'controller_name' => 'PostlikeController',
+        ]);
     }
 }

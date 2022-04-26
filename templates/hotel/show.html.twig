@@ -5,84 +5,86 @@
 {% block body %}
 
 
-    <!-- breadcrumb start -->
-    <div class="breadcrumb-area bg-overlay-2" style="background-image:url('assets/img/other/7.png')">
-        <div class="container">
-            <div class="breadcrumb-inner">
-                <div class="section-title text-center">
-                    <h2 class="page-title">Property Details</h2>
-                    <ul class="page-list">
-                        <li><a href="index.html">Home</a></li>
-                        <li>Property Details</li>
-                    </ul>
-                </div>
+<!-- breadcrumb start -->
+<div class="breadcrumb-area bg-overlay-2" style="background-image:url('assets/img/other/7.png')">
+    <div class="container">
+        <div class="breadcrumb-inner">
+            <div class="section-title text-center">
+                <h2 class="page-title">Property Details</h2>
+                <ul class="page-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li>Property Details</li>
+                </ul>
             </div>
         </div>
     </div>
-    <!-- breadcrumb end -->
+</div>
+<!-- breadcrumb end -->
 
-    <!-- property-page- Start -->
-    <div class="property-page-area pd-top-120 pd-bottom-90">
-        <div class="container">
-            <div class="property-details-top pd-bottom-70">
-                <div class="property-details-top-inner">
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <h3>{{ hotel.nom }}</h3>
-                            <p><img src="{{ asset('assets/img/icon/location2.png') }}" alt="img">
-                                {{ hotel.adresse }}, {{ hotel.complementAdresse }}, {{ hotel.codePostal }}
-                                , {{ hotel.ville }}, {{ hotel.pays }}</p>
-
-                        </div>
-
+<!-- property-page- Start -->
+<div class="property-page-area pd-top-120 pd-bottom-90">
+    <div class="container">
+        <div class="property-details-top pd-bottom-70">
+            <div class="property-details-top-inner">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <h3>{{ hotel.nom }}</h3>
+                        <p><img src="{{ asset('assets/img/icon/location2.png') }}" alt="img">
+                            {{ hotel.adresse }}, {{ hotel.complementAdresse }}, {{ hotel.codePostal }}
+                            , {{ hotel.ville }}, {{ hotel.pays }}</p>
 
                     </div>
-                </div>
-                <div class="product-thumbnail-wrapper">
-                    <div class="single-thumbnail-slider">
-                        {% for image in hotel.images %}
-                            <div class="slider-item">
-                                <img style="height: 600px" src="{{ asset('uploads/images/'~ image.chemain) }}"
-                                     alt="img">
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="product-thumbnail-carousel">
-                        {% for image in hotel.images %}
-                            <div class="single-thumbnail-item">
-                                <img style="height: 100px" src="{{ asset('uploads/images/'~ image.chemain) }}"
-                                     alt="img">
-                            </div>
-                        {% endfor %}
 
-                    </div>
+
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="single-property-details-inner">
-                        <h4></h4>
-                        <p>{{ hotel.description }}</p>
-                        <div class="single-property-grid">
-                            <h4>Equipement</h4>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <ul>
-                                        {% for equipement in hotel.equipements %}
-                                            <li>{{ equipement.nom }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
+            <div class="product-thumbnail-wrapper">
+                <div class="single-thumbnail-slider">
+                    {% for image in hotel.images %}
+                        <div class="slider-item">
+                            <img style="height: 600px" src="{{ asset('uploads/images/'~ image.chemain) }}"
+                                 alt="img">
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="product-thumbnail-carousel">
+                    {% for image in hotel.images %}
+                        <div class="single-thumbnail-item">
+                            <img style="height: 100px" src="{{ asset('uploads/images/'~ image.chemain) }}"
+                                 alt="img">
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="single-property-details-inner">
+                    <h4></h4>
+                    <p>{{ hotel.description }}</p>
+                    <div class="single-property-grid">
+                        <h4>Equipement</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <ul>
+                                    {% for equipement in hotel.equipements %}
+                                        <li>{{ equipement.nom }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="single-property-grid">
+                        <h4> Localisation</h4>
+                        <div class="property-map">
+                            <div id="map" style="height: 400px;width: 100%">
+
                             </div>
                         </div>
 
-
-                        <div class="single-property-grid">
-                            <h4> Localisation</h4>
-                            <div class="property-map">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d198059.49240377638!2d-84.68048827338674!3d39.13652252762691!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1615660592820!5m2!1sen!2sbd"></iframe>
-                            </div>
-                        </div>
 
                         <div class="single-property-grid">
                             <h4>Video</h4>
@@ -97,11 +99,11 @@
                             <h4>Commentaires</h4>
                             {% if commentaires | length >  0 %}
                                 {% for commentaire in commentaires %}
-                                    <div class="media single-review-inner">
+                                    <div  class="media single-review-inner" style="height: 128px;width: 562px;box-shadow: 12px 12px 12px 12px rgba(236, 240, 241);, 1">
                                         <div class="media-left">
                                             <div class="thumb">
-                                                <img src="https://cdn4.vectorstock.com/i/thumb-large/93/48/customer-support-or-service-agent-vector-26289348.jpg"
-                                                     alt="img">
+                                                <img  style="height: 125px;" src="https://cdn4.vectorstock.com/i/thumb-large/93/48/customer-support-or-service-agent-vector-26289348.jpg"
+                                                      alt="img">
                                             </div>
                                         </div>
 
@@ -117,13 +119,46 @@
                                                 </div>
                                                 <div class="col-md-5 text-md-right">
                                                     {% if (app.user and app.user.email == commentaire.iDUser.email) or is_granted('ROLE_ADMIN') %}
+
                                                         <a data-toggle="modal" style="color: red"
                                                            data-target="#remove-{{ commentaire.id }}" class="right red"
                                                            href="#"><i class="fa fa-trash red"></i></a>
 
 
+
+                                                        {# <a href="{{ path('commentaire_like',{'id': commentaire.id}) }}" #}
+                                                        {# class="btn btn-link js-like"> #}
+                                                        <div id="test"></div>
+
+                                                        <div class="likeCommentAjax-{{ commentaire.id }}">
+                                                            <form id="likeComment-{{ commentaire.id }}"
+                                                                  action="{{ path('commentaire_like',{'id':commentaire.id}) }}"
+                                                                  method="post">
+                                                                <button type="button"
+                                                                        onclick="like('{{ commentaire.id }}')"
+                                                                        class="btn btn-link js-like">
+
+                                                                    {% if app.user and commentaire.IsLikedByUser(app.user,commentaire) %}
+                                                                        <i class="fas fa-thumbs-down"></i>
+                                                                        <span class="js-likes">{{ commentaire.likes | length }}</span>
+                                                                        <span class="js-label">je n'aime plus</span>
+                                                                    {% else %}
+                                                                        <i class="fas fa-thumbs-up"></i>
+                                                                        <span class="js-likes">{{ commentaire.likes | length }}</span>
+                                                                        <span class="js-label">j'aime</span>
+                                                                    {% endif %}
+
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                        {# </a> #}
+
+
+
+
                                                         <!-- Modal -->
-                                                        <form action="{{ path('app_commentaire_delete',{'id':commentaire.id}) }}" method="post">
+                                                        <form action="{{ path('app_commentaire_delete',{'id':commentaire.id}) }}"
+                                                              method="post">
                                                             <div id="remove-{{ commentaire.id }}" class="modal"
                                                                  role="dialog">
                                                                 <div class="modal-dialog">
@@ -155,7 +190,7 @@
 
 
                                                     {% endif %}
-                                                    <div class="ratting-inner">
+                                                    <div class="ratting-inner" style="    font-size: 12px;">
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -207,9 +242,10 @@
                                 </div>
                                 <div class="col-12 mb-4">
                                     {% if app.user %}
-                                    <button class="btn btn-base radius-btn" type="submit">Submit Now</button>
+                                        <button class="btn btn-base radius-btn" type="submit">Submit Now</button>
                                     {% else %}
-                                        <a  href="{{ path('app_login') }}" class="btn btn-base radius-btn" >Connectez-vous pour commenter</a>
+                                        <a href="{{ path('app_login') }}" class="btn btn-base radius-btn">Connectez-vous
+                                            pour commenter</a>
 
                                     {% endif %}
                                 </div>
@@ -238,4 +274,74 @@
     </div>
     <!-- property-page- end -->
 
-{% endblock %}
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1M9BTlyXVlMZ4Hqojzm16RJu1Bm9VEIc&callback=initMap&libraries=places&v=weekly"
+                async
+        ></script>
+        <script>
+            //https://developers.google.com/maps/documentation/javascript/examples/place-search
+            let map;
+            let service;
+            let infowindow;
+
+            function initMap() {
+                const tunis = new google.maps.LatLng(46.232192999999995, 2.209666999999996);
+
+                infowindow = new google.maps.InfoWindow();
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: tunis,
+                    zoom: 12,
+                });
+
+                const request = {
+                    query: "{{ hotel.getFulladress() }}",
+                    fields: ["name", "geometry"], // name : adresse w geo : lat w long ...
+                };
+
+                service = new google.maps.places.PlacesService(map);
+                service.findPlaceFromQuery(request, (results, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+                        for (let i = 0; i < results.length; i++) {
+                            createMarker(results[i]);
+                        }
+
+                        map.setCenter(results[0].geometry.location);
+                    }
+                });
+                const transitLayer = new google.maps.TransitLayer();
+
+                transitLayer.setMap(map);
+            }
+
+            function createMarker(place) {
+                if (!place.geometry || !place.geometry.location) return;
+
+                const marker = new google.maps.Marker({
+                    map,
+                    position: place.geometry.location,
+                    zoom: 18,  // google map develloper
+                });
+
+                google.maps.event.addListener(marker, "click", () => {
+                    infowindow.setContent(place.name || "");
+                    infowindow.open(map);
+                });
+            }
+        </script>
+        <script>
+            function like(idcomment) {
+                var action = $('#likeComment-'+idcomment).attr('action');
+                $.ajax({
+                    url: action,
+                    type: 'POST',
+                    success: function (html) {
+                        $('.likeCommentAjax-'+idcomment).html(html);
+                    }
+                })
+            }
+        </script>
+    {% endblock %}

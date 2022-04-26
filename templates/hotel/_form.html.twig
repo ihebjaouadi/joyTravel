@@ -2,7 +2,7 @@
 
 <div class="card card-info">
     <div class="card-header">
-        <h3 class="card-title">Ajouter Hotel</h3>
+        <h3 class="card-title">Hotel</h3>
     </div>
     <div class="card-body">
 
@@ -18,27 +18,27 @@
         </div>
         <div class="form-group">
             <label class="col-sm-2 col-form-label">Adresse</label>
-            {{ form_widget(form.Adresse,{'attr':{'class': 'form-control','placeholder':'Adresse'}}) }}
+            {{ form_widget(form.Adresse,{'attr':{'class': 'address form-control','placeholder':'Adresse'}}) }}
             {{ form_errors(form.Adresse,{'attr':{'class': 'text-danger'}}) }}
         </div>
         <div class="form-group">
             <label class="col-sm-2 col-form-label">Complement adresse</label>
-            {{ form_widget(form.Complement_adresse,{'attr':{'class': 'form-control','placeholder':'Complement adresse'}}) }}
+            {{ form_widget(form.Complement_adresse,{'attr':{'class': 'address2 form-control','placeholder':'Complement adresse'}}) }}
             {{ form_errors(form.Complement_adresse,{'attr':{'class': 'text-danger'}}) }}
         </div>
         <div class="form-group">
             <label class="col-sm-2 col-form-label">Code postal</label>
-            {{ form_widget(form.Code_postal,{'attr':{'class': 'form-control','placeholder':'Code postal'}}) }}
+            {{ form_widget(form.Code_postal,{'attr':{'class': 'postcode form-control','placeholder':'Code postal'}}) }}
             {{ form_errors(form.Code_postal,{'attr':{'class': 'text-danger'}}) }}
         </div>
         <div class="form-group">
             <label class="col-sm-2 col-form-label">Ville</label>
-            {{ form_widget(form.Ville,{'attr':{'class': 'form-control','placeholder':'Ville'}}) }}
+            {{ form_widget(form.Ville,{'attr':{'class': 'locality form-control','placeholder':'Ville'}}) }}
             {{ form_errors(form.Ville,{'attr':{'class': 'text-danger'}}) }}
         </div>
         <div class="form-group">
             <label class="col-sm-2 col-form-label">Pays</label>
-            {{ form_widget(form.Pays,{'attr':{'class': 'form-control'}}) }}
+            {{ form_widget(form.Pays,{'attr':{'class': 'country form-control'}}) }}
             {{ form_errors(form.Pays,{'attr':{'class': 'text-danger'}}) }}
 
         </div>

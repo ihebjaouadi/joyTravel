@@ -29,9 +29,13 @@
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <li class="nav-item">
-                <a href="{{ path('app_hotel_new') }}" class="nav-link
+                <a href="{{ path('app_hotel_admin_index') }}" class="nav-link
                     {% if _route == 'app_hotel_new' or
-                    _route == 'app_hotel_index' %}active
+                    _route == 'app_hotel_index' or
+                    _route == 'app_hotel_edit' or
+                    _route == 'app_hotel_admin_index' %}
+
+                    active
                     {% endif %}
                     ">
                     <i class="nav-icon fas fa-th"></i>
@@ -44,7 +48,6 @@
         </ul>
     </nav>
     <!-- /.sidebar-menu -->
-
 
 
     <!-- Sidebar Menu -->
@@ -71,7 +74,6 @@
     <!-- /.sidebar-menu -->
 
 
-
     <!-- Sidebar Menu -->
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -80,22 +82,31 @@
                  with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ path('app_equipement_index') }}" class="nav-link
-                    {% if _route == 'app_equipement_new' or
+                        {% if _route == 'app_equipement_new' or
                     _route == 'app_equipement_index' %}active
-                    {% endif %}
-                    ">
+                        {% endif %}
+                        ">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                         Equipement
                     </p>
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a href="{{ path('app_hotel_statistique') }}" class="nav-link
+                    {% if _route == 'app_hotel_statistique' %}
+                    active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Statistiques
+                    </p>
+                </a>
+            </li>
         </ul>
     </nav>
     <!-- /.sidebar-menu -->
-
-
 
 
 </div>

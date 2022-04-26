@@ -45,7 +45,7 @@ class Chambre
     private $ID_hotel;
 
     /**
-     * @ORM\OneToMany(targetEntity=Equipement::class, mappedBy="ID_chambre", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Equipement::class, mappedBy="ID_chambre",cascade={"persist", "remove"})
      */
     private $equipements;
 

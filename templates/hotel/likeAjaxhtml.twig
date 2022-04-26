@@ -1,0 +1,19 @@
+<form id="likeComment-{{ commentaire.id }}"
+      action="{{ path('commentaire_like',{'id':commentaire.id}) }}"
+      method="post">
+    <button type="button"
+            onclick="like('{{ commentaire.id }}')"
+            class="btn btn-link js-like">
+
+        {% if app.user and commentaire.IsLikedByUser(app.user,commentaire) %}
+            <i class="fas fa-thumbs-down"></i>
+            <span class="js-likes">{{ commentaire.likes | length }}</span>
+            <span class="js-label">je n'aime plus</span>
+        {% else %}
+            <i class="fas fa-thumbs-up"></i>
+            <span class="js-likes">{{ commentaire.likes | length }}</span>
+            <span class="js-label">j'aime</span>
+        {% endif %}
+
+    </button>
+</form>

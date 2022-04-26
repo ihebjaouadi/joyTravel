@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/vendor.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+
     {% endblock %}
 </head>
 <body>
@@ -46,7 +47,7 @@
                 <div class="col-lg-8 text-lg-left text-center">
                     <ul>
                         <li><p><img src="{{ asset('assets/img/icon/location.png') }}" alt="img"> 420 Love Sreet 133/2
-                                flx City</p></li>
+                                flx City </p></li>
                         <li><p><img src="{{ asset('assets/img/icon/phone.png') }}" alt="img"> +(06) 017 800 628</p></li>
                         <li><p><img src="{{ asset('assets/img/icon/envelope.png') }}" alt="img">
                                 {% if app.user %}{{ app.user.email }}{% endif %}
@@ -561,6 +562,7 @@
     <script src="{{ asset('assets/js/vendor.js') }}"></script>
     <!-- main js  -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="https://kit.fontawesome.com/e615be9371.js" crossorigin="anonymous"></script>
 {% endblock %}
 </body>
 </html>

@@ -14,41 +14,117 @@
                             <h2>The Best Way To Find Your Perfect Hotel</h2>
                         </div>
                     </div>
-                    <div class="col-lg-8 mt-4">
-                        <form class="main-search-inner">
+                    <div class="col-lg-12">
+                        <form action="{{ path('app_hotel_index') }}" method="post" class="main-search-inner">
+                            <div class="row custom-gutters-10">
+                                <div class="col-lg-11 col-md-11">
+                                    <div class="single-check-inner bg-white text-center">
+                                        <label>
+                                            <input
+                                                    {% if typeChambre  == "" %}
+                                                        checked
+                                                    {% endif %}
+                                                    name="typeChambre" value="" type="radio">
+                                            <span>Tout les types</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                    {% if typeChambre  == "Single" %}
+                                                        checked
+                                                    {% endif %}
+                                                    name="typeChambre" value="Single" type="radio">
+                                            <span>Single</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                    {% if typeChambre  == "Double" %}
+                                                        checked
+                                                    {% endif %}
+                                                    name="typeChambre" value="Double" type="radio">
+                                            <span>Double</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                    {% if typeChambre  == "Triple" %}
+                                                        checked
+                                                    {% endif %}
+                                                    name="typeChambre" value="Triple" type="radio">
+                                            <span>Triple</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                    {% if typeChambre  == "quadruple" %}
+                                                        checked
+                                                    {% endif %}
+                                                    name="typeChambre" value="quadruple" type="radio">
+                                            <span>quadruple</span>
+                                        </label>
+                                        <label>
+                                            <input
+                                                    {% if typeChambre  == "Suite" %}
+                                                        checked
+                                                    {% endif %}
+                                                    name="typeChambre" value="Suite" type="radio">
+                                            <span>Suite</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br>
                             <div class="row custom-gutters-10">
                                 <div class="col-md-3">
                                     <div class="single-select-inner">
-                                        <select>
-                                            <option>Location</option>
-                                            <option value="1">Location 1</option>
-                                            <option value="2">Location 2</option>
-                                            <option value="3">Location 3</option>
+                                        <select name="city">
+                                            <option value="">Ville</option>
+                                            {% for city in hotelCities %}
+                                                <option {% if hotelCity == city %}selected{% endif %}
+                                                        value="{{ city }}">{{ city }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="single-select-inner">
-                                        <select>
-                                            <option>Property</option>
-                                            <option value="1">Property 1</option>
-                                            <option value="2">Property 2</option>
-                                            <option value="3">Property 3</option>
+                                        <select name="name">
+                                            <option value="">Nom de l'hotel</option>
+
+                                            <{% for name in hotelNames %}
+                                            <option {% if hotelName == name %}selected{% endif %}
+                                                    value="{{ name }}">{{ name }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-3">
                                     <div class="single-select-inner">
-                                        <select>
-                                            <option>Price</option>
-                                            <option value="1">Price</option>
-                                            <option value="2">Price</option>
-                                            <option value="3">Price</option>
+                                        <select name="tri">
+                                            <option
+                                                    {% if tri == "" %}
+                                                        selected
+                                                    {% endif %}
+                                                    value="">Tout
+                                            </option>
+                                            <option
+                                                    {% if tri == "ASC" %}
+                                                        selected
+                                                    {% endif %}
+                                                    value="ASC">Étoiles par ordre croissant
+                                            </option>
+                                            <option
+                                                    {% if tri == "DESC" %}
+                                                        selected
+                                                    {% endif %}
+                                                    value="DESC">Étoiles par ordre décroissant
+                                            </option>
+
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <a class="btn btn-base w-100" href="#"><i class="fa fa-search mr-1"></i> Search</a>
+                                <div class="col-md-2">
+                                    <button class="btn btn-base w-100" type="submit"><i class="fa fa-search mr-1"></i>
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -120,11 +196,11 @@
                             </div>
                             <div class="product-wrap-details">
                                 <div class="media">
-{#                                    <div class="author">#}
-{#                                        <img src="{{ asset('assets/img/author/1.png') }}" alt="img">#}
-{#                                    </div>#}
+                                    {# <div class="author"> #}
+                                    {# <img src="{{ asset('assets/img/author/1.png') }}" alt="img"> #}
+                                    {# </div> #}
                                     <div class="media-body">
-{#                                        <h6><a href="#">Owner Name</a></h6>#}
+                                        {# <h6><a href="#">Owner Name</a></h6> #}
                                         <p><img src="{{ asset('assets/img/icon/location-alt.png') }}" alt="img">
                                             {{ hotel.adresse }},
                                             {% if  hotel.complementAdresse %}
@@ -148,6 +224,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        Aucun hotel correspant à votre recherche!
                     </div>
                 {% endfor %}
 

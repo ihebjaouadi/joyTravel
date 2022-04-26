@@ -1,9 +1,9 @@
 {% extends 'baseBackOffice.html.twig' %}
 
-{% block title %}Equipement index{% endblock %}
+{% block title %}Hotel{% endblock %}
 
 {% block body %}
-    <h1>Equipement index</h1>
+    <h1>Hotel list</h1>
     {% for message in app.flashes('success') %}
         <div class="row">
             <div class="col-md-12">
@@ -18,23 +18,24 @@
     {% endfor %}
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
-        {% for equipement in equipements %}
+        {% for hotel in hotels %}
             <tr>
-                <td>{{ equipement.id }}</td>
-                <td>{{ equipement.Nom }}</td>
+                <td>{{ hotel.id }}</td>
+                <td>{{ hotel.Nom }}</td>
                 <td>
-                    <form method="post" action="{{ path('app_equipement_delete', {'id': equipement.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ equipement.id) }}">
+                    <form method="post" action="{{ path('app_hotel_delete', {'id': hotel.id}) }}"
+                          onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ hotel.id) }}">
                         <button class="btn btn-danger pull-right">{{ button_label|default('Delete') }}</button>
                     </form>
-                    <a href="{{ path('app_equipement_edit', {'id': equipement.id}) }}">
+                    <a href="{{ path('app_hotel_edit', {'id': hotel.id}) }}">
                         <button class="btn btn-success pull-right">{{ button_label|default('Update') }}</button>
                     </a>
                 </td>
@@ -48,5 +49,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_equipement_new') }}"><button class="btn btn-success pull-right">{{ button_label|default('Create') }}</button></a>
+    <a href="{{ path('app_hotel_new') }}">
+        <button class="btn btn-success pull-right">{{ button_label|default('Create') }}</button>
+    </a>
 {% endblock %}

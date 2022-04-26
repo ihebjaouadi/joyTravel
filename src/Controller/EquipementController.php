@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 /**
  * @Route("/equipement")
@@ -36,6 +38,8 @@ class EquipementController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $equipementRepository->add($equipement);
+            $this->addFlash('success', 'Équippement Ajouté avec succes');
+
             return $this->redirectToRoute('app_equipement_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,6 +69,8 @@ class EquipementController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $equipementRepository->add($equipement);
+            $this->addFlash('success', 'Équippement modifier avec succes');
+
             return $this->redirectToRoute('app_equipement_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -81,6 +87,8 @@ class EquipementController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$equipement->getId(), $request->request->get('_token'))) {
             $equipementRepository->remove($equipement);
+            $this->addFlash('success', 'Équippement supprimé avec succes');
+
         }
 
         return $this->redirectToRoute('app_equipement_index', [], Response::HTTP_SEE_OTHER);

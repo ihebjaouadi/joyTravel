@@ -419,4 +419,9 @@ class Hotel
         $this->description = $description;
     }
 
+    public function getFulladress()
+    {
+        return $this->getAdresse() . ', ' . $this->getComplementAdresse() . ', ' . $this->getCodePostal() . ', ' . $this->getVille() . ', Tunisie';
+    }
+
 }
