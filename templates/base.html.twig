@@ -128,6 +128,12 @@
                             <li><a href="add-property.html">Add Property</a></li>
                         </ul>
                     </li>
+                    {%if app.user%}
+                    
+                            <li><a href="{{ path('app_List_chat') }}">join chat </a></li>
+                            
+                     
+                    {%else%}
                     <li class="menu-item-has-children current-menu-item">
                         <a href="#">Blog</a>
                         <ul class="sub-menu">
@@ -138,6 +144,7 @@
                             <li><a href="blog-details-left-sidebar.html">Details Left Sidebar</a></li>
                         </ul>
                     </li>
+                    {%endif%}
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>

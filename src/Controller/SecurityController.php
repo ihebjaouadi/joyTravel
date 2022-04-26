@@ -74,4 +74,27 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('app_UserList');
 
     }
+     /**
+     * @Route("/Permission_User/{id}", name="app_Permission_User")
+     */
+    public function load($id)
+{
+    $entityManager=$this->getDoctrine()->getManager();
+    $user=$entityManager->getRepository(User::class)->find($id);
+    $user->setRoles(array('ROLE_ADMIN'));
+    $entityManager->flush();
+    return $this->redirectToRoute('app_UserList');
+}
+     /**
+     * @Route("/Remove_Permission_User/{id}", name="app_Remove_Permission_User")
+     */
+    public function unload($id)
+{
+    $entityManager=$this->getDoctrine()->getManager();
+    $user=$entityManager->getRepository(User::class)->find($id);
+    $user->setRoles(array());
+    $entityManager->flush();
+    return $this->redirectToRoute('app_UserList');
+}
+
 }
