@@ -55,9 +55,21 @@ class BlogPost
      */
     private $blogCommentaires;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RapportBlogPost::class, mappedBy="post", orphanRemoval=true)
+     */
+    private $rapportBlogPosts;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="post", orphanRemoval=true)
+     */
+    private $postLikes;
+
     public function __construct()
     {
         $this->blogCommentaires = new ArrayCollection();
+        $this->rapportBlogPosts = new ArrayCollection();
+        $this->postLikes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,5 +165,73 @@ class BlogPost
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, RapportBlogPost>
+     */
+    public function getRapportBlogPosts(): Collection
+    {
+        return $this->rapportBlogPosts;
+    }
+
+    public function addRapportBlogPost(RapportBlogPost $rapportBlogPost): self
+    {
+        if (!$this->rapportBlogPosts->contains($rapportBlogPost)) {
+            $this->rapportBlogPosts[] = $rapportBlogPost;
+            $rapportBlogPost->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRapportBlogPost(RapportBlogPost $rapportBlogPost): self
+    {
+        if ($this->rapportBlogPosts->removeElement($rapportBlogPost)) {
+            // set the owning side to null (unless already changed)
+            if ($rapportBlogPost->getPost() === $this) {
+                $rapportBlogPost->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostLike>
+     */
+    public function getPostLikes(): Collection
+    {
+        return $this->postLikes;
+    }
+
+    public function addPostLike(PostLike $postLike): self
+    {
+        if (!$this->postLikes->contains($postLike)) {
+            $this->postLikes[] = $postLike;
+            $postLike->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostLike(PostLike $postLike): self
+    {
+        if ($this->postLikes->removeElement($postLike)) {
+            // set the owning side to null (unless already changed)
+            if ($postLike->getPost() === $this) {
+                $postLike->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isLikedByUser(User $user): bool
+    {
+        foreach ($this->postLikes as $like) {
+            if ($like->getUser() === $user) return true;
+        }
+        return false;
     }
 }

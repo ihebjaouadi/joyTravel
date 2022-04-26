@@ -1,5 +1,5 @@
-{#{% extends 'base.html.twig' %}#}
-{% extends 'baseBackOffice.html.twig' %}
+ {% extends 'base.html.twig' %}
+{#{% extends 'baseBackOffice.html.twig' %}#}
 
 {% block title %}Chambre index{% endblock %}
 
@@ -8,22 +8,25 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Type</th>
-                <th>Disponibilite</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Type</th>
+            <th>Prix Standard</th>
+            <th>actions</th>
+            <th>Panier</th>
+        </tr>
         </thead>
         <tbody>
         {% for chambre in chambres %}
             <tr>
                 <td>{{ chambre.id }}</td>
                 <td>{{ chambre.Type }}</td>
-                <td>{{ chambre.Disponibilite }}</td>
+                <td>{{ chambre.Prixnuite }}</td>
                 <td>
                     <a href="{{ path('app_chambres_show', {'id': chambre.id}) }}">show</a>
                     <a href="{{ path('app_chambres_edit', {'id': chambre.id}) }}">edit</a>
+                </td>
+                <td><a href="{{ path('addP', {'id': chambre.id}) }}">Ajouter</a>
                 </td>
             </tr>
         {% else %}

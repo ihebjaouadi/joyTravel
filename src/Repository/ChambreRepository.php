@@ -90,10 +90,10 @@ class ChambreRepository extends ServiceEntityRepository
             WHERE (rc.chambre_id=c.id AND :dateA  BETWEEN r.date_arrivee AND r.date_depart or :dateD BETWEEN r.date_arrivee AND r.date_depart
             ))=0";
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['dateA' => $dateArrivee->format('Y-m-d'), 'dateD'=>$dateDepart->format('Y-m-d')]);
+        $resultSet = $stmt->executeQuery(['dateA' => $dateArrivee->format('Y-m-d'), 'dateD' => $dateDepart->format('Y-m-d')]);
 
         // returns an array of arrays (i.e. a raw data set)
-        $chambres =  $resultSet->fetchAllAssociative();
+        $chambres = $resultSet->fetchAllAssociative();
 //        dump($chambres);
         return $chambres;
     }
@@ -109,11 +109,30 @@ class ChambreRepository extends ServiceEntityRepository
             ))=0";
         $rsm = new ResultSetMappingBuilder($em);
         $rsm->addRootEntityFromClassMetadata('App\Entity\Chambre', 'c');
-        $query = $em->createNativeQuery($sql,$rsm);
+        $query = $em->createNativeQuery($sql, $rsm);
         $query->setParameter(1, date_create('2022-04-20'));
         $query->setParameter(2, date_create('2022-04-25'));
         $chs = $query->getResult();
-        dump($chs);
+//        dump($chs);
+        return $chs;
+    }
+
+    public function chambresDispoParHotel(int $idHotel)
+    {
+        $em = $this->getEntityManager();
+        $sql = "SELECT * from chambre c WHERE c.id_hotel_id= ? and (
+            SELECT COUNT(*) from reservation r 
+            JOIN reservation_chambre rc on rc.reservation_id=r.id
+            JOIN chambre on rc.chambre_id=c.id
+            WHERE (rc.chambre_id=c.id AND ?  BETWEEN r.date_arrivee AND r.date_depart or ? BETWEEN r.date_arrivee AND r.date_depart
+            ))=0";
+        $rsm = new ResultSetMappingBuilder($em);
+        $rsm->addRootEntityFromClassMetadata('App\Entity\Chambre', 'c');
+        $query = $em->createNativeQuery($sql, $rsm);
+        $query->setParameter(1,$idHotel);
+        $query->setParameter(2, date_create('2022-04-15'));
+        $query->setParameter(3, date_create('2022-04-16'));
+        $chs = $query->getResult();
         return $chs;
     }
 }

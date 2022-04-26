@@ -5,37 +5,105 @@
 {% block body %}
     <h1>BlogPost index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Body</th>
-                <th>DateCreation</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for blog_post in blog_posts %}
-            <tr>
-                <td>{{ blog_post.id }}</td>
-                <td>{{ blog_post.titre }}</td>
-                <td>{{ blog_post.description }}</td>
-                <td>{{ blog_post.body }}</td>
-                <td>{{ blog_post.dateCreation ? blog_post.dateCreation|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}">show</a>
-                    <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Id</th>#}
+{#                <th>Titre</th>#}
+{#                <th>Description</th>#}
+{#                <th>Body</th>#}
+{#                <th>DateCreation</th>#}
+{#                <th>actions</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        {% for blog_post in blog_posts %}#}
+{#            <tr>#}
+{#                <td>{{ blog_post.id }}</td>#}
+{#                <td>{{ blog_post.titre }}</td>#}
+{#                <td>{{ blog_post.description }}</td>#}
+{#                <td>{{ blog_post.body }}</td>#}
+{#                <td>{{ blog_post.dateCreation ? blog_post.dateCreation|date('Y-m-d') : '' }}</td>#}
+{#                <td>#}
+{#                    <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}">show</a>#}
+{#                    <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}">edit</a>#}
+{#                </td>#}
+{#            </tr>#}
+{#        {% else %}#}
+{#            <tr>#}
+{#                <td colspan="6">no records found</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
 
     <a href="{{ path('app_blog_post_new') }}">Create new</a>
+<div class="service-area">
+    <div class="container">
+    {% for blog_post in blog_posts %}
+        {% if  loop.index0 is divisible by(3) %}
+            <div class="row justify-content-center">
+        {% endif %}
+        <div class="col-lg-4 col-md-10"  style="padding-top: 100px">
+            <div class="single-service-wrap">
+                <div class="thumb">
+                    <img src="{{ asset('assets/img/service/t.png') }}" alt="icon">
+                </div>
+                <div class="single-service-details">
+                    <h4><a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}">{{ blog_post.titre }}</a></h4>
+                    <p>{{ blog_post.description }}</p>
+                    <p>{{ blog_post.dateCreation ? blog_post.dateCreation|date('Y-m-d') : ''}}</p>
+                    <p>{{ blog_post.getBlogCommentaires.count}} Commentaires</p>
+                </div>
+            </div>
+        </div>
+
+        {% if  loop.index is divisible by(3) or loop.last %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+</div>
+
+
+
+{#    <div class="service-area" style="padding-top: 100px">#}
+{#        <div class="container">#}
+{#            <div class="row justify-content-center">#}
+{#                <div class="col-lg-4 col-md-10">#}
+{#                    <div class="single-service-wrap">#}
+{#                        <div class="thumb">#}
+{#                            <img src="{{ asset('assets/img/service/1.png') }}" alt="icon">#}
+{#                        </div>#}
+{#                        <div class="single-service-details">#}
+{#                            <h4><a href="property-details.html">Hotel Reservation</a></h4>#}
+{#                            <p>you find the best hotel price here .</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-lg-4 col-md-10">#}
+{#                    <div class="single-service-wrap">#}
+{#                        <div class="thumb">#}
+{#                            <img src="{{ asset('assets/img/service/2.png') }}" alt="icon">#}
+{#                        </div>#}
+{#                        <div class="single-service-details">#}
+{#                            <h4><a href="property-details.html">Daily Apartment</a></h4>#}
+{#                            <p>you find help 24 hour here .</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-lg-4 col-md-10">#}
+{#                    <div class="single-service-wrap mb-0">#}
+{#                        <div class="thumb">#}
+{#                            <img src="{{ asset('assets/img/service/3.png') }}" alt="icon">#}
+{#                        </div>#}
+{#                        <div class="single-service-details">#}
+{#                            <h4><a href="property-details.html">Deals</a></h4>#}
+{#                            <p>you find weekly deals here .</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}

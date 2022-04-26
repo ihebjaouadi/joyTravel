@@ -44,6 +44,15 @@ class BlogCommentairesRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    public function getNbrComments($id): ?int
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.post = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getScalarResult()
+            ;
+    }
 
     // /**
     //  * @return BlogCommentaires[] Returns an array of BlogCommentaires objects

@@ -44,7 +44,6 @@ class BlogPostRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
-
     // /**
     //  * @return BlogPost[] Returns an array of BlogPost objects
     //  */

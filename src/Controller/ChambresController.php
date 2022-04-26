@@ -8,6 +8,7 @@ use App\Repository\ChambreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -50,11 +51,74 @@ class ChambresController extends AbstractController
     }
 
     /**
+     * @Route("/addP/{id}",name="addP")
+     */
+    public function ajouterChambrePanier(Chambre $chambre, SessionInterface $session)
+    {
+        $id = $chambre->getId();
+        $panier = $session->get("panier", []);
+        $panier[$id] = 1;
+        $session->set("panier", $panier);
+        return $this->redirectToRoute('app_chambres_index');
+    }
+
+    /**
+     * @Route("/deleteP/{id}",name="deleteP")
+     */
+    public function supprimerChambrePanier(Chambre $chambre, SessionInterface $session)
+    {
+        $id = $chambre->getId();
+        $panier = $session->get("panier", []);
+        unset($panier[$id]);
+        $session->set("panier", $panier);
+        return $this->redirectToRoute('panier');
+    }
+
+    /**
+     * @Route("/deleteP",name="deleteAll")
+     */
+    public function viderPanier(SessionInterface $session)
+    {
+        $session->remove("panier");
+        return $this->redirectToRoute('panier');
+
+    }
+
+    /**
+     * @Route("/panier",name="panier")
+     */
+    public function panier(SessionInterface $session, ChambreRepository $chambreRepository)
+    {
+        $panier = $session->get("panier", []);
+        $dataPanier = [];
+        foreach ($panier as $id=> $quantite) {
+            $chambre = $chambreRepository->find($id);
+            $dataPanier[] = [
+                "chambre" => $chambre,
+                "quantite" => $quantite
+            ];
+        }
+        return $this->render('reservation/panier.html.twig', ['dataPanier' => $dataPanier]);
+    }
+
+    /**
      * @Route("/dispo", name="app_chambres_dispo")
      */
-    public function ListChDispo(ChambreRepository $chambreRepository) : Response
+    public function ListChDispo(ChambreRepository $chambreRepository): Response
     {
         $chambres = $chambreRepository->chambresDispo();
+        return $this->render('chambres/index.html.twig', [
+            'chambres' => $chambres,
+        ]);
+    }
+
+    /**
+     * @Route("/dispo/{id}", name="app_chambres_dispo")
+     */
+    public function ListChDispoParHotel(ChambreRepository $chambreRepository, int $id): Response
+    {
+        $chambres = $chambreRepository->chambresDispoParHotel($id);
+//        dd($chambres);
         return $this->render('chambres/index.html.twig', [
             'chambres' => $chambres,
         ]);
@@ -94,18 +158,19 @@ class ChambresController extends AbstractController
      */
     public function delete(Request $request, Chambre $chambre, ChambreRepository $chambreRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$chambre->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $chambre->getId(), $request->request->get('_token'))) {
             $chambreRepository->remove($chambre);
         }
 
         return $this->redirectToRoute('app_chambres_index', [], Response::HTTP_SEE_OTHER);
     }
+
     /**
      * @Route("/{id}/dispo", name="chDispo")
      */
     public function estDisponible(ChambreRepository $chambreRepository, int $id)
     {
-        $chambres = $chambreRepository->estDisponible(date_create('2022-04-10'), date_create('2022-04-15'),$id);
+        $chambres = $chambreRepository->estDisponible(date_create('2022-04-10'), date_create('2022-04-15'), $id);
         dump($chambres);
         return $this->render('chambres/show.html.twig');
     }

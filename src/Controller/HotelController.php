@@ -57,6 +57,14 @@ class HotelController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/dispo",name="hotels_dispo")
+     */
+    public function hotelsContenatnChambresDispo(HotelRepository $hotelRepository){
+        $hotels = $hotelRepository->hotelsContenatnChambresDispo();
+//        dd($hotels);
+        return $this->redirectToRoute('app_hotel_index');
+    }
 
     /**
      * @Route("/{id}", name="app_hotel_show", methods={"GET"})

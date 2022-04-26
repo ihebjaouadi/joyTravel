@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block Stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/css/reservation.css') }}">
+{% endblock %}
+{% block body %}
+<table class="table" colspan="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Hotel</th>
+{#        <th>Quantité</th>#}
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for element in dataPanier %}
+    <tr>
+        <td>{{ element.chambre.id }}</td>
+        <td>{{ element.chambre.Type }}</td>
+        <td>{{ element.chambre.getIDHotel.getNom }}</td>
+{#        <td>{{ element.quantite }}</td>#}
+{#        <td><a href="{{ path('addP', {'id': element.chambre.id}) }}">Ajouter</a></td>#}
+        <td><a href="{{ path('deleteP', {'id': element.chambre.id}) }}">Supprimer</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+    <a href="{{ path('app_chambres_index') }}">
+        <button type="submit" class="rounded-button mt-0">Retour</button>
+    </a>
+    <a href="{{ path('deleteAll') }}">
+        <button type="submit" class="rounded-button-delete mt-0">Vider Panier</button>
+    </a>
+{% endblock %}

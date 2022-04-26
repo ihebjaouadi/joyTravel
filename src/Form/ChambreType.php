@@ -15,7 +15,7 @@ class ChambreType extends AbstractType
     {
         $builder
             ->add('Type')
-            ->add('Disponibilite')
+            ->add('Prixnuite')
             ->add('ID_hotel', EntityType::class,[
                 'class'=>Hotel::class,
                 'choice_label'=>'Nom'

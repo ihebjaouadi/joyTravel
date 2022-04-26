@@ -4,14 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Repository\ChambreRepository;
 use App\Repository\ReservationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,9 +52,15 @@ class ReservationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 //            dump($reservation->getIDChambre());
 //            dd($reservation->getIDChambre());
+            $somme = $this->calculSomme($reservation, $form);
+//            dd($somme);
+            $nbrJours = intval(date_diff($reservation->getDateArrivee(),$reservation->getDateDepart())->format('%d'));
+            $sommeFinale = $somme * $nbrJours;
+//            dd($sommeFinale);
+            $reservation->setPrixTotal($somme*$nbrJours);
             $reservationRepository->add($reservation);
-//            $this->createPDFTicket($reservation);
-//            $this->sendEmail($mailer,$reservation);
+            $this->createPDFTicket($reservation);
+            $this->sendEmail($mailer,$reservation);
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
 
         }
@@ -61,38 +70,50 @@ class ReservationController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    public function calculSomme(Reservation $reservation, Form $form)
+    public function calculSomme(Reservation $reservation, FormInterface $form)
     {
         $total = 0;
         $chambres = $reservation->getIDChambre();
         foreach ($chambres as $c){
-            if(strcasecmp($c->getType(),"single")){
-                $total+=$c->getDisponibilite(); // change dispo to prix nuité and from int to float/double
-            }
-            elseif (strcasecmp($c->getType(),"double")){
-                $total+=$c->getDisponibilite()*1.2;
-            }
-            elseif (strcasecmp($c->getType(),"triple")){
-                $total+=$c->getDisponibilite()*1.5;
-            }
-            elseif (strcasecmp($c->getType(),"quadruple")){
-                $total+=$c->getDisponibilite()*1.7;
-            }
-            elseif (strcasecmp($c->getType(),"suite")){
-                $total+=$c->getDisponibilite()*2;
-            }
-            if(strcasecmp($form->get('ID_formule'),"Pension Complete")){
-                $total+=15;
-            }
-            elseif (strcasecmp($form->get('ID_formule'),"All Inclusive")){
-                $total+=30;
-            }
+            $total+=$c->getPrixnuite();
+//            if(strcasecmp($c->getType(),"single")){
+//                $total+=$c->getPrixnuite();
+//            }
+//            elseif (strcasecmp($c->getType(),"double")){
+//                $total+=$c->getPrixnuite()*1.2;
+//            }
+//            elseif (strcasecmp($c->getType(),"triple")){
+//                $total+=$c->getPrixnuite()*1.5;
+//            }
+//            elseif (strcasecmp($c->getType(),"quadruple")){
+//                $total+=$c->getPrixnuite()*1.7;
+//            }
+//            elseif (strcasecmp($c->getType(),"suite")){
+//                $total+=$c->getPrixnuite()*2;
+//            }
 
+
+            if(strcasecmp(strval($form->get('ID_formule')->getData()),"Pension Complete")==0){
+//                dd($form->get('ID_formule')->getData());
+                $total=$total+15;
+            }
+            elseif(strcasecmp(strval($form->get('ID_formule')->getData()),"All Inclusive")==0){
+//                dd($form->get('ID_formule')->getData());
+                $total=$total+30;
+            }
         }
         return $total;
-
-
     }
+    /**
+     * @Route("/pay")
+     */
+    public function pay(){
+        $amount = 6.58;
+        return $this->render('reservation/payement.html.twig', [
+            'amount' => $amount,
+        ]);
+    }
+
     /**
      * @Route("/email")
      */
@@ -130,6 +151,7 @@ class ReservationController extends AbstractController
         // Configure Dompdf according to your needs
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions->isRemoteEnabled();
 
         // Instantiate Dompdf with our options
         $dompdf = new Dompdf($pdfOptions);

@@ -1,38 +1,137 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}BlogPost{% endblock %}
 
 {% block body %}
-    <h1>BlogPost</h1>
+    <link rel="stylesheet"
+          href="{{ asset('assets/blogpost/fontawesome/css/all.min.css') }}"> <!-- https://fontawesome.com/ -->
+    <link href="{{ asset('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap') }}"
+          rel="stylesheet"> <!-- https://fonts.google.com/ -->
+    <link href="{{ asset('assets/blogpost/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/blogpost/css/templatemo-xtra-blog.css') }}" rel="stylesheet">
+    {#    <h1>BlogPost</h1> #}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ blog_post.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ blog_post.titre }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ blog_post.description }}</td>
-            </tr>
-            <tr>
-                <th>Body</th>
-                <td>{{ blog_post.body }}</td>
-            </tr>
-            <tr>
-                <th>DateCreation</th>
-                <td>{{ blog_post.dateCreation ? blog_post.dateCreation|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {#    <table class="table"> #}
+    {#        <tbody> #}
+    {#        <tr> #}
+    {#            <th>Id</th> #}
+    {#            <td>{{ blog_post.id }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>Titre</th> #}
+    {#            <td>{{ blog_post.titre }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>Description</th> #}
+    {#            <td>{{ blog_post.description }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>Body</th> #}
+    {#            <td>{{ blog_post.body }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>DateCreation</th> #}
+    {#            <td>{{ blog_post.dateCreation ? blog_post.dateCreation|date('Y-m-d') : '' }}</td> #}
+    {#        </tr> #}
+    {#        </tbody> #}
+    {#    </table> #}
 
+
+
+    <div class="col-lg-8 tm-post-col">
+        <div class="tm-post-full">
+            <div class="mb-4">
+                <h2 class="pt-2 tm-color-primary tm-post-title">{{ blog_post.titre }}</h2>
+                <p class="tm-mb-40">{{ blog_post.dateCreation ? blog_post.dateCreation|date('Y-m-d') : '' }} posted by
+                    {{ blog_post.getUser.getEmail }}</p>
+                <p>
+                    {{ blog_post.body }}
+                </p>
+                <a href="{{ path('like',{'id':blog_post.id}) }}" class="btn btn-link js-like">
+                    {% if app.user and blog_post.isLikedByUser(app.user) %}
+                        <i class="fas fa-thumbs-up"></i>
+                    {% else %}
+                        <i class="far fa-thumbs-up"></i>
+                    {% endif %}
+                    <span class="js-likes">{{ blog_post.postLikes | length }}</span>
+                    <span class="js-label">J'aime</span>
+                </a>
+            </div>
+
+            <!-- Comments -->
+            <div>
+                <h2 class="tm-color-primary tm-post-title">Comments</h2>
+                <hr class="tm-hr-primary tm-mb-45">
+                {% for c in commentaires %}
+                    <div class="tm-comment tm-mb-45">
+                        <figure class="tm-comment-figure">
+                            <img src="{{ asset('assets/img/user.png') }}" alt="User"
+                                 class="mb-2 rounded-circle img-thumbnail">
+                            <figcaption class="tm-color-primary text-center">{{ c.getUser.getEmail }}</figcaption>
+                        </figure>
+                        <div>
+                            <p>
+                                {{ c.body }}
+                            </p>
+                            {#                            <div class="d-flex justify-content-between"> #}
+                            {#                                <span class="tm-color-primary">June 14, 2020</span> #}
+                            {#                            </div> #}
+                        </div>
+                    </div>
+                {% endfor %}
+                {#                {{ include('blog_commentaires/_form.html.twig') }} #}
+                <form action="{{ path('app_blog_post_show',{'id':blog_post.id}) }}" class="mb-5 tm-comment-form"
+                      method="POST">
+                    <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
+                    <div class="mb-4">
+                        <textarea class="form-control" name="body" rows="6" cols="10"></textarea>
+                    </div>
+                    <div class="text-right">
+                        {% if app.user %}
+                            <button class="tm-btn tm-btn-primary tm-btn-small">Submit</button>
+                        {% else %}
+                            <a href="{{ path('app_login') }}" class="btn btn-base radius-btn">Connectez-vous
+                                pour commenter</a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if app.user == blog_post.getUser %}
+
+        <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}">edit</a>
+
+        {{ include('blog_post/_delete_form.html.twig') }}
+    {% endif %}
     <a href="{{ path('app_blog_post_index') }}">back to list</a>
-
-    <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}">edit</a>
-
-    {{ include('blog_post/_delete_form.html.twig') }}
+    {% if app.user != blog_post.getUser %}
+        <a href="{{ path('app_rapport_blog_post_new', {'id': blog_post.id}) }}">Signaler</a>
+    {% endif %}
 {% endblock %}
+{#{% block javascripts %}#}
+{#    #}{#    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> #}
+{#    <script>#}
+{#        function onClickBtnLike(event) {#}
+{#            event.preventDefault();#}
+{#            const url = this.href;#}
+{#            const spanCount = this.querySelector('span.js-likes');#}
+{#            const icone = this.querySelector('i');#}
+{#            axios.get(url).then(function (response) {#}
+{#                console.log(response);#}
+{#                // spanCount.textContent = response.data.likes;#}
+{#                // if (icone.classList.contains('fas')){#}
+{#                //     icone.classList.replace ('fas','far');#}
+{#                // } else {#}
+{#                //     icone.classList.replace ('far','fas');#}
+{#                // }#}
+{#            })#}
+{#        }#}
+
+{#        document.querySelectorAll('a.js-like').forEach(function (link) {#}
+{#            link.addEventListener('click', onClickBtnLike);#}
+{#        })#}
+{#    </script>#}
+{#{% endblock %}#}
+
