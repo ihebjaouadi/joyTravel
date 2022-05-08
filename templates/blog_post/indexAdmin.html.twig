@@ -1,0 +1,40 @@
+{# {% extends 'base.html.twig' %} #}
+{% extends 'baseBackOffice.html.twig' %}
+{% block title %}BlogPost index{% endblock %}
+
+{% block body %}
+    <h1>BlogPost index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Body</th>
+            <th>DateCreation</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for blog_post in blog_posts %}
+            <tr>
+                <td>{{ blog_post.id }}</td>
+                <td>{{ blog_post.titre }}</td>
+                <td>{{ blog_post.description }}</td>
+                <td>{{ blog_post.body }}</td>
+                <td>{{ blog_post.dateCreation ? blog_post.dateCreation|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}">show</a>
+                    <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}">edit</a>
+                    <a href="{{ path('app_blog_post_delete', {'id': blog_post.id}) }}">Delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

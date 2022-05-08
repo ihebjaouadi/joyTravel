@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\BlogPost;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Repository\BlogPostRepository;
 use App\Repository\ChambreRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,6 +23,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/reservation")
@@ -48,7 +52,6 @@ class ReservationController extends AbstractController
         $reservation->setPrixTotal(100);
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
 //            dump($reservation->getIDChambre());
 //            dd($reservation->getIDChambre());
@@ -70,35 +73,46 @@ class ReservationController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/newReservation", name="app_res_json", methods={"GET", "POST"})
+     */
+    public function newJSON(ChambreRepository $chambreRepository,Request $request, ReservationRepository $repository, NormalizerInterface $normalizer, UserRepository $userRepository,MailerInterface $mailer): Response
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+//        $user = $userRepository->find($request->get('user'));
+        $reservation = new Reservation();
+        $reservation->setIDUser($user);
+        $reservation->setDateReservation(new \DateTime('now'));
+        $reservation->setPrixTotal($request->get('prix'));
+        $dateA = date_create_from_format('d-m-Y',$request->get('dateA'));
+        $dateD = date_create_from_format('d-m-Y',$request->get('dateD'));
+        $reservation->setDateArrivee($dateA);
+        $reservation->setDateDepart($dateD);
+        $reservation->setNbrPersonnes($request->get('nbr'));
+        $reservation->setIDFormule($request->get('formule'));
+        $ch = $request->get('idchambres');
+        $idChambres =  explode (",", $ch);
+        foreach ($idChambres as $i){
+            $reservation->addIDChambre($chambreRepository->find($i));
+        }
+        $repository->add($reservation);
+        $this->createPDFTicket($reservation);
+        $this->sendEmail($mailer,$reservation);
+//        $resJson = $normalizer->normalize($reservation, 'json', ['groups' => 'g']);
+//        return new Response("Res Created" . json_encode($resJson));
+        return $this->redirectToRoute('resuser',['id'=>$reservation->getIDUser()->getId()]);
+    }
+
     public function calculSomme(Reservation $reservation, FormInterface $form)
     {
         $total = 0;
         $chambres = $reservation->getIDChambre();
         foreach ($chambres as $c){
             $total+=$c->getPrixnuite();
-//            if(strcasecmp($c->getType(),"single")){
-//                $total+=$c->getPrixnuite();
-//            }
-//            elseif (strcasecmp($c->getType(),"double")){
-//                $total+=$c->getPrixnuite()*1.2;
-//            }
-//            elseif (strcasecmp($c->getType(),"triple")){
-//                $total+=$c->getPrixnuite()*1.5;
-//            }
-//            elseif (strcasecmp($c->getType(),"quadruple")){
-//                $total+=$c->getPrixnuite()*1.7;
-//            }
-//            elseif (strcasecmp($c->getType(),"suite")){
-//                $total+=$c->getPrixnuite()*2;
-//            }
-
-
             if(strcasecmp(strval($form->get('ID_formule')->getData()),"Pension Complete")==0){
-//                dd($form->get('ID_formule')->getData());
                 $total=$total+15;
             }
             elseif(strcasecmp(strval($form->get('ID_formule')->getData()),"All Inclusive")==0){
-//                dd($form->get('ID_formule')->getData());
                 $total=$total+30;
             }
         }
@@ -117,7 +131,7 @@ class ReservationController extends AbstractController
     /**
      * @Route("/email")
      */
-    public function sendEmail(MailerInterface $mailer, Reservation $reservation)
+    public function sendEmail(MailerInterface $mailer, Reservation $reservation/*,path*/)
     {
         $publicDirectory = $this->getParameter('kernel.project_dir') . '/public/assets/documents';
         $pdfFilepath =  $publicDirectory . '/ticket.pdf';

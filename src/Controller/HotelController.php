@@ -5,11 +5,17 @@ namespace App\Controller;
 use App\Entity\Hotel;
 use App\Entity\Image;
 use App\Form\HotelType;
+use App\Repository\ChambreRepository;
 use App\Repository\HotelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Loader\LoaderInterface;
 
 /**
  * @Route("/hotel")
@@ -17,12 +23,46 @@ use Symfony\Component\Routing\Annotation\Route;
 class HotelController extends AbstractController
 {
     /**
-     * @Route("/", name="app_hotel_index", methods={"GET"})
+     * @Route("/", name="app_hotel_index", methods={"GET", "POST"})
      */
-    public function index(HotelRepository $hotelRepository): Response
+    public function index(HotelRepository $hotelRepository, Request $request, ChambreRepository $chambreRepository): Response
     {
+        $form = $this->createFormBuilder()
+            ->add('dateA', DateType::class)
+            ->add('dateD', DateType::class)
+            ->add('typeChambre', ChoiceType::class, [
+                'choices' => [
+                    '' => 'Null',
+                    'Single' => 'Single',
+                    'Double' => 'Double',
+                    'Triple' => 'Triple',
+                    'Suite' => 'Suite',
+                ]])
+            ->add('rechercher', SubmitType::class)
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $dateA = $form->get('dateA');
+            $dateA = $dateA->getData();
+            $dateD = $form->get('dateD');
+            $dateD = $dateD->getData();
+            $typeChambre = $form->get('typeChambre')->getData();
+//            $hotels = $hotelRepository->hotelsContenantChambresDispoDate($dateA, $dateD);
+            if (strcasecmp($typeChambre, "Null") != 0) {
+                $hotels = $hotelRepository->hotelsContenantChambresDispoTypeDate($dateA, $dateD, $typeChambre);
+            } else {
+                $hotels = $hotelRepository->hotelsContenantChambresDispoDate($dateA, $dateD);
+            }
+            $dateAFormatted = $dateA->format('d-m-Y');
+            $dateDFormatted = $dateD->format('d-m-Y');
+            return $this->render('hotel/hotelsDispo.html.twig', ['hotels' => $hotels, 'dateA' => $dateAFormatted, 'dateD' => $dateDFormatted, 'type' => $typeChambre]);
+//            $chambres = $chambreRepository->chambresDispoParTypeChambre($dateA, $dateD,$typeChambre);
+//            dd($chambres);
+//            return $this->render('chambres/index.html.twig', ['chambres' => $chambres]);
+        }
         return $this->render('hotel/index.html.twig', [
             'hotels' => $hotelRepository->findAll(),
+            'recherche' => $form->createView()
         ]);
     }
 
@@ -57,11 +97,13 @@ class HotelController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/dispo",name="hotels_dispo")
      */
-    public function hotelsContenatnChambresDispo(HotelRepository $hotelRepository){
-        $hotels = $hotelRepository->hotelsContenatnChambresDispo();
+    public function hotelsContenatnChambresDispo(HotelRepository $hotelRepository)
+    {
+        $hotels = $hotelRepository->hotelsContenantChambresDispo();
 //        dd($hotels);
         return $this->redirectToRoute('app_hotel_index');
     }

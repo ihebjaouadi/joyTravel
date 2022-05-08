@@ -10,11 +10,14 @@ use App\Form\BlogCommentairesType;
 use App\Form\BlogPostType;
 use App\Repository\BlogPostRepository;
 use App\Repository\PostLikeRepository;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/blogpost")
@@ -27,6 +30,28 @@ class BlogPostController extends AbstractController
     public function index(BlogPostRepository $blogPostRepository): Response
     {
         return $this->render('blog_post/index.html.twig', [
+            'blog_posts' => $blogPostRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/list", name="app_blog_post_index_json", methods={"GET"})
+     */
+    public function indexJSON(BlogPostRepository $blogPostRepository, NormalizerInterface $normalizer): Response
+    {
+        $blogPosts = $blogPostRepository->findAll();
+        $blogPostsJSON = $normalizer->normalize($blogPosts, 'json', ['groups' => 'g']);
+        return $this->render('blog_post/indexJSON.html.twig', [
+            'blog_posts' => $blogPostsJSON,
+        ]);
+    }
+
+    /**
+     * @Route("/admin", name="app_blog_post_index_admin", methods={"GET"})
+     */
+    public function indexAdmin(BlogPostRepository $blogPostRepository): Response
+    {
+        return $this->render('blog_post/indexAdmin.html.twig', [
             'blog_posts' => $blogPostRepository->findAll(),
         ]);
     }
@@ -52,6 +77,27 @@ class BlogPostController extends AbstractController
             'blog_post' => $blogPost,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/newjson", name="app_blog_post_new_json", methods={"GET", "POST"})
+     */
+    public function newJSON(Request $request, BlogPostRepository $blogPostRepository, NormalizerInterface $normalizer, UserRepository $userRepository): Response
+    {
+//        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $userRepository->find($request->get('user'));
+        $blogPost = new BlogPost();
+//        $blogPost->setUser($user);
+        $blogPost->setUser($user);
+//        $blogPost->setUser($request->get('user'));
+        $test = $request->get('test');
+        $blogPost->setDateCreation(new \DateTime('now'));
+        $blogPost->setTitre($request->get('titre'));
+        $blogPost->setDescription($request->get('description'));
+        $blogPost->setBody($request->get('body'));
+        $blogPostRepository->add($blogPost);
+        $blogPostJson = $normalizer->normalize($blogPost, 'json', ['groups' => 'g']);
+        return new Response("BlogPost Created" . json_encode($blogPostJson));
     }
 
     /**
@@ -147,6 +193,6 @@ class BlogPostController extends AbstractController
 //            'code' => 200,
 //            'message' => 'Like Ajoute',
 //            'likes' => $likeRepo->count(['post' => $post])], 200);
-        return $this->redirectToRoute('app_blog_post_show',['id'=>$id]);
+        return $this->redirectToRoute('app_blog_post_show', ['id' => $id]);
     }
 }

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{# {% extends 'baseBackOffice.html.twig' %} #}
+
+{% block title %}Chambre index{% endblock %}
+
+{% block body %}
+    <h1>Chambre index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Type</th>
+            <th>Prix Standard</th>
+            {#            <th>actions</th> #}
+            <th>Panier</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for hotel,chambres in chambres %}
+            <tr>
+            <td>
+                Hotel ID : {{ hotel }}
+            </td>
+            </tr>
+            {% for c in chambres %}
+                <tr>
+                    {#                <td>{{ chambre.getIDHotel.nom }}</td> #}
+                    <td>{{ c.id }}</td>
+                    <td>{{ c.Type }}</td>
+                    <td>{{ c.Prixnuite }}</td>
+                    {#                <td> #}
+                    {#                    <a href="{{ path('app_chambres_show', {'id': chambre.id}) }}">show</a> #}
+                    {#                    <a href="{{ path('app_chambres_edit', {'id': chambre.id}) }}">edit</a> #}
+                    {#                </td> #}
+                    <td><a href="{{ path('addP', {'id': c.id}) }}">Ajouter</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {#    <a href="{{ path('app_chambres_new') }}">Create new</a> #}
+{% endblock %}
