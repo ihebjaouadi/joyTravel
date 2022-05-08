@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Evenement;
+use App\Entity\ReservationEvenement;
 use App\Repository\EvenementRepository;
+use App\Repository\ReservationEvenementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,6 +78,30 @@ class CartEventController extends AbstractController
     }
 
 
+    /**
+     * @Route("/Panier/event/RemoveR/{id}" , name="DeleteRR", methods={"GET"})
+     */
+    public function DeleteReservation(Evenement $evenement,$id,EvenementRepository $repository , ReservationEvenementRepository $repositoryRE): Response
+    {
+
+        $ev =new Evenement();
+        $reservationEvenement = new ReservationEvenement();
+        $ev = $this->entityManager->getRepository(Evenement::class)->findOneByid($id);
+        $reservationEvenement->setIDEvenement( $ev );
+        $idd=$reservationEvenement->getIDEvenement()->getId();
+        $reservationEvenement->getIDEvenement()->getId();
+        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        $RAW_QUERY = 'Delete from  reservation_evenement where id_evenement_id = ?';
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement ->bindValue(1, $idd);
+        $statement->execute();
+        $resultSet =  $statement->executeQuery();
+        //$result = $statement->fetchAll();
+        $this->addFlash('success', 'Reservation supprimer !');
+        return $this->redirectToRoute('app_evenement_index');
+
+    }
 
 
 

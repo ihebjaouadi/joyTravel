@@ -74,14 +74,22 @@ class EvenementRepository extends ServiceEntityRepository
             ->join('e.Category','c')
             ->andWhere('e.Nom LIKE :sujet or e.Prix Like :sujet  or c.Nom Like :sujet')
             ->setParameter('sujet', '%'.$value.'%');
-      //  ->orderBy('t.budget', 'DESC');
         return $query->getQuery()->getResult();
     }
 
 
+    public function findEventByValueJson($v)
+    {
 
+        $query=$this->createQueryBuilder('e')
+            ->select( 'e')
 
+           // ->andWhere('e.Nom LIKE :sujet or e.Prix Like :sujet  ')
+           ->andWhere('e.Nom LIKE :sujet ')
+            ->setParameter('sujet', '%'.$v.'%');
 
+        return $query->getQuery()->getResult();
+    }
 
 
 
@@ -112,19 +120,12 @@ public function DecriseNbrParticipants($id)
 
 
 
-
-
-
-
-
 public function TrieDATE(){
     return $this->createQueryBuilder('e')
         ->where('e.Date_debut between :date1 and :date2')
         ->setParameter('date1', 'DateTime.Now.AddDays(7)')
         ->setParameter('date1', 'DateTime.Now')
         ->getQuery()->getResult();
-
-
 }
 
 

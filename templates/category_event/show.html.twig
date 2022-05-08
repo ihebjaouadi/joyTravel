@@ -14,7 +14,6 @@
 
         <a href="{{ path('app_category_event_edit', {'id': category_event.id}) }}"><i class="fas fa-edit fa-3x"> </i></a>
 
-        {{ include('category_event/_delete_form.html.twig') }}
     </div>
 
 
@@ -30,5 +29,7 @@
             </tr>
         </tbody>
     </table>
+<br>
+    {{ include('category_event/_delete_form.html.twig') }}
 
 {% endblock %}

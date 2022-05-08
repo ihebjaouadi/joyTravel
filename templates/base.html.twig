@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Mindgrand - Real Estate HTML Template</title>
+    <title>Joy Travel </title>
     {% block Stylesheet %}
         <link rel="stylesheet" href="{{ asset('assets/css/vendor.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -129,10 +129,10 @@
                         </ul>
                     </li>
                     <li class="menu-item-has-children current-menu-item">
-                        <a href="#">Blog</a>
+                        <a href="{{ path('userGui')}}">EVENT</a>
                         <ul class="sub-menu">
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="blog-grid.html">Blog Grid</a></li>
+                            <li><a href="{{ path('MonPanier') }}"> Mon Panier</a></li>
+                            <li><a <a href="{{ path('userGui')}}">Liste </a></li>
                             <li><a href="blog-left-sidebar.html">Left Sidebar</a></li>
                             <li><a href="blog-details.html">Blog Details</a></li>
                             <li><a href="blog-details-left-sidebar.html">Details Left Sidebar</a></li>
@@ -151,11 +151,13 @@
             </div>
         </div>
     </nav>
+
 </div>
 <!-- navbar end -->
 
 <!-- banner start -->
 <div class="banner-area banner-area-1 banner-area-bg" style="background: url(assets/img/banner/1.png);">
+    {% block banner %}
     <div class="container">
         <div class="banner-area-inner">
             <div class="row justify-content-center">
@@ -208,8 +210,11 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 </div>
 <!-- banner end -->
+<!-- banner end -->
+{% block servcie %}
 
 <!-- service start -->
 <div class="service-area">
@@ -255,10 +260,13 @@
     </div>
 </div>
 <!-- service end -->
-
+{% endblock %}
 <!-- product area start -->
 {% block body %}
 {% endblock %}
+
+
+{% block footer %}
 <!-- product area end -->
 
 <!-- video area start -->
@@ -539,6 +547,7 @@
         </div>
     </div>
 </div>
+
 <!-- Blog area end -->
 
 <!-- footer area start -->
@@ -648,6 +657,7 @@
         </div>
     </div>
 </footer>
+{% endblock %}
 <!-- footer area end -->
 
 <!-- back to top area start -->

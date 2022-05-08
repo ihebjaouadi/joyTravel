@@ -10,16 +10,6 @@
 
 {% block body %}
 
-
-
-
-
-
-
-
-
-
-
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -195,7 +185,7 @@
                 box.style.display = 'none';
 
 
-            }, 5000);
+            }, 4000);
         </script>
         {{ message }}
     </div>
@@ -205,9 +195,12 @@
 
 
 <br>
+
+
+{#
 <a href="{{ path('TriPriceASC') }}"> <button type="button" class="btn-success" > Trie ASC  </button></a>
 
-<a href="{{ path('TriPriceDESC') }}"><button type="button" class="btn-success" > Trie DESC  </button></a>
+<a href="{{ path('TriPriceDESC') }}"><button type="button" class="btn-success" > Trie DESC  </button></a>#}
 
 
 
@@ -249,9 +242,6 @@
                   {#   <th>prix <i class="fa fa-sort">  <li><a href={{ path('TriPriceASC') }} > Trier Par Prix  </a></li> </i>    </th>#}
 
                     <th>prix   <div ><a href="{{ path('TriPriceASC') }}" ><i class="fa fa-sort-asc "  style="font-size:36px;color:red" > </i></a> <a href="{{ path('TriPriceDESC') }}" ><i class="fa fa-sort-desc" style="font-size:36px;color:red"> </i></a> </div></th>
-
-
-
                     <th >Date Debut </th>
                     <th>Date Fin <i class="fa fa-sort"></i></th>
                     <th>Nombre de participants <i class="fa fa-sort"></i></th>
@@ -292,9 +282,10 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <br>
             <a class="btn btn-success" href="{{ path('app_pdf') }}">Create pdf</a>
             <div class="clearfix">
-                <div class="hint-text">Il ya  <b>{{ Cont }}</b> evenement en totale  <b></b> entries</div>
+                <div class="hint-text">Il ya  <b>{{ Cont }}</b> evenement en totale  </div>
                 <ul class="pagination">
                     <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
                     <li class="page-item"><a href="#" class="page-link">1</a></li>

@@ -9,12 +9,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/category/event")
  */
 class CategoryEventController extends AbstractController
 {
+
+
+
+    /**
+     * @Route("/afficher", name="app_categoryJSON", methods={"GET"})
+     */
+    public function afficher(NormalizerInterface $Normalizer)
+    {
+        $repository= $this->getDoctrine()->getRepository(CategoryEvent::class);
+        $CategoryEvent = $repository->findAll();
+
+        $jsonContent = $Normalizer->normalize($CategoryEvent,'json',['groups'=>'post:read']);
+
+        return new Response(json_encode($jsonContent));
+
+    }
+
+
+
+
+
     /**
      * @Route("/", name="app_category_event_index", methods={"GET"})
      */
@@ -24,6 +46,12 @@ class CategoryEventController extends AbstractController
             'category_events' => $categoryEventRepository->findAll(),
         ]);
     }
+
+
+
+
+
+
 
     /**
      * @Route("/new", name="app_category_event_new", methods={"GET", "POST"})
@@ -46,6 +74,30 @@ class CategoryEventController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+
+    /**
+     * @Route("/newJson", name="app_category_event_newJSON", methods={"GET"})
+     */
+    public function newJson(Request $request, CategoryEventRepository $categoryEventRepository, NormalizerInterface $Normalizer)
+    {
+        $categoryEvent = new CategoryEvent();
+        $em=$this->getDoctrine()->getManager();
+$categoryEvent->setNom($request->get("Nom"));
+            $em->persist($categoryEvent);
+            $em->flush();
+
+        $jsonContent = $Normalizer->normalize($categoryEvent,'json',['groups'=>'post:read']);
+
+        return new Response(json_encode($jsonContent));
+
+    }
+
+
+
+
+
 
     /**
      * @Route("/{id}", name="app_category_event_show", methods={"GET"})
@@ -88,4 +140,24 @@ class CategoryEventController extends AbstractController
         $this->addFlash('success', 'Category Supprimer!');
         return $this->redirectToRoute('app_category_event_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("/Suppjson/{id}", name="jsonDelete", methods={"GET"})
+     *
+     */
+    function DeleteJson($id, CategoryEventRepository $repository, NormalizerInterface $Normalizer){
+        $Event=$repository->find($id);
+        $em=$this->getDoctrine()->getManager();
+        $em->remove($Event);
+        $em->flush();
+
+        $jsonContent = $Normalizer->normalize($Event,'json',['groups'=>'post:read']);
+
+        return new Response(json_encode($jsonContent));
+
+    }
+
+
+
+
 }
