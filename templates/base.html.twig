@@ -7,6 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Joy travel</title>
     {% block Stylesheet %}
+        <link rel="stylesheet"
+              href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css') }}">
+
+        <link rel="stylesheet"
+              href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/vendor.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
@@ -52,7 +57,7 @@
                         <li><p><img src="{{ asset('assets/img/icon/envelope.png') }}" alt="img">
                                 {% if app.user %}{{ app.user.email }}{% endif %}
                             </p></li>
-{#                        {% if is_granted('ROLE_ADMIN') %}#}
+                        {#                        {% if is_granted('ROLE_ADMIN') %} #}
                     </ul>
                 </div>
                 <div class="col-lg-4">
@@ -61,7 +66,7 @@
                             <a class="ml-0" href="{{ path('app_register') }}">Register</a>
                             <a href="{% if app.user %}{{ path('app_logout') }}{% else %}{{ path('app_login') }}{% endif %}">
                                 {% if app.user %}
-                                    logout
+                                    <logout></logout>
                                 {% else %}
                                     login
                                 {% endif %}
@@ -101,34 +106,8 @@
             </div>
             <div class="collapse navbar-collapse" id="dkt_main_menu">
                 <ul class="navbar-nav menu-open text-center">
-                    <li class="menu-item-has-children current-menu-item">
-                        <a href="#">Home</a>
-                        <ul class="sub-menu">
-                            <li><a href="index.html">Home 01</a></li>
-                            <li><a href="index-2.html">Home 02</a></li>
-                            <li><a href="index-3.html">Home 03</a></li>
-                            <li><a href="index-4.html">Home 04</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children current-menu-item">
-                        <a href="#">Property</a>
-                        <ul class="sub-menu">
-                            <li><a href="property.html">Property</a></li>
-                            <li><a href="property-grid.html">Property Grid</a></li>
-                            <li><a href="property-left-sidebar.html">Left Sidebar</a></li>
-                            <li><a href="property-details.html">Property Details</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children current-menu-item">
-                        <a href="#">Pages</a>
-                        <ul class="sub-menu">
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="team.html">Team</a></li>
-                            <li><a href="signin.html">Sign In</a></li>
-                            <li><a href="signup.html">Sign Up</a></li>
-                            <li><a href="add-property.html">Add Property</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="{{ path('app_hotel_index') }}">Hotel </a></li>
+
                     {%if app.user%}
                     
                             <li><a href="{{ path('app_List_chat') }}">join chat </a></li>
@@ -146,7 +125,24 @@
                         </ul>
                     </li>
                     {%endif%}
-                    <li><a href="contact.html">Contact</a></li>
+                    <li class="menu-item-has-children current-menu-item">
+                        <a href="#">Reclamation</a>
+                        <ul class="sub-menu">
+                            <li><a href="{{ path('app_contacts_front_addReclamation') }}">Ajouter une Reclamation</a>
+                            </li>
+                            <li><a href="{{ path('app_contacts_front_listeReclamation') }}">Mes Reclamations</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children current-menu-item">
+                        <a href="#">Votes</a>
+                        <ul class="sub-menu">
+                            <li><a href="{{ path('app_vote_new') }}">Ajouter un vote</a>
+                            </li>
+                            <li><a href="{{ path('app_vote_index1') }}">Tout les votes</a></li>
+
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <div class="nav-right-part nav-right-part-desktop">
@@ -157,63 +153,12 @@
                     </li>
                 </ul>
             </div>
+
         </div>
     </nav>
 </div>
 <!-- navbar end -->
  <div class="banner-area banner-area-1 banner-area-bg" style="background: url(assets/img/banner/1.png);">
-        <div class="container">
-            <div class="banner-area-inner">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <div class="banner-inner text-center">
-                            <p>Welcome</p>
-                            <div class="line"></div>
-                            <h2>The Best Way To Find Your Perfect Hotel</h2>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 mt-4">
-                        <form class="main-search-inner">
-                            <div class="row custom-gutters-10">
-                                <div class="col-md-3">
-                                    <div class="single-select-inner">
-                                        <select>
-                                            <option>Location</option>
-                                            <option value="1">Location 1</option>
-                                            <option value="2">Location 2</option>
-                                            <option value="3">Location 3</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="single-select-inner">
-                                        <select>
-                                            <option>Property</option>
-                                            <option value="1">Property 1</option>
-                                            <option value="2">Property 2</option>
-                                            <option value="3">Property 3</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="single-select-inner">
-                                        <select>
-                                            <option>Price</option>
-                                            <option value="1">Price</option>
-                                            <option value="2">Price</option>
-                                            <option value="3">Price</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <a class="btn btn-base w-100" href="#"><i class="fa fa-search mr-1"></i> Search</a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- banner end -->
 
@@ -505,13 +450,14 @@
 {#</div>#}
 <!-- Blog area end -->
 
+
 <!-- footer area start -->
 <footer class="footer-area">
     <div class="footer-top">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <a href="index.html"><img src="assets/img/logo.png" alt="img"></a>
+                    <a href="index.html"><img src="{{ asset('assets/img/logo.png') }}" alt="img"></a>
                 </div>
                 <div class="col-md-8 text-md-right mt-3 mt-md-0">
                     <ul class="social-area">
@@ -525,6 +471,9 @@
             </div>
         </div>
     </div>
+{#    {% block body %}#}
+
+{#    {% endblock %}#}
     <div class="footer-middle bg-black">
         <div class="container">
             <div class="row">
@@ -542,6 +491,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-4 col-md-6">
                     <div class="widget widget_newsfeed">
                         <h4 class="widget-title">News Feed</h4>
@@ -559,6 +509,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <div class="col-lg-4 col-md-9">
                     <div class="widget widget_subscribe mb-4">
                         <h4 class="widget-title">Newslatter</h4>
@@ -581,6 +532,7 @@
                             <a href="#">Seo</a>
                             <a href="#">Appertment</a>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -607,12 +559,14 @@
                             <a href="contact.html">Contact</a>
                         </li>
                     </ul>
+
                 </div>
             </div>
         </div>
     </div>
 </footer>
 <!-- footer area end -->
+
 
 <!-- back to top area start -->
 <div class="back-to-top">
@@ -626,6 +580,23 @@
     <!-- main js  -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="https://kit.fontawesome.com/e615be9371.js" crossorigin="anonymous"></script>
+
+    <script>
+        function notify_delete_Contact() {
+            var notification = new Notification('Reclamation', {
+                body: "Reclamation supprimée !!",
+            });
+
+            setTimeout(notification.close.bind(notification), 6000);
+        }
+
+
+        function closeDiv() {
+            document.getElementById("notif").style.display = " none";
+        }
+
+        window.setTimeout(closeDiv, 6000);
+    </script>
 {% endblock %}
 </body>
 </html>

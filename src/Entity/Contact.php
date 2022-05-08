@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ContactRepository::class)
@@ -24,12 +27,18 @@ class Contact
     private $ID_user;
 
     /**
-     * @ORM\Column(type="string", length=2000)
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage=" Entrer un titre au mini de 2 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="text", nullable=true)
      */
     private $Body;
 
     /**
-     * @ORM\OneToOne(targetEntity=Hotel::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Hotel::class, inversedBy="contacts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ID_hotel;
@@ -38,6 +47,16 @@ class Contact
      * @ORM\Column(type="smallint")
      */
     private $statue;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reponse::class, mappedBy="ID_contact", orphanRemoval=true)
+     */
+    private $reponses;
+
+    public function __construct()
+    {
+        $this->reponses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,5 +109,47 @@ class Contact
         $this->statue = $statue;
 
         return $this;
+    }
+
+    public function setID_contact(int $ID_contact): self
+    {
+        $this->id = $ID_contact;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reponse>
+     */
+    public function getReponses(): Collection
+    {
+        return $this->reponses;
+    }
+
+    public function addReponse(Reponse $reponse): self
+    {
+        if (!$this->reponses->contains($reponse)) {
+            $this->reponses[] = $reponse;
+            $reponse->setIDContact($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponse(Reponse $reponse): self
+    {
+        if ($this->reponses->removeElement($reponse)) {
+            // set the owning side to null (unless already changed)
+            if ($reponse->getIDContact() === $this) {
+                $reponse->setIDContact(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getBody();
     }
 }

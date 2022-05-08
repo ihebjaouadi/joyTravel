@@ -1,0 +1,46 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}Vote index{% endblock %}
+
+{% block body %}
+    <div class="card card-info">
+        <div class="card-header">
+            <a href="{{ path('app_vote_stats') }}">
+                <button type="button" class="btn btn-success float-right">Statistique</button>
+            </a>
+            <h1 class="card-title">Liste des Votes</h1>
+
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Vote</th>
+            <th>Hotel</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for vote in votes %}
+            <tr>
+                <td>{{ vote.id }}</td>
+                <td>{% for i in 1..vote.vote %}
+                        ⭐
+                    {% endfor %}</td>
+                <td>{{ vote.IDhotel }}</td>
+                {#                <td>{{ vote.vote }}</td> #}
+
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

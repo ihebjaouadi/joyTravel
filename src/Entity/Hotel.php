@@ -28,6 +28,7 @@ class Hotel
      *
      *     )
      * @ORM\Column(type="string", length=255)
+
      */
     private $Nom;
     /**
@@ -50,6 +51,7 @@ class Hotel
      *
      *     )
      * @ORM\Column(type="string", length=255)
+
      */
     private $Adresse;
 
@@ -61,6 +63,7 @@ class Hotel
      *
      *     )
      * @ORM\Column(type="string", length=255)
+
      */
     private $Ville;
 
@@ -72,6 +75,7 @@ class Hotel
      *
      *     )
      * @ORM\Column(type="string", length=255)
+
      */
     private $Code_postal;
 
@@ -83,6 +87,7 @@ class Hotel
      *
      *     )
      * @ORM\Column(type="string", length=255)
+
      */
     private $Complement_adresse;
 
@@ -94,12 +99,14 @@ class Hotel
      *
      *     )
      * @ORM\Column(type="string", length=255)
+
      */
     private $Pays;
 
     /**
      * @Assert\NotBlank(message=" titre doit etre non vide")
      * @ORM\Column(type="string", length=255)
+
      */
     private $Nb_etoile;
 
@@ -424,5 +431,6 @@ class Hotel
     {
         $this->description = $description;
     }
+
 
 }

@@ -142,6 +142,12 @@ class User implements UserInterface
 
         return $this;
     }
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * @see UserInterface
@@ -395,4 +401,5 @@ class User implements UserInterface
 
         return $this;
     }
+
 }
