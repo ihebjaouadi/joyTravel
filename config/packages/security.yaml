@@ -18,15 +18,22 @@ security:
             security: false
         main:
             anonymous: true
+            #provider: app_user_provider
             guard:
+                entry_point: App\Security\LoginFormAuthenticator
+                
                 authenticators:
+                    - App\Security\GoogleAuthenticator
                     - App\Security\LoginFormAuthenticator
+                    
+                   
             logout:
                 path: app_logout
                 target: /login
                 # where to redirect after logout
                 # target: app_any_route
-
+                
+            
             # activate different ways to authenticate
 
             # http_basic: true
@@ -39,6 +46,28 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/hotel/mobile/[^/], roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^(?!/(login|register|reset-password|logout)), roles: ROLE_USER }
+
+knpu_oauth2_client:
+    clients:
+        google:
+            # must be "google" - it activates that type!
+            type: google
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(resolve:GOOGLE_CLIENT_ID)%'
+            client_secret: '%env(resolve:GOOGLE_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_google_check
+            redirect_params: {}
+            # Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#authenticationuriparameters
+            # access_type: ''
+            # Optional value for sending hd parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#hd-param
+            # hosted_domain: ''
+            # Optional value for additional fields to be requested from the user profile. If set, these values will be included with the defaults. More details: https://developers.google.com/+/web/api/rest/latest/people
+            # user_fields: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+       
+

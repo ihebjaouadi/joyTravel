@@ -30,17 +30,17 @@ class Hotel
      * @ORM\Column(type="string", length=255)
      */
     private $Nom;
-
     /**
-     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\NotBlank(message=" Description doit etre non vide")
      * @Assert\Length(
      *      min = 2,
      *      minMessage=" Entrer un titre au mini de 2 caracteres"
      *
      *     )
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text",nullable=true)
      */
     private $description;
+
 
     /**
      * @Assert\NotBlank(message=" titre doit etre non vide")
@@ -403,6 +403,12 @@ class Hotel
         return (string)$this->getNom();
     }
 
+
+    public function getFulladress()
+    {
+        return $this->getAdresse() . ', ' . $this->getComplementAdresse() . ', ' . $this->getCodePostal() . ', ' . $this->getVille() . ', Tunisie';
+    }
+
     /**
      * @return mixed
      */
@@ -417,11 +423,6 @@ class Hotel
     public function setDescription($description): void
     {
         $this->description = $description;
-    }
-
-    public function getFulladress()
-    {
-        return $this->getAdresse() . ', ' . $this->getComplementAdresse() . ', ' . $this->getCodePostal() . ', ' . $this->getVille() . ', Tunisie';
     }
 
 }

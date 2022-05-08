@@ -56,15 +56,16 @@
             data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
+
             <li class="nav-item">
-                <a href="{{ path('app_chambres_index') }}" class="nav-link
-                    {% if _route == 'app_chambres_new' or
-                    _route == 'app_chambres_index' %}active
+                <a href="{{ path('app_UserList') }}" class="nav-link
+                    {% if _route == 'app_UserList' or
+                    _route == 'app_UserList' %}active
                     {% endif %}
                     ">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
-                        Chambre
+                        User
                     </p>
                 </a>
             </li>
@@ -72,6 +73,14 @@
         </ul>
     </nav>
     <!-- /.sidebar-menu -->
+    </div>
+
+
+
+   
+
+
+
 
 
     <!-- Sidebar Menu -->
@@ -110,3 +119,4 @@
 
 
 </div>
+

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -21,8 +22,10 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -33,6 +36,12 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @Assert\NotBlank(message="mot de passe doit etre non vide")
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 20,
+     *      minMessage = "doit etre >=7 ",
+     *      maxMessage = "doit etre <=20" )
      * @var string The hashed password
      * @ORM\Column(type="string")
      */

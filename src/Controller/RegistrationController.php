@@ -15,10 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Security\StubAuthenticator;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
+  
 
     public function __construct(EmailVerifier $emailVerifier)
     {
@@ -33,8 +36,8 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
+        
+        if (  $form->isSubmitted() ) {
             // encode the plain password
             $user->setPassword(
             $userPasswordEncoder->encodePassword(
@@ -42,9 +45,10 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
             $entityManager->persist($user);
+            
             $entityManager->flush();
+            
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -55,8 +59,8 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('app_hotel_index');
+            
+            return $this->redirectToRoute('app_verify_email');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -83,6 +87,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_hotel_index');
     }
 }

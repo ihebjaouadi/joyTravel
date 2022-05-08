@@ -11,11 +11,7 @@
             {{ form_widget(form.Nom,{'attr':{'class': 'form-control','placeholder':'Nom hotel'}}) }}
             {{ form_errors(form.Nom,{'attr':{'class': 'text-danger'}}) }}
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 col-form-label">Description</label>
-            {{ form_widget(form.description,{'attr':{'class': 'form-control','placeholder':'description de l\'hotel'}}) }}
-            {{ form_errors(form.description,{'attr':{'class': 'text-danger'}}) }}
-        </div>
+        
         <div class="form-group">
             <label class="col-sm-2 col-form-label">Adresse</label>
             {{ form_widget(form.Adresse,{'attr':{'class': 'address form-control','placeholder':'Adresse'}}) }}

@@ -1,0 +1,401 @@
+{#{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}Chat{% endblock %}
+{% block body %}
+{{form(form)}}
+<button  type="button" class="btn btn-light"><a href="{{ path('app_List_chat') }}">back to inbox </a></button>
+<br>
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-light" role="alert">
+   {{ flashMessage }}
+</div>
+{% endfor %}
+{%endblock%}#}
+<style>
+:root {
+  --fir-font-article: "adobe-garamond-pro", "Times New Roman", Times;
+  --fir-font-header: "foco", Helvetica;
+  --fir-blue-twitter-alpha: rgba(85,172,238, 0.6);
+  --fir-color-grey: rgba(0,0,0, 0.40);
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.fir-clickcircle {
+  height: 80px;
+  width: 80px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.fir-image-figure {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative;
+  text-decoration: none;
+}
+
+.fir-image-figure .caption, .fir-image-figure figcaption {
+  padding-left: 15px;
+}
+
+html.wf-active .fir-image-figure .fig-author-figure-title {
+  font-family: var(--fir-font-header);
+  font-size: 16px;
+}
+
+.fir-image-figure .fig-author-figure-title {
+  color: var(--fir-color-grey);
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  margin-top: 2px;
+}
+
+.fir-imageover {
+  position: relative;
+  display: flex;
+}
+
+.fir-imageover-color {
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  background: var(--fir-blue-twitter-alpha);
+  background-image: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background .3s ease-in-out;
+  animation: fadeInFadeOut 2s infinite;
+  top: 0;
+  left: 0;
+}
+
+.fir-imageover-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: fadeInFadeOut 2s infinite;
+}
+
+@keyframes fadeInFadeOut {
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+body{margin-top:20px;}
+.email-app {
+    display: flex;
+    flex-direction: row;
+    background: #fff;
+    border: 1px solid #e1e6ef;
+}
+
+.email-app nav {
+    flex: 0 0 200px;
+    padding: 1rem;
+    border-right: 1px solid #e1e6ef;
+}
+
+.email-app nav .btn-block {
+    margin-bottom: 15px;
+}
+
+.email-app nav .nav {
+    flex-direction: column;
+}
+
+.email-app nav .nav .nav-item {
+    position: relative;
+}
+
+.email-app nav .nav .nav-item .nav-link,
+.email-app nav .nav .nav-item .navbar .dropdown-toggle,
+.navbar .email-app nav .nav .nav-item .dropdown-toggle {
+    color: #151b1e;
+    border-bottom: 1px solid #e1e6ef;
+}
+
+.email-app nav .nav .nav-item .nav-link i,
+.email-app nav .nav .nav-item .navbar .dropdown-toggle i,
+.navbar .email-app nav .nav .nav-item .dropdown-toggle i {
+    width: 20px;
+    margin: 0 10px 0 0;
+    font-size: 14px;
+    text-align: center;
+}
+
+.email-app nav .nav .nav-item .nav-link .badge,
+.email-app nav .nav .nav-item .navbar .dropdown-toggle .badge,
+.navbar .email-app nav .nav .nav-item .dropdown-toggle .badge {
+    float: right;
+    margin-top: 4px;
+    margin-left: 10px;
+}
+
+.email-app main {
+    min-width: 0;
+    flex: 1;
+    padding: 1rem;
+}
+
+.email-app .inbox .toolbar {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e1e6ef;
+}
+
+.email-app .inbox .messages {
+    padding: 0;
+    list-style: none;
+}
+
+.email-app .inbox .message {
+    position: relative;
+    padding: 1rem 1rem 1rem 2rem;
+    cursor: pointer;
+    border-bottom: 1px solid #e1e6ef;
+}
+
+.email-app .inbox .message:hover {
+    background: #f9f9fa;
+}
+
+.email-app .inbox .message .actions {
+    position: absolute;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.email-app .inbox .message .actions .action {
+    width: 2rem;
+    margin-bottom: 0.5rem;
+    color: #c0cadd;
+    text-align: center;
+}
+
+.email-app .inbox .message a {
+    color: #000;
+}
+
+.email-app .inbox .message a:hover {
+    text-decoration: none;
+}
+
+.email-app .inbox .message.unread .header,
+.email-app .inbox .message.unread .title {
+    font-weight: bold;
+}
+
+.email-app .inbox .message .header {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.5rem;
+}
+
+.email-app .inbox .message .header .date {
+    margin-left: auto;
+}
+
+.email-app .inbox .message .title {
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.email-app .inbox .message .description {
+    font-size: 12px;
+}
+
+.email-app .message .toolbar {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e1e6ef;
+}
+
+.email-app .message .details .title {
+    padding: 1rem 0;
+    font-weight: bold;
+}
+
+.email-app .message .details .header {
+    display: flex;
+    padding: 1rem 0;
+    margin: 1rem 0;
+    border-top: 1px solid #e1e6ef;
+    border-bottom: 1px solid #e1e6ef;
+}
+
+.email-app .message .details .header .avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 1rem;
+}
+
+.email-app .message .details .header .from {
+    font-size: 12px;
+    color: #9faecb;
+    align-self: center;
+}
+
+.email-app .message .details .header .from span {
+    display: block;
+    font-weight: bold;
+}
+
+.email-app .message .details .header .date {
+    margin-left: auto;
+}
+
+.email-app .message .details .attachments {
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+    border-top: 3px solid #f9f9fa;
+    border-bottom: 3px solid #f9f9fa;
+}
+
+.email-app .message .details .attachments .attachment {
+    display: flex;
+    margin: 0.5rem 0;
+    font-size: 12px;
+    align-self: center;
+}
+
+.email-app .message .details .attachments .attachment .badge {
+    margin: 0 0.5rem;
+    line-height: inherit;
+}
+
+.email-app .message .details .attachments .attachment .menu {
+    margin-left: auto;
+}
+
+.email-app .message .details .attachments .attachment .menu a {
+    padding: 0 0.5rem;
+    font-size: 14px;
+    color: #e1e6ef;
+}
+
+@media (max-width: 767px) {
+    .email-app {
+        flex-direction: column;
+    }
+    .email-app nav {
+        flex: 0 0 100%;
+    }
+}
+
+@media (max-width: 575px) {
+    .email-app .message .header {
+        flex-flow: row wrap;
+    }
+    .email-app .message .header .date {
+        flex: 0 0 100%;
+    }
+}
+</style>
+<head>
+ {% block stylesheet %}
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- Tempusdominus Bootstrap 4 -->
+        <link rel="stylesheet"
+              href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+        <!-- iCheck -->
+        <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+        <!-- JQVMap -->
+        <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+        <!-- overlayScrollbars -->
+        <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+        <!-- Daterange picker -->
+        <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
+        <!-- summernote -->
+        <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+        <link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    {% endblock %}
+</head>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<br>
+<br>
+<div class="container bootdey">
+<div class="email-app">
+    <nav>
+       
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-inbox"></i> Inbox <span class="badge badge-danger">4</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-star"></i> Stared</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-rocket"></i> Sent</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-trash-o"></i> Trash</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-bookmark"></i> Important</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-inbox"></i> Inbox <span class="badge badge-danger">4</span></a>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        
+        
+        
+        
+        <figure class="fir-image-figure">
+
+  <a class="fir-imageover" rel="noopener" target="_blank" href="https://twitter.com/_davideast">
+    <img class="fir-author-image fir-clickcircle" src="https://fir-rollup.firebaseapp.com/de-sm.jpg" alt="David East - Author">
+    <div class="fir-imageover-color"></div>
+    <img class="fir-imageover-image fir-clickcircle" src="https://fir-rollup.firebaseapp.com/twitter-logo.png" />
+  </a>
+
+  <figcaption>
+    <div class="fig-author-figure-title">
+      <span class="badge rounded-pill bg-success">✔</span>
+    </div>
+    <div class="fig-author-figure-title">{{app.user.email}}</div>
+  
+   
+  </figcaption>
+</figure>
+
+
+
+
+
+        {% block body %}
+        <br>
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-light" role="alert">
+   {{ flashMessage }}
+</div>
+{% endfor %}
+{{form(form)}}
+<button  type="button" class="btn btn-light"><a href="{{ path('app_List_chat') }}">back to inbox </a></button>
+
+{%endblock%}
+        
+    </main>
+</div>
+</div>

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ChatRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ChatRepository::class)
@@ -17,8 +18,9 @@ class Chat
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=1000)
+     /**
+     * @Assert\NotBlank(message="mot de passe doit etre non vide")
+     * @ORM\Column(type="string")
      */
     private $message;
 
@@ -38,7 +40,9 @@ class Chat
      * @ORM\JoinColumn(nullable=false)
      */
     private $idReceiver;
-
+    public function __construct(){
+      $this->Date=new \DateTime();
+    }
     public function getId(): ?int
     {
         return $this->id;
