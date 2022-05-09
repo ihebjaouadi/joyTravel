@@ -5,11 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Mindgrand - Real Estate HTML Template</title>
+    <title>Joy Travel</title>
+
+    <link rel="stylesheet" href="{{ asset('assets/css/vendor.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Calendar Start-->
+    <!-- Icons font CSS-->
+    <link href="{{ asset('assets/calendar/vendor/mdi-font/css/material-design-iconic-font.min.css')}}" rel="stylesheet" media="all">
+    <link href="{{ asset('assets/calendar/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet')}}" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <!-- Vendor CSS-->
+    <link href="{{ asset('assets/calendar/vendor/select2/select2.min.css')}}" rel="stylesheet" media="all">
+    <link href="{{ asset('assets/calendar/vendor/datepicker/daterangepicker.css')}}" rel="stylesheet" media="all">
+    <!-- Main CSS-->
+    <link href="{{ asset('assets/calendar/css/main.css')}}" rel="stylesheet" media="all">
+    <!-- Calendar End-->
     {% block Stylesheet %}
-        <link rel="stylesheet" href="{{ asset('assets/css/vendor.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
     {% endblock %}
 </head>
 <body>
@@ -51,7 +66,7 @@
                         <li><p><img src="{{ asset('assets/img/icon/envelope.png') }}" alt="img">
                                 {% if app.user %}{{ app.user.email }}{% endif %}
                             </p></li>
-{#                        {% if is_granted('ROLE_ADMIN') %}#}
+                        {#                        {% if is_granted('ROLE_ADMIN') %} #}
                     </ul>
                 </div>
                 <div class="col-lg-4">
@@ -88,7 +103,7 @@
                 </button>
             </div>
             <div class="logo">
-                <a href="index.html"><img src="{{ asset('assets/img/logo.png') }}" alt="img"></a>
+                <a href="index.html"><img src="{{ asset('assets/img/logo.png') }}" alt="img" style="max-height: 100px"></a>
             </div>
             <div class="nav-right-part nav-right-part-mobile">
                 <ul>
@@ -153,392 +168,450 @@
     </nav>
 </div>
 <!-- navbar end -->
+<!-- recherche start -->
+{#<div class="banner-area banner-area-1 banner-area-bg">#}
+{#    <div class="container">#}
+{#        <div class="banner-area-inner">#}
+{#            <div class="col-lg-8 mt-4">#}
+{#                <form class="main-search-inner" action="{{ path('app_chambres_dispo_date') }}">#}
+{#                    <div class="row custom-gutters-10">#}
+{#                        <div class="col-md-3">#}
+{#                            <div class="single-select-inner">#}
+{#                                #}{#                                <select> #}
+{#                                <input type="date" name="dateD">#}
+{#                                #}{#                                    <option>Location</option> #}
+{#                                #}{#                                    <option value="1">Location 1</option> #}
+{#                                #}{#                                    <option value="2">Location 2</option> #}
+{#                                #}{#                                    <option value="3">Location 3</option> #}
+{#                                #}{#                                </select> #}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-3">#}
+{#                            <div class="single-select-inner">#}
+{#                                <input type="date" name="dateD" >#}
+{#                                #}{#                                <select> #}
+{#                                #}{#                                    <option>Property</option> #}
+{#                                #}{#                                    <option value="1">Property 1</option> #}
+{#                                #}{#                                    <option value="2">Property 2</option> #}
+{#                                #}{#                                    <option value="3">Property 3</option> #}
+{#                                #}{#                                </select> #}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-3">#}
+{#                            <div class="single-select-inner">#}
+{#                                <select>#}
+{#                                    <option>Price</option>#}
+{#                                    <option value="1">Price</option>#}
+{#                                    <option value="2">Price</option>#}
+{#                                    <option value="3">Price</option>#}
+{#                                </select>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-3">#}
+{#                            <input type="submit" value="Search">#}
+{#                        </div>#}
+{#                        <div class="col-md-3">#}
+{#                            <a class="btn btn-base w-100" href="{{ path('app_chambres_dispo_date') }}"><i class="fa fa-search mr-1"></i> Search</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+<!-- recherche end -->
 
 <!-- banner start -->
-<div class="banner-area banner-area-1 banner-area-bg" style="background: url(assets/img/banner/1.png);">
-    <div class="container">
-        <div class="banner-area-inner">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="banner-inner text-center">
-                        <p>Lorem ipsum dolor sit amet, consecteLorem ipsum dolor sit amet,</p>
-                        <div class="line"></div>
-                        <h2>The Best Way To Find Your Perfect Home</h2>
-                    </div>
-                </div>
-                <div class="col-lg-8 mt-4">
-                    <form class="main-search-inner">
-                        <div class="row custom-gutters-10">
-                            <div class="col-md-3">
-                                <div class="single-select-inner">
-                                    <select>
-                                        <option>Location</option>
-                                        <option value="1">Location 1</option>
-                                        <option value="2">Location 2</option>
-                                        <option value="3">Location 3</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="single-select-inner">
-                                    <select>
-                                        <option>Property</option>
-                                        <option value="1">Property 1</option>
-                                        <option value="2">Property 2</option>
-                                        <option value="3">Property 3</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="single-select-inner">
-                                    <select>
-                                        <option>Price</option>
-                                        <option value="1">Price</option>
-                                        <option value="2">Price</option>
-                                        <option value="3">Price</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <a class="btn btn-base w-100" href="#"><i class="fa fa-search mr-1"></i> Search</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{# <div class="banner-area banner-area-1 banner-area-bg" style="background: url(assets/img/banner/1.png);"> #}
+{#    <div class="container"> #}
+{#        <div class="banner-area-inner"> #}
+{#            <div class="row justify-content-center"> #}
+{#                <div class="col-lg-8"> #}
+{#                    <div class="banner-inner text-center"> #}
+{#                        <p>Lorem ipsum dolor sit amet, consecteLorem ipsum dolor sit amet,</p> #}
+{#                        <div class="line"></div> #}
+{#                        <h2>The Best Way To Find Your Perfect Home</h2> #}
+{#                    </div> #}
+{#                </div> #}
+{#                <div class="col-lg-8 mt-4"> #}
+{#                    <form class="main-search-inner"> #}
+{#                        <div class="row custom-gutters-10"> #}
+{#                            <div class="col-md-3"> #}
+{#                                <div class="single-select-inner"> #}
+{#                                    <select> #}
+{#                                        <option>Location</option> #}
+{#                                        <option value="1">Location 1</option> #}
+{#                                        <option value="2">Location 2</option> #}
+{#                                        <option value="3">Location 3</option> #}
+{#                                    </select> #}
+{#                                </div> #}
+{#                            </div> #}
+{#                            <div class="col-md-3"> #}
+{#                                <div class="single-select-inner"> #}
+{#                                    <select> #}
+{#                                        <option>Property</option> #}
+{#                                        <option value="1">Property 1</option> #}
+{#                                        <option value="2">Property 2</option> #}
+{#                                        <option value="3">Property 3</option> #}
+{#                                    </select> #}
+{#                                </div> #}
+{#                            </div> #}
+{#                            <div class="col-md-3"> #}
+{#                                <div class="single-select-inner"> #}
+{#                                    <select> #}
+{#                                        <option>Price</option> #}
+{#                                        <option value="1">Price</option> #}
+{#                                        <option value="2">Price</option> #}
+{#                                        <option value="3">Price</option> #}
+{#                                    </select> #}
+{#                                </div> #}
+{#                            </div> #}
+{#                            <div class="col-md-3"> #}
+{#                                <a class="btn btn-base w-100" href="#"><i class="fa fa-search mr-1"></i> Search</a> #}
+{#                            </div> #}
+{#                        </div> #}
+{#                    </form> #}
+{#                </div> #}
+{#            </div> #}
+{#        </div> #}
+{#    </div> #}
+{# </div> #}
 <!-- banner end -->
 
 <!-- service start -->
-<div class="service-area">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-10">
-                <div class="single-service-wrap">
-                    <div class="thumb">
-                        <img src="{{ asset('assets/img/service/1.png') }}" alt="icon">
-                    </div>
-                    <div class="single-service-details">
-                        <h4><a href="property-details.html">Sell Poparty</a></h4>
-                        <p>Lorem ipsum dolor sit consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                            labore.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-10">
-                <div class="single-service-wrap">
-                    <div class="thumb">
-                        <img src="{{ asset('assets/img/service/2.png') }}" alt="icon">
-                    </div>
-                    <div class="single-service-details">
-                        <h4><a href="property-details.html">Daily Apartment</a></h4>
-                        <p>Lorem ipsum dolor sit consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                            labore.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-10">
-                <div class="single-service-wrap mb-0">
-                    <div class="thumb">
-                        <img src="{{ asset('assets/img/service/3.png') }}" alt="icon">
-                    </div>
-                    <div class="single-service-details">
-                        <h4><a href="property-details.html">Family House</a></h4>
-                        <p>Lorem ipsum dolor sit consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                            labore.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{# <div class="service-area"> #}
+{#    <div class="container"> #}
+{#        <div class="row justify-content-center"> #}
+{#            <div class="col-lg-4 col-md-10"> #}
+{#                <div class="single-service-wrap"> #}
+{#                    <div class="thumb"> #}
+{#                        <img src="{{ asset('assets/img/service/1.png') }}" alt="icon"> #}
+{#                    </div> #}
+{#                    <div class="single-service-details"> #}
+{#                        <h4><a href="property-details.html">Sell Poparty</a></h4> #}
+{#                        <p>Lorem ipsum dolor sit consectetur adipisicing elit, sed do eiusmod tempor incididunt ut #}
+{#                            labore.</p> #}
+{#                    </div> #}
+{#                </div> #}
+{#            </div> #}
+{#            <div class="col-lg-4 col-md-10"> #}
+{#                <div class="single-service-wrap"> #}
+{#                    <div class="thumb"> #}
+{#                        <img src="{{ asset('assets/img/service/2.png') }}" alt="icon"> #}
+{#                    </div> #}
+{#                    <div class="single-service-details"> #}
+{#                        <h4><a href="property-details.html">Daily Apartment</a></h4> #}
+{#                        <p>Lorem ipsum dolor sit consectetur adipisicing elit, sed do eiusmod tempor incididunt ut #}
+{#                            labore.</p> #}
+{#                    </div> #}
+{#                </div> #}
+{#            </div> #}
+{#            <div class="col-lg-4 col-md-10"> #}
+{#                <div class="single-service-wrap mb-0"> #}
+{#                    <div class="thumb"> #}
+{#                        <img src="{{ asset('assets/img/service/3.png') }}" alt="icon"> #}
+{#                    </div> #}
+{#                    <div class="single-service-details"> #}
+{#                        <h4><a href="property-details.html">Family House</a></h4> #}
+{#                        <p>Lorem ipsum dolor sit consectetur adipisicing elit, sed do eiusmod tempor incididunt ut #}
+{#                            labore.</p> #}
+{#                    </div> #}
+{#                </div> #}
+{#            </div> #}
+{#        </div> #}
+{#    </div> #}
+{# </div> #}
 <!-- service end -->
 
 <!-- product area start -->
-{% block body %}
-{% endblock %}
-<!-- product area end -->
-
-<!-- video area start -->
-<div class="video-area bg-overlay">
+<div class="banner-area banner-area-1 banner-area-bg">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-8 col-lg-10">
-                <div class="section-title text-center">
-                    <h2>The Mordan House Video</h2>
-                    <p>Lorem ipsum dolor amet, consectetur adipisicing elit Lorem ipsum dolor sit amet, consectetur
-                        adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <a class="play-btn" href="https://www.youtube.com/embed/Wimkqo8gDZ0" data-effect="mfp-zoom-in"><i
-                                class="fa fa-play"></i></a>
-                </div>
-            </div>
+        <div class="banner-area-inner">
+            {% block body %}
+            {% endblock %}
         </div>
     </div>
 </div>
+<!-- product area end -->
+
+<!-- video area start -->
+{# <div class="video-area bg-overlay"> #}
+{#    <div class="container"> #}
+{#        <div class="row justify-content-center"> #}
+{#            <div class="col-xl-8 col-lg-10"> #}
+{#                <div class="section-title text-center"> #}
+{#                    <h2>The Mordan House Video</h2> #}
+{#                    <p>Lorem ipsum dolor amet, consectetur adipisicing elit Lorem ipsum dolor sit amet, consectetur #}
+{#                        adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua eiusmod #}
+{#                        tempor incididunt ut labore et dolore magna aliqua.</p> #}
+{#                    <a class="play-btn" href="https://www.youtube.com/embed/Wimkqo8gDZ0" data-effect="mfp-zoom-in"><i #}
+{#                                class="fa fa-play"></i></a> #}
+{#                </div> #}
+{#            </div> #}
+{#        </div> #}
+{#    </div> #}
+{# </div> #}
 <!-- video area end -->
 
 
 <!-- testimonial area start -->
-<div class="testimonial-area pd-top-118 pd-bottom-120 bg-overlay" style="background: url(assets/img/bg/2.png);">
-    <div class="bg-overlay-wrap">
-        <div class="section-title style-white text-center">
-            <h6>Our Testomonial </h6>
-            <h2>What Client Say</h2>
-            <p>Lorem ipsum dolor amet, consectetur adipisicing elit Lorem ipsum dolor sit amet, </p>
-        </div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="testimonial-slider-1 owl-carousel">
-                        <div class="item">
-                            <div class="single-testimonial-inner style-two text-center">
-                                <div class="thumb main-thumb">
-                                    <img src="assets/img/testimonial/1.png" alt="img">
-                                </div>
-                                <div class="details">
-                                    <h6 class="name">Sarif Jaya Miprut</h6>
-                                    <p>“consecte Lorem ipsum dolor sit amet, Lorem ipsum dolor amet, consecte Lorem
-                                        ipsum dolor sit adipisicing amet, consectetur sed do eiusmod tempor incididunt
-                                        dolore magna consecrem adipisicing ipsum dolor sit amet, consectetur
-                                        elit,’’ </p>
-                                    <div class="rating-inner">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="single-testimonial-inner style-two text-center">
-                                <div class="thumb main-thumb">
-                                    <img src="assets/img/testimonial/4.png" alt="img">
-                                </div>
-                                <div class="details">
-                                    <h6 class="name">Sarif Jaya Miprut</h6>
-                                    <p>“consecte Lorem ipsum dolor sit amet, Lorem ipsum dolor amet, consecte Lorem
-                                        ipsum dolor sit adipisicing amet, consectetur sed do eiusmod tempor incididunt
-                                        dolore magna consecrem adipisicing ipsum dolor sit amet, consectetur
-                                        elit,’’ </p>
-                                    <div class="rating-inner">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{# <div class="testimonial-area pd-top-118 pd-bottom-120 bg-overlay" style="background: url(assets/img/bg/2.png);"> #}
+{#    <div class="bg-overlay-wrap"> #}
+{#        <div class="section-title style-white text-center"> #}
+{#            <h6>Our Testomonial </h6> #}
+{#            <h2>What Client Say</h2> #}
+{#            <p>Lorem ipsum dolor amet, consectetur adipisicing elit Lorem ipsum dolor sit amet, </p> #}
+{#        </div> #}
+{#        <div class="container"> #}
+{#            <div class="row justify-content-center"> #}
+{#                <div class="col-lg-10"> #}
+{#                    <div class="testimonial-slider-1 owl-carousel"> #}
+{#                        <div class="item"> #}
+{#                            <div class="single-testimonial-inner style-two text-center"> #}
+{#                                <div class="thumb main-thumb"> #}
+{#                                    <img src="assets/img/testimonial/1.png" alt="img"> #}
+{#                                </div> #}
+{#                                <div class="details"> #}
+{#                                    <h6 class="name">Sarif Jaya Miprut</h6> #}
+{#                                    <p>“consecte Lorem ipsum dolor sit amet, Lorem ipsum dolor amet, consecte Lorem #}
+{#                                        ipsum dolor sit adipisicing amet, consectetur sed do eiusmod tempor incididunt #}
+{#                                        dolore magna consecrem adipisicing ipsum dolor sit amet, consectetur #}
+{#                                        elit,’’ </p> #}
+{#                                    <div class="rating-inner"> #}
+{#                                        <i class="fas fa-star"></i> #}
+{#                                        <i class="fas fa-star"></i> #}
+{#                                        <i class="fas fa-star"></i> #}
+{#                                        <i class="fas fa-star"></i> #}
+{#                                        <i class="far fa-star" aria-hidden="true"></i> #}
+{#                                    </div> #}
+{#                                </div> #}
+{#                            </div> #}
+{#                        </div> #}
+{#                        <div class="item"> #}
+{#                            <div class="single-testimonial-inner style-two text-center"> #}
+{#                                <div class="thumb main-thumb"> #}
+{#                                    <img src="assets/img/testimonial/4.png" alt="img"> #}
+{#                                </div> #}
+{#                                <div class="details"> #}
+{#                                    <h6 class="name">Sarif Jaya Miprut</h6> #}
+{#                                    <p>“consecte Lorem ipsum dolor sit amet, Lorem ipsum dolor amet, consecte Lorem #}
+{#                                        ipsum dolor sit adipisicing amet, consectetur sed do eiusmod tempor incididunt #}
+{#                                        dolore magna consecrem adipisicing ipsum dolor sit amet, consectetur #}
+{#                                        elit,’’ </p> #}
+{#                                    <div class="rating-inner"> #}
+{#                                        <i class="fas fa-star"></i> #}
+{#                                        <i class="fas fa-star"></i> #}
+{#                                        <i class="fas fa-star"></i> #}
+{#                                        <i class="fas fa-star"></i> #}
+{#                                        <i class="far fa-star" aria-hidden="true"></i> #}
+{#                                    </div> #}
+{#                                </div> #}
+{#                            </div> #}
+{#                        </div> #}
+{#                    </div> #}
+{#                </div> #}
+{#            </div> #}
+{#        </div> #}
+{#    </div> #}
+{# </div> #}
 <!-- testimonial area end -->
 
 
 <!-- call-to-action area start -->
-<div class="cta-area bg-overlay pd-top-118 pd-bottom-120 text-center" style="background: url(assets/img/other/1.png);">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-8 col-lg-10">
-                <div class="section-title style-white mb-0">
-                    <h6>Buy Or Sell</h6>
-                    <h2>Submit Property</h2>
-                    <p>consecte Lorem ipsum dolor sit amet, Lorem ipsum dolor amet, consecte Lorem ipsum dolor sit
-                        adipisicing amet, consectetur sed do eiusmod tempor incididunt dolore magna consecrem
-                        adipisicing ipsum dolor sit amet, consectetur elit,</p>
-                </div>
-                <div class="btn-wrap mt-4 pt-3">
-                    <a class="btn btn-base mr-2" href="add-property.html">SUBMIT</a>
-                    <a class="btn btn-base ml-2" href="property-details.html">BUY NOW</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{# <div class="cta-area bg-overlay pd-top-118 pd-bottom-120 text-center" style="background: url(assets/img/other/1.png);"> #}
+{#    <div class="container"> #}
+{#        <div class="row justify-content-center"> #}
+{#            <div class="col-xl-8 col-lg-10"> #}
+{#                <div class="section-title style-white mb-0"> #}
+{#                    <h6>Buy Or Sell</h6> #}
+{#                    <h2>Submit Property</h2> #}
+{#                    <p>consecte Lorem ipsum dolor sit amet, Lorem ipsum dolor amet, consecte Lorem ipsum dolor sit #}
+{#                        adipisicing amet, consectetur sed do eiusmod tempor incididunt dolore magna consecrem #}
+{#                        adipisicing ipsum dolor sit amet, consectetur elit,</p> #}
+{#                </div> #}
+{#                <div class="btn-wrap mt-4 pt-3"> #}
+{#                    <a class="btn btn-base mr-2" href="add-property.html">SUBMIT</a> #}
+{#                    <a class="btn btn-base ml-2" href="property-details.html">BUY NOW</a> #}
+{#                </div> #}
+{#            </div> #}
+{#        </div> #}
+{#    </div> #}
+{# </div> #}
 <!-- call-to-action area end -->
 
 <!-- agent area start -->
-<div class="agent-area text-center pd-top-118 pd-bottom-90">
-    <div class="container">
-        <div class="section-title text-center">
-            <h6>Meet Our Agent</h6>
-            <h2>Our Best Agent</h2>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6">
-                <div class="single-agent-wrap">
-                    <div class="thumb">
-                        <img src="assets/img/agent/1.png" alt="img">
-                    </div>
-                    <div class="details">
-                        <h4>Sandara Mrikon</h4>
-                        <h6>Estate Agent</h6>
-                        <ul class="social-area style-2">
-                            <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="single-agent-wrap">
-                    <div class="thumb">
-                        <img src="assets/img/agent/2.png" alt="img">
-                    </div>
-                    <div class="details">
-                        <h4>Sarif Jaya Miprut</h4>
-                        <h6>Area Agent</h6>
-                        <ul class="social-area style-2">
-                            <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="single-agent-wrap">
-                    <div class="thumb">
-                        <img src="assets/img/agent/3.png" alt="img">
-                    </div>
-                    <div class="details">
-                        <h4>Jordan Smith</h4>
-                        <h6>Expart Agent</h6>
-                        <ul class="social-area style-2">
-                            <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{# <div class="agent-area text-center pd-top-118 pd-bottom-90"> #}
+{#    <div class="container"> #}
+{#        <div class="section-title text-center"> #}
+{#            <h6>Meet Our Agent</h6> #}
+{#            <h2>Our Best Agent</h2> #}
+{#        </div> #}
+{#        <div class="row justify-content-center"> #}
+{#            <div class="col-lg-4 col-md-6"> #}
+{#                <div class="single-agent-wrap"> #}
+{#                    <div class="thumb"> #}
+{#                        <img src="assets/img/agent/1.png" alt="img"> #}
+{#                    </div> #}
+{#                    <div class="details"> #}
+{#                        <h4>Sandara Mrikon</h4> #}
+{#                        <h6>Estate Agent</h6> #}
+{#                        <ul class="social-area style-2"> #}
+{#                            <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li> #}
+{#                            <li><a href="#"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a></li> #}
+{#                            <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li> #}
+{#                            <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li> #}
+{#                        </ul> #}
+{#                    </div> #}
+{#                </div> #}
+{#            </div> #}
+{#            <div class="col-lg-4 col-md-6"> #}
+{#                <div class="single-agent-wrap"> #}
+{#                    <div class="thumb"> #}
+{#                        <img src="assets/img/agent/2.png" alt="img"> #}
+{#                    </div> #}
+{#                    <div class="details"> #}
+{#                        <h4>Sarif Jaya Miprut</h4> #}
+{#                        <h6>Area Agent</h6> #}
+{#                        <ul class="social-area style-2"> #}
+{#                            <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li> #}
+{#                            <li><a href="#"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a></li> #}
+{#                            <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li> #}
+{#                            <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li> #}
+{#                        </ul> #}
+{#                    </div> #}
+{#                </div> #}
+{#            </div> #}
+{#            <div class="col-lg-4 col-md-6"> #}
+{#                <div class="single-agent-wrap"> #}
+{#                    <div class="thumb"> #}
+{#                        <img src="assets/img/agent/3.png" alt="img"> #}
+{#                    </div> #}
+{#                    <div class="details"> #}
+{#                        <h4>Jordan Smith</h4> #}
+{#                        <h6>Expart Agent</h6> #}
+{#                        <ul class="social-area style-2"> #}
+{#                            <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li> #}
+{#                            <li><a href="#"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a></li> #}
+{#                            <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li> #}
+{#                            <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li> #}
+{#                        </ul> #}
+{#                    </div> #}
+{#                </div> #}
+{#            </div> #}
+{#        </div> #}
+{#    </div> #}
+{# </div> #}
 <!-- agent area end -->
 
 <!-- client area start -->
-<div class="client-area client-area-pd bg-overlay pd-top-118" style="background: url(assets/img/other/1.png);">
-    <div class="container">
-        <div class="row justify-content-center text-lg-left text-center">
-            <div class="col-lg-9">
-                <div class="section-title style-white mb-0">
-                    <h6>Buy Or Sell</h6>
-                    <h2>Find Best Place For Leaving</h2>
-                    <p>Lorem ipsum dolor amet, consecteLorem ipsum dolor sit amet, consectetur adipisicing sed do
-                        eiusmod tempor incididunt dolore magna consecteLorem ipsum dolor sit amet, consectetur
-                        adipisicing elit,</p>
-                </div>
-            </div>
-            <div class="col-lg-3 align-self-end text-lg-right mt-4 mt-lg-0">
-                <a class="btn btn-base" href="#">SUBMIT</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="client-slider bg-main style-two owl-carousel">
-        <div class="item">
-            <div class="thumb">
-                <img src="assets/img/client/2.png" alt="img">
-            </div>
-        </div>
-        <div class="item">
-            <div class="thumb">
-                <img src="assets/img/client/3.png" alt="img">
-            </div>
-        </div>
-        <div class="item">
-            <div class="thumb">
-                <img src="assets/img/client/4.png" alt="img">
-            </div>
-        </div>
-        <div class="item">
-            <div class="thumb">
-                <img src="assets/img/client/5.png" alt="img">
-            </div>
-        </div>
-        <div class="item">
-            <div class="thumb">
-                <img src="assets/img/client/2.png" alt="img">
-            </div>
-        </div>
-    </div>
-</div>
+{# <div class="client-area client-area-pd bg-overlay pd-top-118" style="background: url(assets/img/other/1.png);"> #}
+{#    <div class="container"> #}
+{#        <div class="row justify-content-center text-lg-left text-center"> #}
+{#            <div class="col-lg-9"> #}
+{#                <div class="section-title style-white mb-0"> #}
+{#                    <h6>Buy Or Sell</h6> #}
+{#                    <h2>Find Best Place For Leaving</h2> #}
+{#                    <p>Lorem ipsum dolor amet, consecteLorem ipsum dolor sit amet, consectetur adipisicing sed do #}
+{#                        eiusmod tempor incididunt dolore magna consecteLorem ipsum dolor sit amet, consectetur #}
+{#                        adipisicing elit,</p> #}
+{#                </div> #}
+{#            </div> #}
+{#            <div class="col-lg-3 align-self-end text-lg-right mt-4 mt-lg-0"> #}
+{#                <a class="btn btn-base" href="#">SUBMIT</a> #}
+{#            </div> #}
+{#        </div> #}
+{#    </div> #}
+{# </div> #}
+{# <div class="container"> #}
+{#    <div class="client-slider bg-main style-two owl-carousel"> #}
+{#        <div class="item"> #}
+{#            <div class="thumb"> #}
+{#                <img src="assets/img/client/2.png" alt="img"> #}
+{#            </div> #}
+{#        </div> #}
+{#        <div class="item"> #}
+{#            <div class="thumb"> #}
+{#                <img src="assets/img/client/3.png" alt="img"> #}
+{#            </div> #}
+{#        </div> #}
+{#        <div class="item"> #}
+{#            <div class="thumb"> #}
+{#                <img src="assets/img/client/4.png" alt="img"> #}
+{#            </div> #}
+{#        </div> #}
+{#        <div class="item"> #}
+{#            <div class="thumb"> #}
+{#                <img src="assets/img/client/5.png" alt="img"> #}
+{#            </div> #}
+{#        </div> #}
+{#        <div class="item"> #}
+{#            <div class="thumb"> #}
+{#                <img src="assets/img/client/2.png" alt="img"> #}
+{#            </div> #}
+{#        </div> #}
+{#    </div> #}
+{# </div> #}
 <!-- client area end -->
 
 <!-- blog area start -->
-<div class="blog-area pd-top-118 pd-bottom-90">
-    <div class="container">
-        <div class="section-title text-center">
-            <h6>Blog & News</h6>
-            <h2>News Feads</h2>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6">
-                <div class="single-product-wrap style-bottom-radius">
-                    <div class="thumb">
-                        <img src="assets/img/project/10.png" alt="img">
-                    </div>
-                    <div class="product-details-inner">
-                        <ul class="meta-inner">
-                            <li><i class="fa fa-user"></i>By Admin</li>
-                            <li><i class="fa fa-calendar-alt"></i>Marce 9 , 2020</li>
-                        </ul>
-                        <h4><a href="blog-details.html">Family House</a></h4>
-                        <p>House ipsum dolor consectetur adipisicing elit, sed do eius Lorem ipsum dolo ame conse.</p>
-                        <a class="btn btn-base read-more" href="#"><i class="la la-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="single-product-wrap style-bottom-radius">
-                    <div class="thumb">
-                        <img src="assets/img/project/11.png" alt="img">
-                    </div>
-                    <div class="product-details-inner">
-                        <ul class="meta-inner">
-                            <li><i class="fa fa-user"></i>By Admin</li>
-                            <li><i class="fa fa-calendar-alt"></i>Marce 9 , 2020</li>
-                        </ul>
-                        <h4><a href="blog-details.html">Daily Apartment</a></h4>
-                        <p>Daily ipsum dolor consectetur adipisicing elit, sed do eius Lorem ipsum dolo ame conse.</p>
-                        <a class="btn btn-base read-more" href="#"><i class="la la-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="single-product-wrap style-bottom-radius">
-                    <div class="thumb">
-                        <img src="assets/img/project/12.png" alt="img">
-                    </div>
-                    <div class="product-details-inner">
-                        <ul class="meta-inner">
-                            <li><i class="fa fa-user"></i>By Admin</li>
-                            <li><i class="fa fa-calendar-alt"></i>Marce 9 , 2020</li>
-                        </ul>
-                        <h4><a href="blog-details.html">Hotel Resort</a></h4>
-                        <p>Resort ipsum dolor consectetur adipisicing elit, sed do eius Lorem ipsum dolo ame conse.</p>
-                        <a class="btn btn-base read-more" href="#"><i class="la la-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{# <div class="blog-area pd-top-118 pd-bottom-90"> #}
+{#    <div class="container"> #}
+{#        <div class="section-title text-center"> #}
+{#            <h6>Blog & News</h6> #}
+{#            <h2>News Feads</h2> #}
+{#        </div> #}
+{#        <div class="row justify-content-center"> #}
+{#            <div class="col-lg-4 col-md-6"> #}
+{#                <div class="single-product-wrap style-bottom-radius"> #}
+{#                    <div class="thumb"> #}
+{#                        <img src="assets/img/project/10.png" alt="img"> #}
+{#                    </div> #}
+{#                    <div class="product-details-inner"> #}
+{#                        <ul class="meta-inner"> #}
+{#                            <li><i class="fa fa-user"></i>By Admin</li> #}
+{#                            <li><i class="fa fa-calendar-alt"></i>Marce 9 , 2020</li> #}
+{#                        </ul> #}
+{#                        <h4><a href="blog-details.html">Family House</a></h4> #}
+{#                        <p>House ipsum dolor consectetur adipisicing elit, sed do eius Lorem ipsum dolo ame conse.</p> #}
+{#                        <a class="btn btn-base read-more" href="#"><i class="la la-arrow-right"></i></a> #}
+{#                    </div> #}
+{#                </div> #}
+{#            </div> #}
+{#            <div class="col-lg-4 col-md-6"> #}
+{#                <div class="single-product-wrap style-bottom-radius"> #}
+{#                    <div class="thumb"> #}
+{#                        <img src="assets/img/project/11.png" alt="img"> #}
+{#                    </div> #}
+{#                    <div class="product-details-inner"> #}
+{#                        <ul class="meta-inner"> #}
+{#                            <li><i class="fa fa-user"></i>By Admin</li> #}
+{#                            <li><i class="fa fa-calendar-alt"></i>Marce 9 , 2020</li> #}
+{#                        </ul> #}
+{#                        <h4><a href="blog-details.html">Daily Apartment</a></h4> #}
+{#                        <p>Daily ipsum dolor consectetur adipisicing elit, sed do eius Lorem ipsum dolo ame conse.</p> #}
+{#                        <a class="btn btn-base read-more" href="#"><i class="la la-arrow-right"></i></a> #}
+{#                    </div> #}
+{#                </div> #}
+{#            </div> #}
+{#            <div class="col-lg-4 col-md-6"> #}
+{#                <div class="single-product-wrap style-bottom-radius"> #}
+{#                    <div class="thumb"> #}
+{#                        <img src="assets/img/project/12.png" alt="img"> #}
+{#                    </div> #}
+{#                    <div class="product-details-inner"> #}
+{#                        <ul class="meta-inner"> #}
+{#                            <li><i class="fa fa-user"></i>By Admin</li> #}
+{#                            <li><i class="fa fa-calendar-alt"></i>Marce 9 , 2020</li> #}
+{#                        </ul> #}
+{#                        <h4><a href="blog-details.html">Hotel Resort</a></h4> #}
+{#                        <p>Resort ipsum dolor consectetur adipisicing elit, sed do eius Lorem ipsum dolo ame conse.</p> #}
+{#                        <a class="btn btn-base read-more" href="#"><i class="la la-arrow-right"></i></a> #}
+{#                    </div> #}
+{#                </div> #}
+{#            </div> #}
+{#        </div> #}
+{#    </div> #}
+{# </div> #}
 <!-- Blog area end -->
 
 <!-- footer area start -->
@@ -547,7 +620,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <a href="index.html"><img src="assets/img/logo.png" alt="img"></a>
+                    <a href="index.html"><img src="{{ asset ('assets/img/logo.png') }}" style="max-height: 100px"
+                                              alt="img"></a>
                 </div>
                 <div class="col-md-8 text-md-right mt-3 mt-md-0">
                     <ul class="social-area">
@@ -661,6 +735,20 @@
     <script src="{{ asset('assets/js/vendor.js') }}"></script>
     <!-- main js  -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    {#    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> #}
+    <!-- Calendar Start-->
+    <!-- Jquery JS-->
+    <script src="{{ asset('assets/calendar/vendor/jquery/jquery.min.js')}}"></script>
+    <!-- Vendor JS-->
+    <script src="{{ asset('assets/calendar/vendor/select2/select2.min.js')}}"></script>
+    <script src="{{ asset('assets/calendar/vendor/jquery-validate/jquery.validate.min.js')}}"></script>
+    <script src="{{ asset('assets/calendar/vendor/bootstrap-wizard/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('assets/calendar/vendor/bootstrap-wizard/jquery.bootstrap.wizard.min.js')}}"></script>
+    <script src="{{ asset('assets/calendar/vendor/datepicker/moment.min.js')}}"></script>
+    <script src="{{ asset('assets/calendar/vendor/datepicker/daterangepicker.js')}}"></script>
+    <!-- Main JS-->
+    <script src="{{ asset('assets/calendar/js/global.js')}}"></script>
+    <!-- Calendar End-->
 {% endblock %}
 </body>
 </html>

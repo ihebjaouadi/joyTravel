@@ -42,6 +42,41 @@
             </li>
 
         </ul>
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="{{ path('app_hotel_new') }}" class="nav-link
+                    {% if _route == 'app_hotel_new' or
+                    _route == 'app_chambres_index_admin' %}active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Chambres
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="{{ path('app_rapport_blog_post_index') }}" class="nav-link
+                    {% if _route == 'app_rapport_blog_post_index' %}active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Posts Signales
+                    </p>
+                </a>
+            </li>
+
+        </ul>
     </nav>
     <!-- /.sidebar-menu -->
 </div>

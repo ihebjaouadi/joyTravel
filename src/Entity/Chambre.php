@@ -25,9 +25,9 @@ class Chambre
     private $Type;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="float")
      */
-    private $Disponibilite;
+    private $Prixnuite;
 
     /**
      * @ORM\ManyToOne(targetEntity=Hotel::class, inversedBy="chambres")
@@ -40,15 +40,16 @@ class Chambre
      */
     private $equipements;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Disponibilite::class, mappedBy="ID_chambre", orphanRemoval=true)
-     */
-    private $disponibilites;
+//    /**
+//     * @ORM\OneToMany(targetEntity=Disponibilite::class, mappedBy="ID_chambre", orphanRemoval=true)
+//     */
+//    private $disponibilites;
 
     /**
-     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="ID_chambre", orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity=Reservation::class, mappedBy="ID_chambre")
      */
     private $reservations;
+
 
     public function __construct()
     {
@@ -74,14 +75,14 @@ class Chambre
         return $this;
     }
 
-    public function getDisponibilite(): ?int
+    public function getPrixnuite(): ?float
     {
-        return $this->Disponibilite;
+        return $this->Prixnuite;
     }
 
-    public function setDisponibilite(int $Disponibilite): self
+    public function setPrixnuite(float $Prix): self
     {
-        $this->Disponibilite = $Disponibilite;
+        $this->Prixnuite = $Prix;
 
         return $this;
     }
@@ -128,35 +129,35 @@ class Chambre
         return $this;
     }
 
-    /**
-     * @return Collection<int, Disponibilite>
-     */
-    public function getDisponibilites(): Collection
-    {
-        return $this->disponibilites;
-    }
+//    /**
+//     * @return Collection<int, Disponibilite>
+//     */
+//    public function getDisponibilites(): Collection
+//    {
+//        return $this->disponibilites;
+//    }
 
-    public function addDisponibilite(Disponibilite $disponibilite): self
-    {
-        if (!$this->disponibilites->contains($disponibilite)) {
-            $this->disponibilites[] = $disponibilite;
-            $disponibilite->setIDChambre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDisponibilite(Disponibilite $disponibilite): self
-    {
-        if ($this->disponibilites->removeElement($disponibilite)) {
-            // set the owning side to null (unless already changed)
-            if ($disponibilite->getIDChambre() === $this) {
-                $disponibilite->setIDChambre(null);
-            }
-        }
-
-        return $this;
-    }
+//    public function addDisponibilite(Disponibilite $disponibilite): self
+//    {
+//        if (!$this->disponibilites->contains($disponibilite)) {
+//            $this->disponibilites[] = $disponibilite;
+//            $disponibilite->setIDChambre($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeDisponibilite(Disponibilite $disponibilite): self
+//    {
+//        if ($this->disponibilites->removeElement($disponibilite)) {
+//            // set the owning side to null (unless already changed)
+//            if ($disponibilite->getIDChambre() === $this) {
+//                $disponibilite->setIDChambre(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
 
     /**
      * @return Collection<int, Reservation>
@@ -170,7 +171,7 @@ class Chambre
     {
         if (!$this->reservations->contains($reservation)) {
             $this->reservations[] = $reservation;
-            $reservation->setIDChambre($this);
+            $reservation->addIDChambre($this);
         }
 
         return $this;
@@ -179,12 +180,10 @@ class Chambre
     public function removeReservation(Reservation $reservation): self
     {
         if ($this->reservations->removeElement($reservation)) {
-            // set the owning side to null (unless already changed)
-            if ($reservation->getIDChambre() === $this) {
-                $reservation->setIDChambre(null);
-            }
+            $reservation->removeIDChambre($this);
         }
 
         return $this;
     }
+
 }

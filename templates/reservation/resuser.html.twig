@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block Stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/css/reservation.css') }}">
+{% endblock %}
+{% block title %}Reservation Par User{% endblock %}
+
+{% block body %}
+<table class="table">
+    <th>ID</th>
+    <th>Date Arrivée</th>
+    <th>Date Départ</th>
+{% for r in reservations %}
+    <tr>
+    <td>{{ r.id }}</td>
+<td>{{ r.getDateArrivee | date('Y-m-d') }}</td>
+<td>{{ r.getDateDepart | date('Y-m-d')}}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}

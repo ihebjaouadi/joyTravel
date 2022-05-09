@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Chambre;
+use App\Entity\Hotel;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,8 +15,11 @@ class ChambreType extends AbstractType
     {
         $builder
             ->add('Type')
-            ->add('Disponibilite')
-            ->add('ID_hotel')
+            ->add('Prixnuite')
+            ->add('ID_hotel', EntityType::class,[
+                'class'=>Hotel::class,
+                'choice_label'=>'Nom'
+            ])
         ;
     }
 
