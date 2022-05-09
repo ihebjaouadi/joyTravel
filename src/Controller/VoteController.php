@@ -80,6 +80,7 @@ class VoteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $vote->setIDUser($this->getUser());
             $voteRepository->add($vote);
             return $this->redirectToRoute('app_vote_index', [], Response::HTTP_SEE_OTHER);
         }

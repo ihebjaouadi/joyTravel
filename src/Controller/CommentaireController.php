@@ -118,7 +118,7 @@ class CommentaireController extends AbstractController
                 ], 403);
             }
             // chercher si l'utilisateur connecté a dèja liker un commentaire
-            $isLiked = $manager->getRepository('App:Postlike')->findBy(['Post' => $commentaire->getId(), 'user' => $user]);
+            $isLiked = $manager->getRepository(Postlike::class)->findBy(['Post' => $commentaire->getId(), 'user' => $user]);
             // si oui on va disliker le commentaire en supprimant le Like depuis la table like
             if ($isLiked) {
                 $like = $repository->findOneBy(['user' => $user->getId(), 'Post' => $commentaire->getId()]);
@@ -139,8 +139,8 @@ class CommentaireController extends AbstractController
                 $manager->persist($like);// pour alimenter l'objet
                 $manager->flush();// pour ajouter une ligne dans la base
             }
-            $likes = $manager->getRepository('App:Postlike')->findBy(['Post' => $commentaire->getId()]);
-            $isLiked = $manager->getRepository('App:Postlike')->findBy(['Post' => $commentaire->getId(), 'user' => $user]);
+            $likes = $manager->getRepository(Postlike::class)->findBy(['Post' => $commentaire->getId()]);
+            $isLiked = $manager->getRepository(Postlike::class)->findBy(['Post' => $commentaire->getId(), 'user' => $user]);
             // on charge la meme page avec le meme contenu de la form pour mettre à jour les données
             $html = $this->renderView('hotel/likeAjaxhtml.twig',
                 [

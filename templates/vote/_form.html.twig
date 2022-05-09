@@ -1,4 +1,41 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+{{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+<form class="single-property-comment-form">
+    <div class="single-property-grid bg-black">
+        <div class="single-property-form-title">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>Post Your Vote</h4>
+                </div>
+                <div class="col-md-4 text-md-right">
+                    <div class="ratting-inner">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="single-input-inner style-bg">
+                <span class="label">Entrer Votre Vote</span>
+                {{ form_widget(form.vote) }}
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-14">
+                <div class="single-input-inner style-bg">
+                    <span class="label">Entrer l'hotel a voter</span>
+                    {{ form_widget(form.ID_hotel) }}
+                </div>
+            </div>
+            <div class="col-12 ">
+                <button class="btn btn-base radius-btn">Voter</button>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
