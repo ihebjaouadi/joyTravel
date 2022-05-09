@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="breadcrumb-area bg-overlay-2" style="background-image:url({{ asset('assets/img/other/4.png') }})">
+        <div class="container">
+            <div class="breadcrumb-inner">
+                <div class="section-title text-center">
+                    <h2 class="page-title">Add Property</h2>
+                    <ul class="page-list">
+                        <li><a href="index.html">Home</a></li>
+                        <li>Add Property</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb end -->
+
+    <!-- add-property Start -->
+    <div class="add-property-area pd-top-120">
+        <div class="container">
+            {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+            <div class="btn btn-base hover-none">Basic Information</div>
+            <div class="property-form-grid">
+                <div class="row">
+                    <div class="col-12">
+                        <label class="single-input-inner style-bg-border">
+                            <span class="label">Body</span>
+                            {{ form_widget(form.Body) }}
+                            {{ form_errors(form.Body,{'attr':{'class': 'text-danger'}}) }}
+                        </label>
+
+                        <div class="form-group">
+                            <div>
+                                <label class="col-sm-2 col-form-label">hotels</label>
+                            </div>
+
+                            {{ form_widget( form.ID_hotel ,{'attr':{'class': 'form-control','placeholder':'ecrire reclamation'}}) }}
+
+                        </div>
+                        <div class="col-12 text-center mb-4">
+                            <button class="btn btn-base">Envoyer</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            {{ form_end(form) }}
+
+
+        </div>
+    </div>
+{% endblock %}

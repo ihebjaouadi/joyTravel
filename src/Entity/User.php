@@ -23,6 +23,9 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -33,6 +36,12 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @Assert\NotBlank(message="mot de passe doit etre non vide")
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 20,
+     *      minMessage = "doit etre >=7 ",
+     *      maxMessage = "doit etre <=20" )
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -74,6 +83,11 @@ class User implements UserInterface
     private $chats;
 
     /**
+     * @ORM\OneToMany(targetEntity=Postlike::class, mappedBy="user")
+     */
+
+    private $likes;
+    /**
      * @ORM\OneToMany(targetEntity=BlogPost::class, mappedBy="user", orphanRemoval=true)
      */
     private $blogPosts;
@@ -98,6 +112,7 @@ class User implements UserInterface
         $this->blogPosts = new ArrayCollection();
         $this->blogCommentaires = new ArrayCollection();
         $this->postLikes = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -364,6 +379,10 @@ class User implements UserInterface
 
         return $this;
     }
+    public function __toString()
+    {
+        return (string)$this->getUsername();
+    }
 
     /**
      * @return Collection<int, BlogPost>
@@ -449,6 +468,35 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($postLike->getUser() === $this) {
                 $postLike->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+    /**
+     * @return Collection<int, Postlike>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Postlike $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Postlike $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
             }
         }
 

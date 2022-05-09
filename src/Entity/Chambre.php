@@ -20,12 +20,20 @@ class Chambre
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage=" Entrer un titre au mini de 2 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="string", length=255)
      */
     private $Type;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message=" prix ne doit pas etre vide")
+     * @Assert\GreaterThan(value = 0)
      */
     private $Prixnuite;
 
@@ -54,7 +62,7 @@ class Chambre
     public function __construct()
     {
         $this->equipements = new ArrayCollection();
-        $this->disponibilites = new ArrayCollection();
+//        $this->disponibilites = new ArrayCollection();
         $this->reservations = new ArrayCollection();
     }
 
@@ -184,6 +192,10 @@ class Chambre
         }
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->getType();
     }
 
 }

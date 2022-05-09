@@ -1,0 +1,43 @@
+{% extends 'baseBackOffice.html.twig' %}
+{% block title %} Statistiques {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
+          integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+{% endblock %}
+{% block body %}
+    <div class="container" style="display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;">
+        <h1>statistiques</h1>
+        <canvas id="vote" width="1085" height="417" style="display: block;
+    "></canvas>
+
+    </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+            integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+        let vote = document.querySelector("#vote");
+        let voteGraph = new Chart(vote, {
+            type: "pie",
+            data: {
+                labels: {{ vvvote|raw }},
+                datasets: [{
+                    label: "Repartition des votes",
+                    data: {{ vvote }},
+                    backgroundColor: ["red", "green", "blue", "black"],
+                }]
+            }
+        })
+    </script>
+{% endblock %}

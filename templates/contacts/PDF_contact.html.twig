@@ -1,0 +1,45 @@
+<div class="card card-info">
+    <div class="card-header">
+        <img src="uploads/images/logo.png" width="250" height="150">
+        <h1 class="card-title" align="center" style="color: #00a87d">Liste des Reclamations</h1>
+
+    </div>
+</div>
+
+<table class="table" border="1" align="center">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Body</th>
+        <th>Statue</th>
+        <th>User</th>
+        <th>Hotel</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for contact in contacts %}
+        <tr>
+            <td>{{ contact.id }}</td>
+            <td>{{ contact.body }}</td>
+            <td>  {% if(contact.statue == 0) %}
+                    Non traité
+                {% elseif(contact.statue==1) %}
+                    traité
+                {% else %}
+                    en cours de traitement
+                {% endif %}
+            </td>
+
+            <td>{{ contact.IDUser }}</td>
+            <td>{{ contact.IDhotel }}</td>
+
+
+        </tr>
+
+
+    {% endfor %}
+    </tbody>
+</table>
+
+

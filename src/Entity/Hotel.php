@@ -6,6 +6,7 @@ use App\Repository\HotelRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=HotelRepository::class)
@@ -20,37 +21,92 @@ class Hotel
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage=" Entrer un titre au mini de 2 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="string", length=255)
+
      */
     private $Nom;
+    /**
+     * @Assert\NotBlank(message=" Description doit etre non vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage=" Entrer un titre au mini de 2 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="text",nullable=true)
+     */
+    private $description;
+
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage=" Entrer un titre au mini de 2 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="string", length=255)
+
      */
     private $Adresse;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage=" Entrer un titre au mini de 2 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="string", length=255)
+
      */
     private $Ville;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage=" Entrer un titre au mini de 2 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="string", length=255)
+
      */
     private $Code_postal;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage=" Entrer un titre au mini de 4 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="string", length=255)
+
      */
     private $Complement_adresse;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage=" Entrer un titre au mini de 2 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="string", length=255)
+
      */
     private $Pays;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @ORM\Column(type="string", length=255)
+
      */
     private $Nb_etoile;
 
@@ -134,12 +190,12 @@ class Hotel
         return $this;
     }
 
-    public function getCodePostal(): ?int
+    public function getCodePostal()
     {
         return $this->Code_postal;
     }
 
-    public function setCodePostal(?int $Code_postal): self
+    public function setCodePostal($Code_postal): self
     {
         $this->Code_postal = $Code_postal;
 
@@ -348,4 +404,33 @@ class Hotel
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return (string)$this->getNom();
+    }
+
+
+    public function getFulladress()
+    {
+        return $this->getAdresse() . ', ' . $this->getComplementAdresse() . ', ' . $this->getCodePostal() . ', ' . $this->getVille() . ', Tunisie';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
+    }
+
+
 }
