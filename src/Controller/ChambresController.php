@@ -21,6 +21,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChambresController extends AbstractController
 {
     /**
+     * @Route("/", name="app_chambres_index", methods={"GET"})
+     */
+    public function index(ChambreRepository $chambreRepository): Response
+    {
+        return $this->render('chambres/index.html.twig', [
+            'chambres' => $chambreRepository->findAll(),
+        ]);
+    }
+
+    /**
      * @param Request $request
      * @Route("/test/{id}/{dateA}/{dateD}/{type}",name="test")
      */
@@ -43,27 +53,9 @@ class ChambresController extends AbstractController
     /**
      * @Route("/admin", name="app_chambres_index_admin", methods={"GET"})
      */
-    public function index(ChambreRepository $chambreRepository): Response
+    public function indexAdmin(ChambreRepository $chambreRepository): Response
     {
-        $chs = $chambreRepository->chambresDispo();
-//        $chambres = $chambreRepository->estDisponible(date_create('2022-04-20'), date_create('2022-04-25'));
-//        dump($chambres);
-//        dump($chambreRepository->findAll());
         return $this->render('chambres/indexAdmin.html.twig', [
-            'chambres' => $chambreRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/", name="app_chambres_index", methods={"GET"})
-     */
-    public function indexUser(ChambreRepository $chambreRepository): Response
-    {
-        $chs = $chambreRepository->chambresDispo();
-//        $chambres = $chambreRepository->estDisponible(date_create('2022-04-20'), date_create('2022-04-25'));
-//        dump($chambres);
-//        dump($chambreRepository->findAll());
-        return $this->render('chambres/index.html.twig', [
             'chambres' => $chambreRepository->findAll(),
         ]);
     }
@@ -239,7 +231,6 @@ class ChambresController extends AbstractController
     {
         $dateA = $request->request->get('dateA');
         $dateD = $request->request->get('dateD');
-        dd($dateA, $dateD);
         $hotels = $hotelRepository->findAll();
         $chambresParHotel = array();
         foreach ($hotels as $h) {
