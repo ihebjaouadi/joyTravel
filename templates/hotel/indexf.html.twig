@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}liste des hotels{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper--w1070">
+        <div class="card card-7">
+            <div class="card-body">
+                {{ form_start(recherche,{'attr':{'class':'form'}}) }}
+                <div class="input-group input--medium">
+                    <label class="label">Check-In</label>
+                    {{ form_widget(recherche.dateA,{'attr':{'class':'input--style-1','id':'input-start','name':'checkin','placeholder':'dd/mm/yyyy'}}) }}
+                </div>
+                <div class="input-group input--medium">
+                    <label class="label">Check-Out</label>
+                    {{ form_widget(recherche.dateD,{'attr':{'class':'input--style-1','id':'input-end','name':'checkout','placeholder':'dd/mm/yyyy'}}) }}
+                </div>
+                <div class="input-group input--medium" style="height: 112px">
+                    {#                <div class="col-md-3">#}
+                    {#                    <div class="single-select-inner">#}
+                    {{ form_widget(recherche.typeChambre) }}
+                    {#                    </div>#}
+                    {#                </div>#}
+                </div>
+                {#    <div class="page-wrapper bg-color-1 p-t-395 p-b-120"> #}
+                {#        <div class="wrapper wrapper--w1070"> #}
+                {#            <div class="card card-7"> #}
+                {#                <div class="card-body"> #}
+                {#                    <form class="form" method="POST" action="#"> #}
+                {#                        <div class="input-group input--large"> #}
+                {#                            <label class="label">going to</label> #}
+                {#                            <input class="input--style-1" type="text" placeholder="Destination, hotel name" name="going"> #}
+                {#                        </div> #}
+                {#                        <div class="input-group input--medium"> #}
+                {#                            <label class="label">Check-In</label> #}
+                {#                            <input class="input--style-1" type="text" name="checkin" placeholder="mm/dd/yyyy" id="input-start"> #}
+                {#                        </div> #}
+                {#                        <div class="input-group input--medium"> #}
+                {#                            <label class="label">Check-Out</label> #}
+                {#                            <input class="input--style-1" type="text" name="checkout" placeholder="mm/dd/yyyy" id="input-end"> #}
+                {#                        </div> #}
+                {#                        <div class="input-group input--medium"> #}
+                {#                            <label class="label">guests</label> #}
+                {#                            <div class="input-group-icon js-number-input"> #}
+                {#                                <div class="icon-con"> #}
+                {#                                    <span class="plus">+</span> #}
+                {#                                    <span class="minus">-</span> #}
+                {#                                </div> #}
+                {#                                <input class="input--style-1 quantity" type="text" name="guests" value="2 Guests"> #}
+                {#                            </div> #}
+                {#                        </div> #}
+                {#                        <button class="btn-submit" type="submit">search</button> #}
+                {#                    </form> #}
+                {#                </div> #}
+                {#            </div> #}
+                {#        </div> #}
+                {#    </div> #}
+                {{ form_end(recherche) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="product-area pd-top-118 pd-bottom-90">
+        <div class="container">
+            <div class="section-title text-center">
+                <h6>We are offring the best Deal</h6>
+                <h2>Best Hotel For You</h2>
+            </div>
+            <div class="row justify-content-center">
+                {% for hotel in hotels %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-product-wrap">
+                            <div class="thumb">
+                                {% for image in hotel.images %}
+                                    {% if loop.first %}
+                                        <img width="1000" height="300"
+                                             src="{{ asset('uploads/images/'~ image.chemain) }}" alt="img">
+                                    {% endif %}
+                                {% endfor %}
+                                {#                                <a class="cat" href="{{ path('test',{'id':hotel.id}) }}">Voir les dètails</a>#}
+                                <a class="cat" href="#">Voir les dètails</a>
+                            </div>
+                            <div class="product-wrap-details">
+                                <div class="media">
+                                    <div class="author">
+                                        <img src="{{ asset('assets/img/author/1.png') }}" alt="img">
+                                    </div>
+                                    <div class="media-body">
+                                        <h6><a href="#">Owner Name</a></h6>
+                                        <p><img src="{{ asset('assets/img/icon/location-alt.png') }}" alt="img">
+                                            {{ hotel.adresse }},
+                                            {% if  hotel.complementAdresse %}
+                                                {{ hotel.complementAdresse }},
+                                            {% endif %}
+                                            {{ hotel.codePostal }}, {{ hotel.ville }}
+                                        </p>
+                                    </div>
+                                    <a class="fav-btn float-right" href="#"><i class="far fa-heart"></i></a>
+                                </div>
+                                <div class="product-meta">
+                                    <span class="price">DT 500</span>
+                                    <div class="float-right d-inline-block">
+                                        <ul>
+                                            <li><img src="{{ asset('assets/img/icon/triangle.png') }}" alt="img">2</li>
+                                            <li><img src="{{ asset('assets/img/icon/bed.png') }}" alt="img">3</li>
+                                            <li><img src="{{ asset('assets/img/icon/wall.png') }}" alt="img">1026 sq ft
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

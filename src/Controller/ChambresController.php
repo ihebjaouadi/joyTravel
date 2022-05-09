@@ -41,7 +41,7 @@ class ChambresController extends AbstractController
         } else {
             $chambres = $chambreRepository->chambresDispoParHotelTypeChambre($hotelRepository->find($id)->getId(), $dateA, $dateD, $type);
         }
-        return $this->render('chambres/index.html.twig',
+        return $this->render('chambres/indexF.html.twig',
             ['chambres' => $chambres,
                 'dateA' => $dateA,
                 'dateD' => $dateD,
@@ -292,9 +292,9 @@ class ChambresController extends AbstractController
      */
     public function delete(Request $request, Chambre $chambre, ChambreRepository $chambreRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $chambre->getId(), $request->request->get('_token'))) {
-            $chambreRepository->remove($chambre);
-        }
+        $chambreRepository->remove($chambre);
+        $this->addFlash('success', 'Chambre supprimée avec succes');
+
 
         return $this->redirectToRoute('app_chambres_index', [], Response::HTTP_SEE_OTHER);
     }
