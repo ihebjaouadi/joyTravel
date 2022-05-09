@@ -12,7 +12,7 @@
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
-    <section class="content">
+    <section class="content"><<<
         <div class="container-fluid">
             {{ include('hotel/_form.html.twig') }}
         </div>
@@ -20,5 +20,7 @@
 
 
 
-    <a href="{{ path('app_hotel_index') }}">back to list</a>
+    <a href="{{ path('app_hotel_index') }}">
+        <button class="btn btn-success pull-right">{{ button_label|default('Back to list') }}</button>
+    </a>
 {% endblock %}

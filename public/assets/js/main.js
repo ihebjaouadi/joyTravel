@@ -134,7 +134,7 @@
                     youtube: {
                         index: 'youtube.com/',
                         id: 'v=',
-                        src: 'https://www.youtube.com/embed/Wimkqo8gDZ0'
+                        src: 'https://www.youtube.com/embed/B4sga00ixy0'
                     }
                 }
             }

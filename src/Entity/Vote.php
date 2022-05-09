@@ -23,13 +23,13 @@ class Vote
     private $vote;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="vote", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="vote")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ID_user;
 
     /**
-     * @ORM\OneToOne(targetEntity=Hotel::class, inversedBy="vote", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Hotel::class, inversedBy="vote")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ID_hotel;

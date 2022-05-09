@@ -8,6 +8,9 @@
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet"
               href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+         <!-- toggle-switch -->
+         <link  rel="stylesheet" 
+               href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" >
         <!-- Font Awesome -->
         <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
         <!-- Ionicons -->
@@ -18,7 +21,6 @@
         <!-- iCheck -->
         <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
         <!-- JQVMap -->
-        <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
         <!-- Theme style -->
         <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
         <!-- overlayScrollbars -->
@@ -27,19 +29,21 @@
         <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+        <link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     {% endblock %}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
     <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60"
-             width="60">
-    </div>
+    {#    <div class="preloader flex-column justify-content-center align-items-center"> #}
+    {#        <img class="animation__shake" src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" #}
+    {#             width="60"> #}
+    {#    </div> #}
 
     <!-- Navbar -->
-   {% include 'Layouts/header.twig' %}
+    {% include 'Layouts/header.twig' %}
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -60,6 +64,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         {% block body %}
+
         {% endblock %}
         <!-- /.content -->
     </div>
@@ -93,6 +98,7 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- ChartJS -->
     <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
     <!-- Sparkline -->
     <script src="{{ asset('plugins/sparklines/sparkline.js') }}"></script>
     <!-- JQVMap -->
@@ -101,12 +107,9 @@
     <!-- jQuery Knob Chart -->
     <script src="{{ asset('plugins/jquery-knob/jquery.knob.min.js') }}"></script>
     <!-- daterangepicker -->
-    <script src="{{ asset('plugins/moment/locales.min.js') }}"></script>
-    <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <!-- Summernote -->
-    <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
     <!-- overlayScrollbars -->
     <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
@@ -115,6 +118,93 @@
     <script src="{{ asset('dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+            $('.table').DataTable();
+        });
+    </script>
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1M9BTlyXVlMZ4Hqojzm16RJu1Bm9VEIc&callback=initAutocomplete&libraries=places&v=weekly"
+            async
+    ></script>
+    <script>
+        let autocomplete;
+        let address1Field;
+        let address2Field;
+        let postalField;
+            //https://developers.google.com/maps/documentation/javascript/places-autocomplete#javascript_2
+        function initAutocomplete() {
+            address1Field = document.querySelector(".address");
+            address2Field = document.querySelector(".address2");
+            postalField = document.querySelector(".postcode");
+            // Create the autocomplete object, restricting the search predictions to
+            // addresses in the US and Canada.
+            autocomplete = new google.maps.places.Autocomplete(address1Field, {
+                componentRestrictions: {country: ["tn"]},
+                fields: ["address_components", "geometry"],
+                types: ["address"],
+            });
+            // address1Field.focus();
+            // When the user selects an address from the drop-down, populate the
+            // address fields in the form.
+            autocomplete.addListener("place_changed", fillInAddress);
+        }
+
+        function fillInAddress() {
+            // Get the place details from the autocomplete object.
+            const place = autocomplete.getPlace();
+            let address1 = "";
+            let postcode = "";
+
+            // Get each component of the address from the place details,
+            // and then fill-in the corresponding field on the form.
+            // place.address_components are google.maps.GeocoderAddressComponent objects
+            // which are documented at http://goo.gle/3l5i5Mr
+            for (const component of place.address_components) {
+                const componentType = component.types[0];
+
+                switch (componentType) {
+                    case "street_number": {
+                        address1 = `${component.long_name} ${address1}`;
+                        break;
+                    }
+
+                    case "route": {
+                        address1 += component.short_name;
+                        break;
+                    }
+
+                    case "postal_code": {
+                        postcode = `${component.long_name}${postcode}`;
+                        break;
+                    }
+
+                    case "postal_code_suffix": {
+                        postcode = `${postcode}-${component.long_name}`;
+                        break;
+                    }
+                    case "locality":
+                        document.querySelector(".locality").value = component.long_name;
+                        break;
+
+                    case "country":
+                        document.querySelector(".country").value = component.long_name;
+                        break;
+                }
+            }
+
+            address1Field.value = address1;
+            postalField.value = postcode;
+            // After filling the form with address components from the Autocomplete
+            // prediction, set cursor focus on the second address line to encourage
+            // entry of subpremise information such as apartment, unit, or floor number.
+            address2Field.focus();
+        }
+    </script>
 {% endblock %}
 </body>
 </html>

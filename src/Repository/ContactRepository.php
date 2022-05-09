@@ -45,6 +45,22 @@ class ContactRepository extends ServiceEntityRepository
         }
     }
 
+    public function searchHotel($statue)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.statue LIKE :ncl')
+            ->setParameter('ncl', $statue . '%')
+            ->getQuery()
+            ->execute();
+    }
+
+    public function orderByHotel()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.ID_hotel', 'ASC')
+            ->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Contact[] Returns an array of Contact objects
     //  */

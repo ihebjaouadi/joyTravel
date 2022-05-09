@@ -45,6 +45,17 @@ class VoteRepository extends ServiceEntityRepository
         }
     }
 
+    public function getVoteCount()
+    {
+        $qb = $this->_em->createQueryBuilder()
+            ->addSelect('count(v.vote)')
+            ->addSelect('v.vote')
+            ->from('App\Entity\Vote', 'v')
+            ->groupBy('v.vote');
+        return $qb->getQuery()->getResult();
+
+    }
+
     // /**
     //  * @return Vote[] Returns an array of Vote objects
     //  */

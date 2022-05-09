@@ -29,9 +29,13 @@
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <li class="nav-item">
-                <a href="{{ path('app_hotel_new') }}" class="nav-link
+                <a href="{{ path('app_hotel_admin_index') }}" class="nav-link
                     {% if _route == 'app_hotel_new' or
-                    _route == 'app_hotel_index' %}active
+                    _route == 'app_hotel_index' or
+                    _route == 'app_hotel_edit' or
+                    _route == 'app_hotel_admin_index' %}
+
+                    active
                     {% endif %}
                     ">
                     <i class="nav-icon fas fa-th"></i>
@@ -43,5 +47,148 @@
 
         </ul>
     </nav>
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="{{ path('app_chambres_index') }}" class="nav-link
+                    {% if _route == 'app_chambres_index' or
+                    _route == 'app_chambres_edit'  %}
+
+                    active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Chambres
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="{{ path('app_hotel_statistique') }}" class="nav-link
+                    {% if _route == 'app_hotel_statistique'  %}
+
+                    active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Statistiques
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
     <!-- /.sidebar-menu -->
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+
+            <li class="nav-item">
+                <a href="{{ path('app_UserList') }}" class="nav-link
+                    {% if _route == 'app_UserList' or
+                    _route == 'app_UserList' %}active
+
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        User
+
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+
+
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+
+                <a href="{{ path('app_contacts_index') }}" class="nav-link
+                    {% if _route == 'app_contacts_index' or
+                    _route == 'app_contacts_index' %}active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Reclamation
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="{{ path('app_vote_index') }}" class="nav-link
+                    {% if _route == 'app_vote_index' or
+                    _route == 'app_vote_index' %}active
+                    {% endif %}
+                    ">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+
+                        Vote
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                                <a href="{{ path('app_equipement_new') }}" class="nav-link
+                                                    {% if _route == 'app_equipement_new' or
+                                    _route == 'app_equipement_index' %}active
+                                                    {% endif %}
+                                                    ">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Equipement
+                                    </p>
+                                </a>
+
+
+            </li>
+
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+
+
 </div>
