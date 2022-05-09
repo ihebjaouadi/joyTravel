@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Commentaire;
-use App\Entity\Postlike;
+use App\Entity\PostLike;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
-use App\Repository\PostlikeRepository;
+use App\Repository\PostLikeRepository;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -101,11 +101,11 @@ class CommentaireController extends AbstractController
      * @Route("/{id}/like", name="commentaire_like", methods={"GET","POST"})
      *
      * @param Commentaire $commentaire
-     * @param PostlikeRepository $repository
+     * @param PostLikeRepository $repository
      * @return Response
      */
 
-    public function like(Commentaire $commentaire, PostlikeRepository $repository, Request $request): Response
+    public function like(Commentaire $commentaire, PostLikeRepository $repository, Request $request): Response
     {
         if ($request->isXmlHttpRequest()) {
             $manager = $this->getDoctrine()->getManager();
@@ -118,7 +118,8 @@ class CommentaireController extends AbstractController
                 ], 403);
             }
             // chercher si l'utilisateur connecté a dèja liker un commentaire
-            $isLiked = $manager->getRepository(Postlike::class)->findBy(['Post' => $commentaire->getId(), 'user' => $user]);
+            $isLiked = $manager->getRepository(PostLike::class)->findBy(['Post' => $commentaire->getId(), 'user' => $user]);
+
             // si oui on va disliker le commentaire en supprimant le Like depuis la table like
             if ($isLiked) {
                 $like = $repository->findOneBy(['user' => $user->getId(), 'Post' => $commentaire->getId()]);
@@ -130,7 +131,7 @@ class CommentaireController extends AbstractController
 
             } else {
                 //si l'utilisateur n'a jamais licker ce commentaire, on ajoute une ligne dans la table like
-                $like = new Postlike();
+                $like = new PostLike();
                 $like
                     ->setPost($commentaire)
                     ->setUser($user)
@@ -139,8 +140,9 @@ class CommentaireController extends AbstractController
                 $manager->persist($like);// pour alimenter l'objet
                 $manager->flush();// pour ajouter une ligne dans la base
             }
-            $likes = $manager->getRepository(Postlike::class)->findBy(['Post' => $commentaire->getId()]);
-            $isLiked = $manager->getRepository(Postlike::class)->findBy(['Post' => $commentaire->getId(), 'user' => $user]);
+            $likes = $manager->getRepository(PostLike::class)->findBy(['Post' => $commentaire->getId()]);
+            $isLiked = $manager->getRepository(PostLike::class)->findBy(['Post' => $commentaire->getId(), 'user' => $user]);
+
             // on charge la meme page avec le meme contenu de la form pour mettre à jour les données
             $html = $this->renderView('hotel/likeAjaxhtml.twig',
                 [

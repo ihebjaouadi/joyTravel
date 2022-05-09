@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BlogCommentaires{% endblock %}
+
+{% block body %}
+    <h1>BlogCommentaires</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ blog_commentaire.id }}</td>
+            </tr>
+                <th>Post</th>
+            <td>{{ blog_commentaire.getPost.getTitre }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ blog_commentaire.body }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_blog_commentaires_index') }}">back to list</a>
+
+    <a href="{{ path('app_blog_commentaires_edit', {'id': blog_commentaire.id}) }}">edit</a>
+
+    {{ include('blog_commentaires/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,47 @@
+.rounded-button{
+    height: 30px;
+    color: #262626;
+    background-color: transparent;
+    display: inline-block;
+    border: 1px solid #262626;
+    line-height: 30px;
+    padding: 0 18px;
+    border-radius: 30px;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin: 0 3px 8px 0;
+    transition: all 0.3s ease-in;
+    position: relative;
+}
+.rounded-button:hover {
+    background: var(--main-color);
+    color: #262626;
+    border: 1px solid var(--main-color);
+}
+.rounded-button-delete{
+    height: 30px;
+    color: #262626;
+    background-color: transparent;
+    display: inline-block;
+    border: 1px solid #262626;
+    line-height: 30px;
+    padding: 0 18px;
+    border-radius: 30px;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin: 0 3px 8px 0;
+    transition: all 0.3s ease-in;
+    position: relative;
+}
+.rounded-button-delete:hover {
+    background: #e1534f;
+    color: #262626;
+    border: 1px solid #e1534f;
+}
+
+table {
+    color: #262626;
+}
+label {
+    color: #262626;
+}

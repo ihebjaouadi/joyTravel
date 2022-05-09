@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RapportBlogPost{% endblock %}
+
+{% block body %}
+    <h1>Create new RapportBlogPost</h1>
+
+    {{ include('rapport_blog_post/_form.html.twig') }}
+
+    <a href="{{ path('app_rapport_blog_post_index') }}">back to list</a>
+{% endblock %}

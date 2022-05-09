@@ -9,12 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostlikeController extends AbstractController
 {
     /**
-     * @Route("/postlike", name="app_postlike")
+     * @Route("/PostLike", name="app_PostLike")
      */
     public function index(): Response
     {
-        return $this->render('postlike/index.html.twig', [
-            'controller_name' => 'PostlikeController',
+        return $this->render('PostLike/index.html.twig', [
+            'controller_name' => 'PostLikeController',
         ]);
     }
 }

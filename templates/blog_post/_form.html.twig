@@ -1,0 +1,71 @@
+{# {{ form_start(form) }} #}
+{#{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}#}
+{#<div class="row custom-gutters-10">#}
+{#    <div class="col-md-6">#}
+{#        <div class="single-select-inner">#}
+{#            <label>Titre</label>#}
+{#            {{ form_widget(form.titre,{'attr':{'class':'flex-nowrap'}}) }}#}
+{#            {{ form_errors(form.titre, {'attr':{'class':'text-danger'}}) }}#}
+{#        </div>#}
+{#    </div>#}
+{#    <div class="col-md-6">#}
+{#        <div class="single-select-inner">#}
+{#            <label>Description</label>#}
+{#            {{ form_widget(form.description,{'attr':{'class':'flex-nowrap'}}) }}#}
+{#            {{ form_errors(form.description, {'attr':{'class':'text-danger'}}) }}#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{#<div class="col-md-6">#}
+{#    <div class="single-select-inner">#}
+{#        <label>Body</label>#}
+{#        {{ form_widget(form.body,{'attr':{'class':'flex-nowrap'}}) }}#}
+{#        {{ form_errors(form.body, {'attr':{'class':'text-danger'}}) }}#}
+{#    </div>#}
+{#</div>#}
+{#</div>#}
+{# {{ form_widget (form.titre,{'attr':{'class':'form-control'}}) }} #}
+{# {{ form_errors(form.titre, {'attr':{'class':'text-danger'}}) }} #}
+{#<button class="btn">{{ button_label|default('Save') }}</button>#}
+{#{{ form_end(form) }}#}
+{#########################################################################################}
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<div class="single-property-grid bg-black">
+    <div class="single-property-form-title">
+        <div class="row">
+            <div class="col-md-8">
+                <h4>
+                    <div class="mb-3">
+                        fida.mrad@esprit.tn :
+                    </div>
+                    Voulez-vous créer un BlogPost ?
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <label class="single-input-inner style-bg">
+            <span class="label">Titre</span>
+            {{ form_widget(form.titre,{'attr':{'class':'flex-nowrap'}}) }}
+            {{ form_errors(form.titre, {'attr':{'class':'text-danger'}}) }}
+        </label>
+    </div>
+    <div class="col-12">
+        <label class="single-input-inner style-bg">
+            <span class="label">Description</span>
+            {{ form_widget(form.description,{'attr':{'class':'flex-nowrap'}}) }}
+            {{ form_errors(form.description, {'attr':{'class':'text-danger'}}) }}
+        </label>
+    </div>
+    <div class="col-12">
+        <label class="single-input-inner style-bg">
+            <span class="label">Body</span>
+            {{ form_widget(form.body,{'attr':{'class':'flex-nowrap'}}) }}
+            {{ form_errors(form.body, {'attr':{'class':'text-danger'}}) }}
+        </label>
+    </div>
+    <div class="col-12 mb-4">
+        <button class="btn btn-base radius-btn" type="submit">{{ button_label|default('Submit') }}</button>
+    </div>
+</div>
+{{ form_end(form) }}

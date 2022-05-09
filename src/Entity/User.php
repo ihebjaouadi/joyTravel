@@ -83,9 +83,25 @@ class User implements UserInterface
     private $chats;
 
     /**
-     * @ORM\OneToMany(targetEntity=Postlike::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="user")
      */
+
+
     private $likes;
+    /**
+     * @ORM\OneToMany(targetEntity=BlogPost::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $blogPosts;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BlogCommentaires::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $blogCommentaires;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $PostLikes;
 
     public function __construct()
     {
@@ -94,6 +110,10 @@ class User implements UserInterface
         $this->commentaires = new ArrayCollection();
         $this->reservationEvenements = new ArrayCollection();
         $this->chats = new ArrayCollection();
+
+        $this->blogPosts = new ArrayCollection();
+        $this->blogCommentaires = new ArrayCollection();
+        $this->PostLikes = new ArrayCollection();
         $this->likes = new ArrayCollection();
     }
 
@@ -373,14 +393,104 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection<int, Postlike>
+
+     * @return Collection<int, BlogPost>
+     */
+    public function getBlogPosts(): Collection
+    {
+        return $this->blogPosts;
+    }
+
+    public function addBlogPost(BlogPost $blogPost): self
+    {
+        if (!$this->blogPosts->contains($blogPost)) {
+            $this->blogPosts[] = $blogPost;
+            $blogPost->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogPost(BlogPost $blogPost): self
+    {
+        if ($this->blogPosts->removeElement($blogPost)) {
+            // set the owning side to null (unless already changed)
+            if ($blogPost->getUser() === $this) {
+                $blogPost->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BlogCommentaires>
+     */
+    public function getBlogCommentaires(): Collection
+    {
+        return $this->blogCommentaires;
+    }
+
+    public function addBlogCommentaire(BlogCommentaires $blogCommentaire): self
+    {
+        if (!$this->blogCommentaires->contains($blogCommentaire)) {
+            $this->blogCommentaires[] = $blogCommentaire;
+            $blogCommentaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogCommentaire(BlogCommentaires $blogCommentaire): self
+    {
+        if ($this->blogCommentaires->removeElement($blogCommentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($blogCommentaire->getUser() === $this) {
+                $blogCommentaire->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostLike>
+     */
+    public function getPostLikes(): Collection
+    {
+        return $this->PostLikes;
+    }
+
+    public function addPostLike(PostLike $PostLike): self
+    {
+        if (!$this->PostLikes->contains($PostLike)) {
+            $this->PostLikes[] = $PostLike;
+            $PostLike->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostLike(PostLike $PostLike): self
+    {
+        if ($this->PostLikes->removeElement($PostLike)) {
+            // set the owning side to null (unless already changed)
+            if ($PostLike->getUser() === $this) {
+                $PostLike->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+    /**
+     * @return Collection<int, PostLike>
      */
     public function getLikes(): Collection
     {
         return $this->likes;
     }
 
-    public function addLike(Postlike $like): self
+    public function addLike(PostLike $like): self
     {
         if (!$this->likes->contains($like)) {
             $this->likes[] = $like;
@@ -390,7 +500,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeLike(Postlike $like): self
+    public function removeLike(PostLike $like): self
     {
         if ($this->likes->removeElement($like)) {
             // set the owning side to null (unless already changed)
@@ -401,5 +511,6 @@ class User implements UserInterface
 
         return $this;
     }
+
 
 }

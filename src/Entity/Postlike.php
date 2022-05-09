@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PostlikeRepository;
+use App\Repository\PostLikeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PostlikeRepository::class)
+ * @ORM\Entity(repositoryClass=PostLikeRepository::class)
  */
-class Postlike
+class PostLike
 {
     /**
      * @ORM\Id
@@ -18,33 +18,30 @@ class Postlike
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Commentaire::class, inversedBy="Likes")
+     * @ORM\ManyToOne(targetEntity=BlogPost::class, inversedBy="PostLikes")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $Post;
+    private $post;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="likes")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="PostLikes")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $value;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPost(): ?Commentaire
+    public function getPost(): ?BlogPost
     {
-        return $this->Post;
+        return $this->post;
     }
 
-    public function setPost(?Commentaire $Post): self
+    public function setPost(?BlogPost $post): self
     {
-        $this->Post = $Post;
+        $this->post = $post;
 
         return $this;
     }
@@ -60,17 +57,4 @@ class Postlike
 
         return $this;
     }
-
-    public function getValue(): ?int
-    {
-        return $this->value;
-    }
-
-    public function setValue(int $value): self
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
 }

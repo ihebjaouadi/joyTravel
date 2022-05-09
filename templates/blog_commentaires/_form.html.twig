@@ -1,0 +1,51 @@
+{#{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}#}
+{#<div class="row custom-gutters-6">#}
+{#    <div class="col-md-12">#}
+{#        <label>Post</label><br>#}
+{#        {{ form_widget(form.post,{'attr':{'class':'flex-nowrap'}}) }}#}
+{#        {{ form_errors(form.post, {'attr':{'class':'text-danger'}}) }}#}
+{#    </div>#}
+{#</div>#}
+{#<div class="col-md-6">#}
+{#    <div class="single-select-inner">#}
+{#        <label>Body</label>#}
+{#        {{ form_widget(form.body,{'attr':{'class':'flex-nowrap'}}) }}#}
+{#        {{ form_errors(form.body, {'attr':{'class':'text-danger'}}) }}#}
+{#    </div>#}
+{#</div>#}
+{#    <button class="btn">{{ button_label|default('Save') }}</button>#}
+{#{{ form_end(form) }}#}
+
+<link rel="stylesheet"
+      href="{{ asset('assets/blogpost/fontawesome/css/all.min.css') }}"> <!-- https://fontawesome.com/ -->
+<link href="{{ asset('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap') }}"
+      rel="stylesheet"> <!-- https://fonts.google.com/ -->
+<link href="{{ asset('assets/blogpost/css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/blogpost/css/templatemo-xtra-blog.css') }}" rel="stylesheet">
+
+{{ form_start(form,{'attr':{'novalidate':'novalidate','class':'mb-5 tm-comment-form'}}) }}
+<div class="row custom-gutters-6">
+    <div class="col-md-12">
+        <label>Post</label><br>
+        {{ form_widget(form.post,{'attr':{'class':'flex-nowrap'}}) }}
+        {{ form_errors(form.post, {'attr':{'class':'text-danger'}}) }}
+    </div>
+</div>
+<h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
+<div class="mb-4">
+        {{ form_widget(form.body,{'attr':{'class':'form-control','rows':'6'}}) }}
+        {{ form_errors(form.body, {'attr':{'class':'text-danger'}}) }}
+</div>
+<button class="tm-btn tm-btn-primary tm-btn-small">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+
+{#<form action="" class="mb-5 tm-comment-form">#}
+{#    <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>#}
+{#    <div class="mb-4">#}
+{#        <textarea class="form-control" name="message" rows="6" cols="10"></textarea>#}
+{#    </div>#}
+{#    <div class="text-right">#}
+{#        <button class="tm-btn tm-btn-primary tm-btn-small">Submit</button>#}
+{#    </div>#}
+{#</form>#}

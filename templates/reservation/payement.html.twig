@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+{% block title %}Payement Réservation{% endblock %}
+
+{% block body %}
+    <h2>Formule : </h2>  <p>{{ formule }}</p><br>
+    <h2>Date Arrivée</h2> <p>{{ dateA }}</p><br>
+    <h2>Date Depart </h2><p>{{ dateD }}</p><br>
+    <h2>Somme</h2><p>{{ amount }}</p><br>
+    <h2>Chambres</h2>
+    <table class="table" colspan="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Hotel</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for element in dataPanier %}
+            <tr>
+                <td>{{ element.chambre.id }}</td>
+                <td>{{ element.chambre.Type }}</td>
+                <td>{{ element.chambre.getIDHotel.getNom }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+    <!-- Replace "test" with your own sandbox Business account app client ID -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AW6ptZ4_CkBt_1wELpzCxgsBq8dItUYmUD71MS5-gBOuy_OpxOHj8Xd0xRQwnUnqF1JldOeyXt1QHyEf&currency=USD"></script>
+    <!-- Set up a container element for the button -->
+    <div id="paypal-button-container"></div>
+    <script>
+        {# let somme= {{amount}} ; #}
+        paypal.Buttons({
+            // Sets up the transaction when a payment button is clicked
+            createOrder: (data, actions) => {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: {{ sommeUSD }} // Can also reference a variable or function
+                        }
+                    }]
+                });
+            },
+            // Finalize the transaction after payer approval
+            onApprove: (data, actions) => {
+                return actions.order.capture().then(function (orderData) {
+                    // Successful capture! For dev/demo purposes:
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                    const transaction = orderData.purchase_units[0].payments.captures[0];
+                    // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                    // When ready to go live, remove the alert and show a success message within this page. For example:
+                    // const element = document.getElementById('paypal-button-container');
+                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                    // Or go to another URL:  actions.redirect('thank_you.html');
+                    //  actions.redirect("http://"+window.location.host+"/reservation");
+                    let x = "";
+                    {% for element in dataPanier %}
+                    {% if not loop.last %}
+                    x = x + {{ element.chambre.id }} +","
+                    {% else %}
+                    x = x + {{ element.chambre.id }}
+                            {% endif %}
+                            {% endfor %}
+                        let dateA =  "{{ dateA }}"
+                        let dateD =  "{{ dateD }}"
+                        let prix =  "{{ amount }}"
+                        let formule =  "{{ formule }}"
+                        let nbr =  "{{ nbr }}"
+                     actions.redirect("http://"+window.location.host+"/reservation/newReservation?idchambres="+x+"&dateA="+dateA+"&formule="+formule+"&dateD="+dateD+"&nbr="+nbr+"&prix="+prix);
+                    // var xhr = new XMLHttpRequest();
+                    // xhr.open("POST", "http://"+window.location.host+"/reservation", true);
+                    // xhr.setRequestHeader('Content-Type', 'application/json');
+                    // xhr.send(JSON.stringify({
+                    //     value: "Hello"
+                    // }));
+
+                });
+            }
+        }).render('#paypal-button-container');
+    </script>
+    </body>
+    </html>
+{% endblock %}

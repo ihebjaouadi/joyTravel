@@ -45,7 +45,7 @@ Version: 1.0.3
 @import url("https://fonts.googleapis.com/css?family=Rubik:400,400i,500,600,700,800display=swap");
 /***transition***/
 :root {
-  --main-color: #5ba600;
+  --main-color: #5cb85c;
   --heading-color: #0d1741;
   --paragraph-color: #565872;
   --heading-font: "Rubik", sans-serif;
@@ -1388,7 +1388,7 @@ ul {
 .navbar-top ul li a {
   margin: 0;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(0, 0, 0, 0.9);
 }
 .navbar-top ul li p img,
 .navbar-top ul li a img {
@@ -2028,15 +2028,15 @@ ul {
   background-size: cover !important;
   background-position: center !important;
 }
-.banner-area-bg:after {
-  content: "";
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  left: 0;
-  top: 0;
-  background: rgba(0, 24, 77, 0.8);
-}
+/*.banner-area-bg:after {*/
+/*  content: "";*/
+/*  position: absolute;*/
+/*  height: 100%;*/
+/*  width: 100%;*/
+/*  left: 0;*/
+/*  top: 0;*/
+/*  background: rgba(0, 24, 77, 0.8);*/
+/*}*/
 
 .banner-area-inner {
   padding-top: 60px;

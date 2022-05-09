@@ -3,8 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Chambre;
-use ContainerT0R5Eqk\EntityManager_9a5be93;
-use Doctrine\ORM\Mapping\Entity;
+
+use App\Entity\Hotel;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,7 +35,10 @@ class ChambreType extends AbstractType
                     'Suite' => 'Suite',
 
                 ]
-            ]);
+            ])
+            ->add('Prixnuite')
+
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

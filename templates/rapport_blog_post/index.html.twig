@@ -1,0 +1,42 @@
+{# {% extends 'base.html.twig' %} #}
+{% extends 'baseBackOffice.html.twig' %}
+{% block title %}RapportBlogPost index{% endblock %}
+
+{% block body %}
+    <h1>RapportBlogPost index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Post</th>
+            <th>Raison</th>
+            <th>Actions</th>
+{#            <th>Delete</th>#}
+        </tr>
+        </thead>
+        <tbody>
+        {% for rapport_blog_post in rapport_blog_posts %}
+            <tr>
+                <td>{{ rapport_blog_post.id }}</td>
+                <td>{{ rapport_blog_post.getPost.getTitre }}</td>
+                <td>{{ rapport_blog_post.raison }}</td>
+                <td>
+                    <a href="{{ path('app_rapport_blog_post_show', {'id': rapport_blog_post.id}) }}">show</a>
+                    <a href="{{ path('app_rapport_blog_post_edit', {'id': rapport_blog_post.id}) }}">edit</a>
+                </td>
+{#                <td>#}
+{#                    <a href="{{ path('app_blog_post_delete', {'id': rapport_blog_post.getPost.getId}) }}">Delete#}
+{#                        Post</a>#}
+{#                </td>#}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {#    <a href="{{ path('app_rapport_blog_post_new') }}">Create new</a> #}
+{% endblock %}

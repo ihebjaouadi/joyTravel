@@ -44,7 +44,7 @@ class Commentaire
     private $Content;
 
     /**
-     * @ORM\OneToMany(targetEntity=Postlike::class, mappedBy="Post")
+     * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="Post")
      */
     private $Likes;
 
@@ -112,14 +112,14 @@ class Commentaire
     }
 
     /**
-     * @return Collection<int, Postlike>
+     * @return Collection<int, PostLike>
      */
     public function getLikes(): Collection
     {
         return $this->Likes;
     }
 
-    public function addLike(Postlike $like): self
+    public function addLike(PostLike $like): self
     {
         if (!$this->Likes->contains($like)) {
             $this->Likes[] = $like;
@@ -129,7 +129,7 @@ class Commentaire
         return $this;
     }
 
-    public function removeLike(Postlike $like): self
+    public function removeLike(PostLike $like): self
     {
         if ($this->Likes->removeElement($like)) {
             // set the owning side to null (unless already changed)
@@ -149,7 +149,7 @@ class Commentaire
     {
         foreach ($this->Likes as $like) {
             /**
-             * @var Postlike $like
+             * @var PostLike $like
              */
             if ($like->getUser()->getId() === $user->getId() && $like->getPost()->getId() == $commentaire->getId()) return true;
         }
