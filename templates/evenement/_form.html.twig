@@ -1,0 +1,39 @@
+
+
+
+
+  <div class="container">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    <div class="form-group">
+    {{ form_widget(form) }}
+
+      <input class="btn btn-primary" type="submit" value="Submit"></div>
+  </div>
+  {{ form_end(form) }}
+{{ form_start(form) }}
+
+
+
+  {#
+
+
+  <div class="container">
+      {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+      <div class="form-group">
+      {{ form_row(form.Nom) }}
+
+
+
+      {{ form_row(form.Type) }}
+      {{ form_row(form.Date_debut) }}
+      {{ form_row(form.Date_fin) }}
+      {{ form_row(form.Prix) }}
+      {{ form_row(form.Nombre_Participants) }}
+      {{ form_row(form.Description) }}
+      {{ form_row(form.Category) }}
+      {{ form_row(form.Img) }}
+
+     {{ form_end(form) }}
+</div>#}

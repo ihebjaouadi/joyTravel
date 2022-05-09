@@ -1,0 +1,221 @@
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Liste Comple des Evenements </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+        tbody {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+        .table-responsive {
+            margin: 30px 0;
+        }
+        .table-wrapper {
+            min-width: 1400px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+        .table-title {
+            padding-bottom: 10px;
+            margin: 0 0 10px;
+            min-width: 100%;
+        }
+        .table-title h2 {
+            margin: 8px 0 0;
+            font-size: 22px;
+        }
+        .search-box {
+            position: relative;
+            float: right;
+        }
+        .search-box input {
+            height: 34px;
+            border-radius: 20px;
+            padding-left: 35px;
+            border-color: #ddd;
+            box-shadow: none;
+        }
+        .search-box input:focus {
+            border-color: #3FBAE4;
+        }
+        .search-box i {
+            color: #a0a5b1;
+            position: absolute;
+            font-size: 19px;
+            top: 8px;
+            left: 10px;
+        }
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+        }
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        table.table td:last-child {
+            width: 130px;
+        }
+        table.table td a {
+            color: #a0a5b1;
+            display: inline-block;
+            margin: 0 5px;
+        }
+        table.table td a.view {
+            color: #03A9F4;
+        }
+        table.table td a.edit {
+            color: #FFC107;
+        }
+        table.table td a.delete {
+            color: #E34724;
+        }
+        table.table td i {
+            font-size: 19px;
+        }
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+
+        .hint-text {
+            float: left;
+            margin-top: 6px;
+            font-size: 95%;
+        }
+        th {background-color: #811414;
+            font-weight: bold;
+            font-size: 100%;
+        }
+
+        th, td {
+            border-style: dotted;
+        }
+    </style>
+
+</head>
+
+
+
+
+Bilon de : {{ "now"|date("m/d/Y") }}
+<br>
+<br>
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>Nom</th>
+        {#<th>Affiche</th>#}
+        <th>Category</th>
+
+        {#   <th>prix <i class="fa fa-sort">  <li><a href={{ path('TriPriceASC') }} > Trier Par Prix  </a></li> </i>    </th>#}
+
+        <th>prix   </th>
+
+
+
+        <th >Date Debut </th>
+        <th>Date Fin </th>
+        <th>Nombre de participants </th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+
+
+
+
+    <tr>
+        {% set NomMAX="ab" %}
+        {% set NomMIN="app" %}
+
+        {% set total= 0 %}
+        {% set maxValue = 0 %}
+        {% set minValue = 9999999%}
+        {% set Cont=0 %}
+        {% for evenement in evenements %}
+    <tr>
+        {#<td>{{ evenement.id }}</td> #}
+        <td>{{ evenement.Nom |upper()}}
+        </td>
+      {#   <td> <img width="100" height="100" src="{{ asset('uploads/images/'~ evenement.Img) }}" alt="img"></td>#}
+
+        <td>{{ evenement.Category }}</td>
+        <td>{{ evenement.Prix }}</td>
+        <td>{{ evenement.DateDebut ? evenement.DateDebut|date('Y-m-d') : '' }}</td>
+        <td>{{ evenement.DateFin ? evenement.DateFin|date('Y-m-d') : '' }}</td>
+
+        <td style="width:10%">{{ evenement.NombreParticipants }}</td>
+        {#  <td>{{ evenement.Description }}</td>#}
+        {# <td> <img width="100" height="100" src="{{ asset('uploads/images/'~ evenement.Img) }}" alt="img"></td> #}
+    </tr>
+    {% set maxValue = max(evenement.Prix, maxValue) %}
+    {% set minValue = min(evenement.Prix, minValue) %}
+
+    {%  set total = total + (evenement.Prix  * evenement.NombreParticipants ) %}
+    {% set Cont=Cont+1 %}
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="clearfix">
+    <div class="hint-text">Il ya  <b>{{ Cont }}</b> evenement en totale  <b></b> </div>
+</div>
+<br>
+<br>
+
+
+{% for evenement in evenements %}
+    {% if (evenement.Prix)  == (maxValue) %}
+     {% set NomMAX= evenement.Nom  %}
+    {% endif %}
+{% endfor %}
+
+
+{% for evenement in evenements %}
+    {% if (evenement.Prix)  == (minValue) %}
+        {% set NomMIN = evenement.Nom  %}
+    {% endif %}
+
+{% endfor %}
+
+
+
+
+
+
+le prix le plus grand est : {{maxValue}}   &#36;  : {{ NomMAX }}  <br>
+le prix le plus  petite est : {{minValue}} &#36;  : {{ NomMIN }}
+
+
+<br>
+
+Total argent : {{ total }}
+<br>
+
+
+
+
+
+</div>
+</div>
+</div>
+</html>

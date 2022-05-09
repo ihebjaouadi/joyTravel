@@ -1,0 +1,35 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}CategoryEvent{% endblock %}
+
+{% block body %}
+    <h1>CategoryEvent</h1>
+
+
+    <div>
+        <a href="{{ path('app_category_event_index') }}"><i class="fa fa-home fa-3x" aria-hidden="true"></i>
+        </a>
+
+
+
+        <a href="{{ path('app_category_event_edit', {'id': category_event.id}) }}"><i class="fas fa-edit fa-3x"> </i></a>
+
+    </div>
+
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ category_event.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ category_event.Nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+<br>
+    {{ include('category_event/_delete_form.html.twig') }}
+
+{% endblock %}

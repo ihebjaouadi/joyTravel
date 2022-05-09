@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Your Panner!{% endblock %}
+
+   {% block banner %}
+{% endblock %}
+{% block servcie %}
+{% endblock %}
+{% block body %}
+<h1>Mon Pannier</h1>
+
+
+    {% if items | length > 0 %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Date de debut</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total</th>
+                <th></th>  </tr>
+            </thead>
+            <tbody>
+
+            {% for item in items %}
+            <tr>
+                <td>{{ item.event.Nom }}</td>
+                <td>{{ item.event.DateDebut |date('Y-m-d')  }}</td>
+                <td>{{ item.event.Prix }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.event.Prix * item.quantity }}</td>
+                <td>
+                    <a href="{{ path('Remove_cart_event', {'id': item.event.id }) }}" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i></a>
+                </td>
+
+
+            </tr>
+
+{% endfor %}
+
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">Total :
+                </td>
+                <td>{{ total}}</td>
+<td></td>
+</tr>
+</tfoot>
+
+
+
+
+        </table>
+
+    {% else %}
+        <p>Surprise, c'est vide !</p>
+    {% endif %}
+    </tr>
+
+{% endblock %}
