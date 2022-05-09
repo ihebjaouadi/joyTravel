@@ -41,9 +41,10 @@ class BlogPostController extends AbstractController
     {
         $blogPosts = $blogPostRepository->findAll();
         $blogPostsJSON = $normalizer->normalize($blogPosts, 'json', ['groups' => 'g']);
-        return $this->render('blog_post/indexJSON.html.twig', [
-            'blog_posts' => $blogPostsJSON,
-        ]);
+        return new Response(json_encode($blogPostsJSON));
+//        return $this->render('blog_post/indexJSON.html.twig', [
+//            'blog_posts' => $blogPostsJSON,
+//        ]);
     }
 
     /**

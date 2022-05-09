@@ -74,7 +74,8 @@
                         let dateD =  "{{ dateD }}"
                         let prix =  "{{ amount }}"
                         let formule =  "{{ formule }}"
-                     actions.redirect("http://"+window.location.host+"/reservation/newReservation?idchambres="+x+"&dateA="+dateA+"&formule="+formule+"&dateD="+dateD+"&nbr=2&prix="+prix);
+                        let nbr =  "{{ nbr }}"
+                     actions.redirect("http://"+window.location.host+"/reservation/newReservation?idchambres="+x+"&dateA="+dateA+"&formule="+formule+"&dateD="+dateD+"&nbr="+nbr+"&prix="+prix);
                     // var xhr = new XMLHttpRequest();
                     // xhr.open("POST", "http://"+window.location.host+"/reservation", true);
                     // xhr.setRequestHeader('Content-Type', 'application/json');

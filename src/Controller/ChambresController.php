@@ -124,6 +124,20 @@ class ChambresController extends AbstractController
         return $this->redirectToRoute('panierV');
     }
 
+    public function nbrPersonnes(Chambre $chambre){
+        $nbrPersonnes = 0;
+        if(strcasecmp($chambre->getType(),"Suite")==0){
+            $nbrPersonnes=5;
+        }elseif (strcasecmp($chambre->getType(),"Double")==0){
+            $nbrPersonnes=2;
+        }elseif (strcasecmp($chambre->getType(),"Triple")==0){
+            $nbrPersonnes=3;
+        }elseif (strcasecmp($chambre->getType(),"Quadruple")==0){
+            $nbrPersonnes=4;
+        }
+        return $nbrPersonnes;
+    }
+
     /**
      * @Route("/panier/{da}/{dd}",name="panier")
      */
@@ -141,11 +155,13 @@ class ChambresController extends AbstractController
         $form->handleRequest($request);
 
         $amount = 0;
+        $nbrPersonnes = 0;
         $panier = $session->get("panier", []);
         $dataPanier = [];
         foreach ($panier as $id => $quantite) {
             $chambre = $chambreRepository->find($id);
             $amount += $chambre->getPrixnuite();
+            $nbrPersonnes+=$this->nbrPersonnes($chambre);
             $dataPanier[] = [
                 "chambre" => $chambre,
                 "quantite" => $quantite
@@ -162,7 +178,7 @@ class ChambresController extends AbstractController
             }
             $somme  = $amount*$nbrJours;
             $sommeUSD = $somme*0.33;
-            return $this->render('reservation/payement.html.twig',['amount'=>$somme,'dataPanier' => $dataPanier,'formule'=>$formule,'dateA'=>$da->format('d-m-Y'),'dateD'=>$dd->format('d-m-Y'),'sommeUSD'=>$sommeUSD]);
+            return $this->render('reservation/payement.html.twig',['amount'=>$somme,'dataPanier' => $dataPanier,'formule'=>$formule,'dateA'=>$da->format('d-m-Y'),'dateD'=>$dd->format('d-m-Y'),'sommeUSD'=>$sommeUSD,'nbr'=>$nbrPersonnes]);
         }
         return $this->render('reservation/panier.html.twig', [
             'dataPanier' => $dataPanier, 'amount' => $amount, 'form' => $form->createView(),'da'=>$da->format('d-m-Y'),'dd'=>$dd->format('d-m-Y')]);
